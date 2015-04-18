@@ -1,26 +1,24 @@
-
-<ion-header-bar>
-  <h1 class="title">Sign In</h1>
-  <div class="buttons">
-    <button class="button button-clear" ng-click="closeLogin()">Close</button>
-  </div>
-</ion-header-bar>
-<ion-content>
-  <div>
-    <div class="list list-inset">
-      <label class="item item-input">
-        <input ng-model="username" type="text" placeholder="Email" />
-      </label>
-      <label class="item item-input">
-        <input ng-model="password" type="text" placeholder="Password" />
-      </label>
-    </div>
-    <div class="padding-left padding-right">
-        <div class="button-bar">
-          <a class="button" ng-click="login(username, password)">Login</a>
-          <a class="button" ng-click="register(username, password)">Register</a>
+<ion-view view-title="Vantage">
+    <ion-content class="padding">
+        <div class="list">
+            <!-- Logo here -->
         </div>
-    </div>
-  </div>
-</ion-content>
+        <div class="list card padding">
+            <label class="item item-input">
+                <input type="text" ng-model="username" placeholder="Email">
+            </label>
+            <label class="item item-input">
+                <input type="password" ng-model="password" placeholder="Password">
+            </label>
+            <button ng-click="login(username, password)" class="button button-block button-positive activated">
+                Log In
+            </button>
+        </div>
+        <div class="list" style="text-align:center">
+            <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-positive">
+                Create New Account
+            </button>
+        </div>
+    </ion-content>
+</ion-view>
 

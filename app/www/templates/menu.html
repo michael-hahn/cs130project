@@ -18,21 +18,24 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item nav-clear menu-close ng-controller="LoginController" href="#/app/login">
-          Login
-        </ion-item>
         <ion-item nav-clear menu-close href="#/app/createEvent">
           Create Event
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/joinEvent">
           Join Event
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/secure">
+        <ion-item nav-clear menu-close href="#/app/images">
           Photos
+        </ion-item>
+        <ion-item nav-clear menu-close ng-controller="PostController">
+          <button ng-click="uploadPost()" class="button button-royal activated">
+            Post to Firebase
+          </button>
         </ion-item>
         <ion-item nav-clear menu-close ng-controller="LoginController" ng-click="logout()">
           Logout
         </ion-item>
+
       </ion-list>
     </ion-content>
   </ion-side-menu>

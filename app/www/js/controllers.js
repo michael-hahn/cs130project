@@ -2,44 +2,82 @@ var firebaseObject = new Firebase("https://cs130project.firebaseio.com/");
 
 angular.module('starter.controllers', [])
 
-
+/*
 .controller('AppCtrl', function($scope) {
 })
-
-.controller('LoginController', ['$scope', '$state', '$firebaseAuth', function($scope, $state, $firebaseAuth) {  
+*/
+.controller('LoginController', ['$scope', '$state', '$firebaseAuth', '$ionicModal', '$ionicLoading', function($scope, $state, $firebaseAuth, $ionicModal, $ionicLoading) {  
   var fbAuth = $firebaseAuth(firebaseObject); 
 
-  $scope.login = function(username, password) {
-    fbAuth.$authWithPassword({
-      email: username,
-      password: password
-    }).then(function(authData) {
-      alert("logged in!");
-      $state.go("app.images");
-    }).catch(function(error) {
-      alert("email or password is invalid"); 
-      console.error("ERROR: " + error);
-    });
+  $ionicModal.fromTemplateUrl('templates/register.html', {
+      scope: $scope
+  }).then(function (modal) {
+      $scope.modal = modal;
+  });
+
+
+  $scope.register = function(em, pw, name) {
+    console.log("Create User Function called");
+    if (em && name && pw) {
+      $ionicLoading.show({
+              template: 'Registering...'
+      });
+
+      fbAuth.$createUser({
+        email: em, 
+        password: pw,
+        displayName: name
+      }).then(function(userData) {
+        firebaseObject.child("users").child(userData.uid).set({
+          email: em,
+          displayName: name
+        });
+        return fbAuth.$authWithPassword({
+          email: em,
+          password: pw,
+          displayName: name
+        });
+      }).then(function(authData) {
+        $ionicLoading.hide();
+        $scope.modal.hide();
+        $state.go("app.images");
+      }).catch(function(error){
+        alert("Error: " + em + " already taken.");
+        console.log("ERROR REGISTER: " + error);
+        $ionicLoading.hide();
+      });
+    } else {
+      alert("Please fill out all details.");
+    }
   }
 
-  $scope.register = function(username, password) {
-    fbAuth.$createUser({email: username, password: password}).then(function(userData) {
-      return fbAuth.$authWithPassword({
+  $scope.login = function(username, password) {
+    if (username && password) {
+
+      $ionicLoading.show({
+        template: 'Logging in...'
+      });
+
+      fbAuth.$authWithPassword({
         email: username,
         password: password
+      }).then(function(authData) {
+        $ionicLoading.hide();
+        $state.go("app.images");
+      }).catch(function(error) {
+        alert("email or password is invalid"); 
+        console.error("ERROR LOGIN: " + error);
+        $ionicLoading.hide();
       });
-    }).then(function(authData) {
-      $state.go("app.images");
-    }).catch(function(error){
-      alert("Error: " + username + " already taken.");
-      console.log("ERROR: " + error);
-    });
+  } else {
+    alert("Please fill out all details.");
+  }
   }
 
   $scope.logout = function() {
     firebaseObject.unauth();
     alert("logged out!");
-    $state.go("app.login");
+    $state.go("login");
   }
 }])
 
@@ -50,18 +88,18 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ImagesController', function( $scope, $ionicHistory, $firebaseArray, $cordovaCamera, $state) {
-  
   $ionicHistory.clearHistory();
-  $scope.images = [];
+ 
   var fbAuth = firebaseObject.getAuth();
-  
+  $scope.images = [];
   if(fbAuth) {
+     
     var userReference = firebaseObject.child("users/" + fbAuth.uid);
     var syncArray = $firebaseArray(userReference.child("images"));
     $scope.images = syncArray;
   }
   else {
-    $state.go("app.login");
+    $state.go("login");
   }
 
   $scope.upload = function() {
@@ -82,7 +120,7 @@ angular.module('starter.controllers', [])
         alert("Image has been uploaded!");
       });
     }, function(error) {
-      console.error(error);
+      console.error("ERROR UPLOAD: " + error);
     });
   }
 
@@ -97,4 +135,24 @@ angular.module('starter.controllers', [])
 
 .controller('PhotoController', function($scope, $stateParams) {
   $scope.photoContent = $stateParams.imageData;
-});
+})
+
+.controller('PostController', function($scope, $firebaseArray, $state) {
+  var fbAuth = firebaseObject.getAuth();
+  
+  if(fbAuth) {
+    var userReference = firebaseObject.child("users/" + fbAuth.uid);
+    var syncArray = $firebaseArray(userReference.child("testPosts"));
+  }
+  else {
+    $state.go("login");
+  }
+
+  $scope.uploadPost = function() {
+    var timestamp = new Date().getTime();;
+    syncArray.$add({testPost: timestamp})
+    .then(function() {
+      alert("Posted to firebase!");
+    });
+  }
+})

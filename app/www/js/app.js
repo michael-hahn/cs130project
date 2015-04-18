@@ -18,28 +18,25 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
       StatusBar.styleDefault();
     }
 
-    $state.go('app.login')
+    $state.go('login')
   });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+
+  .state('login', {
+    url: "/login",
+    templateUrl: "templates/login.html",
+    controller: "LoginController",
+  })
+
   .state('app', {
     url: "/app",
     abstract: true,
     templateUrl: "templates/menu.html",
-    controller: 'AppCtrl'
-  })
-
-  .state('app.login', {
-    url: "/login",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/login.html",
-        controller: "LoginController"
-      }
-    }
+    //controller: 'AppCtrl'
   })
 
   .state('app.createEvent', {
@@ -82,8 +79,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
       }
     },
     params: {'imageData' : null }
-  });
+  })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/login');
+  $urlRouterProvider.otherwise('/login');
 });
