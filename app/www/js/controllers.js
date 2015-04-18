@@ -81,7 +81,25 @@ angular.module('starter.controllers', [])
   }
 }])
 
-.controller('createEventController', function($scope, $stateParams) {
+.controller('createEventController', function($scope, $firebaseArray) {
+  var fbAuth = firebaseObject.getAuth();
+
+  if(fbAuth) {
+    var eventsReference = firebaseObject.child("Events");
+  }
+  else {
+    $state.go("login");
+  }
+
+  $scope.createEvent = function(eventName, password, confirmPassword) {
+    if( password === confirmPassword ) {
+      eventsReference.push({Host: fbAuth.uid, Name: eventName, Password: password});
+      alert("Event Created!");
+    }
+    else {
+      alert("The passwords do not match");
+    }
+  }
 })
 
 .controller('joinEventController', function($scope, $stateParams) {

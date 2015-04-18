@@ -1,5 +1,26 @@
 <ion-view view-title="Create Event">
   <ion-content>
-    <h1>Create Event</h1>
+  	<div class="padding-left padding-right">
+    	<h1>Event Name</h1>
+    	<label class="item item-input">
+        	<input ng-model="eventName" type="text" placeholder="Event Name" />
+      	</label>
+
+    	<h1>Password</h1>
+    	<label class="item item-input">
+        	<input ng-model="password" type="password" placeholder="Password" />
+      	</label>
+
+    	<h1>Confirm Password</h1>
+    	<label class="item item-input">
+        	<input ng-model="confirmPassword" type="password" placeholder="Confirm Password" />
+      	</label>
+
+      	<br></br>
+
+      	<div class="button-bar">
+          <a class="button" ng-click="createEvent(eventName, password, confirmPassword)">Create Event</a>
+        </div>
+	</div>
   </ion-content>
 </ion-view>
