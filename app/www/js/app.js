@@ -64,7 +64,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
       'menuContent': {
         templateUrl: "templates/createEvent.html",
         controller: "createEventController"
-      }
+      },
+      cache: false
     }
   })
 

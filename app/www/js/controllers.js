@@ -141,7 +141,7 @@ angular.module('starter.controllers', [])
     }
 
     // If we're already hosting an event by that name, we can't add it.
-    for( i = 0; i < myEvents.length; i++ ) {
+    for(var i = 0; i < myEvents.length; i++ ) {
       if( eventName == getNameOfEventWithID(myEvents[i]) ) {
         alert("You are already hosting an event by this name. Choose a different name.");
         return;
