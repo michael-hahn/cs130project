@@ -81,20 +81,80 @@ angular.module('starter.controllers', [])
   }
 }])
 
-.controller('createEventController', function($scope, $firebaseArray) {
+.controller('createEventController', function($scope, $firebaseArray, $q, $state) {
   var fbAuth = firebaseObject.getAuth();
+  var myEvents = [];
+  var allEvents = [];
 
   if(fbAuth) {
+    var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
     var eventsReference = firebaseObject.child("Events");
+
+    refreshEvents();
   }
   else {
     $state.go("login");
   }
 
+  function refreshEvents() {
+    var deferredPromise = $q.defer();
+
+    $q(function(resolve, reject) {
+      myEvents = [];
+      firebaseObject.child("users/" + fbAuth.uid + "/Events").once("value", function(events) {
+        events.forEach(function(event) {
+          if(event.val() == "host") {
+            myEvents.push(event.key());
+          }
+        });
+        resolve();
+      });
+    }).then(function() {
+      $q(function(resolve, reject) {
+        allEvents = [];
+        eventsReference.once("value", function(events) {
+          events.forEach(function(event) {
+            allEvents.push(event);
+          });
+          resolve();
+        });
+      }).then(function() {
+        deferredPromise.resolve();
+      });
+    });
+
+    return deferredPromise.promise;
+  }
+
   $scope.createEvent = function(eventName, password, confirmPassword) {
-    if( password === confirmPassword ) {
-      eventsReference.push({Host: fbAuth.uid, Name: eventName, Password: password});
-      alert("Event Created!");
+    function getNameOfEventWithID(eventID) {
+      for( i = 0; i < allEvents.length; i++ ) {
+        if( allEvents[i].key() == eventID ) {
+          return allEvents[i].val()["Name"];
+        }
+      }
+      return null;
+    }
+
+    // If we're already hosting an event by that name, we can't add it.
+    for( i = 0; i < myEvents.length; i++ ) {
+      if( eventName == getNameOfEventWithID(myEvents[i]) ) {
+        alert("You are already hosting an event by this name. Choose a different name.");
+        return;
+      }
+    }
+
+    // Try to add the event
+    if( password == confirmPassword ) {
+      var eventID = eventsReference.push({Host: fbAuth.uid, Name: eventName, Password: password, Active: 1}).key();
+      myEventsReference.child(eventID).set("host");
+
+      // I would like to do this each time the page loads instead of anytime the button is pressed
+      // but this works for now.
+      refreshEvents().then(function() {
+        alert("Event Created!");
+        $state.go("app.images");
+      });
     }
     else {
       alert("The passwords do not match");
