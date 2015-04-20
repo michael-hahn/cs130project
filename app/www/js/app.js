@@ -1,3 +1,4 @@
+'use strict';
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -6,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform, $state) {
+.run(['$rootScope', '$ionicPlatform', '$state', function($rootScope, $ionicPlatform, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,9 +19,18 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
       StatusBar.styleDefault();
     }
 
-    $state.go('login')
+    $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
+      // We can catch the error thrown when the $requireAuth promise is rejected
+      // and redirect the user back to the home page
+      if (error === "AUTH_REQUIRED") {
+        window.alert('You forgot to log in!');
+        console.log("auth required");
+        $state.go('login'); 
+      }
+    });
+    //$state.go('login')
   });
-})
+}])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -37,6 +47,15 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
     abstract: true,
     templateUrl: "templates/menu.html",
     //controller: 'AppCtrl'
+    resolve: {
+        // controller will not be loaded until $requireAuth resolves
+          "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+                  var ref = new Firebase('https://cs130project.firebaseio.com/');
+                  var authObj = $firebaseAuth(ref);
+                  return authObj.$requireAuth();
+              }
+          ]
+        }
   })
 
   .state('app.createEvent', {
@@ -67,7 +86,16 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
         controller: 'ImagesController'
       }
     },
-    params: {'loginAuth' : null}
+    params: {'loginAuth' : null},
+    resolve: {
+        // controller will not be loaded until $requireAuth resolves
+          "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+                  var ref = new Firebase('https://cs130project.firebaseio.com/');
+                  var authObj = $firebaseAuth(ref);
+                  return authObj.$requireAuth();
+              }
+          ]
+        }
   })
 
   .state("app.photo", {

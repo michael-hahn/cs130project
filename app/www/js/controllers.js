@@ -1,3 +1,5 @@
+'use strict';
+
 var firebaseObject = new Firebase("https://cs130project.firebaseio.com/");
 
 angular.module('starter.controllers', [])
@@ -7,6 +9,7 @@ angular.module('starter.controllers', [])
 })
 */
 .controller('LoginController', ['$scope', '$state', '$firebaseAuth', '$ionicModal', '$ionicLoading', function($scope, $state, $firebaseAuth, $ionicModal, $ionicLoading) {  
+  
   var fbAuth = $firebaseAuth(firebaseObject); 
 
   $ionicModal.fromTemplateUrl('templates/register.html', {
@@ -22,16 +25,17 @@ angular.module('starter.controllers', [])
       $ionicLoading.show({
               template: 'Registering...'
       });
-
       fbAuth.$createUser({
         email: em, 
         password: pw,
         displayName: name
       }).then(function(userData) {
+        //add to firebase at 'users' endpoint
         firebaseObject.child("users").child(userData.uid).set({
           email: em,
           displayName: name
         });
+        //login after registering
         return fbAuth.$authWithPassword({
           email: em,
           password: pw,
@@ -220,17 +224,17 @@ angular.module('starter.controllers', [])
   
   if(fbAuth) {
     var userReference = firebaseObject.child("users/" + fbAuth.uid);
-    var syncArray = $firebaseArray(userReference.child("testPosts"));
+    var testPosts = userReference.child("testPosts");
   }
   else {
     $state.go("login");
   }
-
+  //upload to firebase, endpoint at testPosts
   $scope.uploadPost = function() {
     var timestamp = new Date().getTime();;
-    syncArray.$add({testPost: timestamp})
-    .then(function() {
-      alert("Posted to firebase!");
+    testPosts.push({
+      testPost: timestamp
     });
+    alert("posted to firebase!");
   }
 })
