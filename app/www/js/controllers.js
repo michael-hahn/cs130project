@@ -73,16 +73,17 @@ angular.module('starter.controllers', [])
         console.error("ERROR LOGIN: " + error);
         $ionicLoading.hide();
       });
-  } else {
-    alert("Please fill out all details.");
+    } else {
+      alert("Please fill out all details.");
+    }
   }
-  }
-
+/*
   $scope.logout = function() {
     firebaseObject.unauth();
     alert("logged out!");
     $state.go("login");
   }
+  */
 }])
 
 .controller('createEventController', function($scope, $firebaseArray, $q, $state) {
@@ -235,5 +236,16 @@ angular.module('starter.controllers', [])
       testPost: timestamp
     });
     alert("posted to firebase!");
+  }
+})
+
+.controller('ProfileController', function($scope, $state) {
+    var fbAuth = firebaseObject.getAuth();
+    console.log("fbAuth " + fbAuth);
+    $scope.logout = function() {
+
+    firebaseObject.unauth();
+    alert("logged out!");
+    $state.go("login");
   }
 })
