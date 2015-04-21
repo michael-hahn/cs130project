@@ -88,22 +88,27 @@ angular.module('starter.controllers', [])
 .controller('createEventController', function($scope, $firebaseArray, $q, $state) {
   var fbAuth = firebaseObject.getAuth();
   var myEvents = [];
-  var allEvents = [];
 
   if(fbAuth) {
     var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
     var eventsReference = firebaseObject.child("Events");
-
-    refreshEvents();
   }
   else {
     $state.go("login");
   }
 
-  function refreshEvents() {
-    var deferredPromise = $q.defer();
+  // Get the name of the event with a given ID
+  function getNameOfEventWithID(eventID) {
+    return $q(function(resolve, reject) {
+      firebaseObject.child("Events/" + eventID).once("value", function(eventData) {
+        resolve( eventData.val()["Name"] );
+      });
+    });
+  }
 
-    $q(function(resolve, reject) {
+  // Update the list of the events this user is hosting
+  function refreshMyEvents() {
+    return $q(function(resolve, reject) {
       myEvents = [];
       firebaseObject.child("users/" + fbAuth.uid + "/Events").once("value", function(events) {
         events.forEach(function(event) {
@@ -113,56 +118,50 @@ angular.module('starter.controllers', [])
         });
         resolve();
       });
-    }).then(function() {
-      $q(function(resolve, reject) {
-        allEvents = [];
-        eventsReference.once("value", function(events) {
-          events.forEach(function(event) {
-            allEvents.push(event);
-          });
-          resolve();
-        });
-      }).then(function() {
-        deferredPromise.resolve();
-      });
     });
+  }
 
-    return deferredPromise.promise;
+  // Detect whether this event name has already been taken
+  function eventNameIsAvailable(eventName) {
+    return $q(function(resolve, reject) {
+      var count = 0;
+
+      for( var i = 0; i < myEvents.length; i++ ) {
+        getNameOfEventWithID(myEvents[i]).then(function(name) {
+          count++;
+          if( name == eventName ) {
+            reject();
+          }
+          if( count == myEvents.length ) {
+            resolve();
+          }
+        });
+      }
+    });
   }
 
   $scope.createEvent = function(eventName, password, confirmPassword) {
-    function getNameOfEventWithID(eventID) {
-      for( i = 0; i < allEvents.length; i++ ) {
-        if( allEvents[i].key() == eventID ) {
-          return allEvents[i].val()["Name"];
+    // First, refresh the list of events this user is hosting
+    refreshMyEvents().then(function() {
+      // Then, check if the event name is available
+      eventNameIsAvailable(eventName).then(function() {
+        // We're not hosting an event by that name yet, so we can add it
+        if( password == confirmPassword ) {
+          var eventID = eventsReference.push({Host: fbAuth.uid, Name: eventName, Password: password, Active: 1}).key();
+          myEventsReference.child(eventID).set("host");
+
+          alert("Event Created!");
+          $state.go("app.images");
         }
-      }
-      return null;
-    }
-
-    // If we're already hosting an event by that name, we can't add it.
-    for(var i = 0; i < myEvents.length; i++ ) {
-      if( eventName == getNameOfEventWithID(myEvents[i]) ) {
+        else {
+          alert("The passwords do not match");
+        }
+      },
+      function() {
+        // We're already hosting an event by that name, so we can't add it.
         alert("You are already hosting an event by this name. Choose a different name.");
-        return;
-      }
-    }
-
-    // Try to add the event
-    if( password == confirmPassword ) {
-      var eventID = eventsReference.push({Host: fbAuth.uid, Name: eventName, Password: password, Active: 1}).key();
-      myEventsReference.child(eventID).set("host");
-
-      // I would like to do this each time the page loads instead of anytime the button is pressed
-      // but this works for now.
-      refreshEvents().then(function() {
-        alert("Event Created!");
-        $state.go("app.images");
       });
-    }
-    else {
-      alert("The passwords do not match");
-    }
+    });
   }
 })
 
