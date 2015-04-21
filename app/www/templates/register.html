@@ -12,9 +12,12 @@
                 <input ng-model="password" type="password" placeholder="Password">
             </label>
             <label class="item item-input">
+                <input ng-model="confirmPassword" type="password" placeholder="Confirm Password">
+            </label>
+            <label class="item item-input">
                 <input ng-model="displayName" type="text" placeholder="Display Name">
             </label>
-            <button class="button button-full button-positive" ng-click="register(email, password, displayName)">Done!</button>
+            <button class="button button-full button-positive" ng-click="register(email, password, confirmPassword, displayName)">Done!</button>
         </div>
     </ion-content>
 </ion-modal-view>

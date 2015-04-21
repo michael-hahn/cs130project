@@ -7,22 +7,21 @@
 		  </div>
 
 		  <div class="item item-image">
-		  	<p>Profile Picture here</p>
-		    <img src="/img/ionic.png">
+		  	<br/>
+		    <img style="width:250px; height:300px" src="/img/profile-pic.jpg">
 		  </div>
-
-		  <a class="item item-icon-left energized" href="#">
-		    <i class="icon ion-ios-person"></i>
-		    Change User name
-		  </a>
-		  <a class="item item-icon-left energized" href="#">
-		    <i class="icon ion-ios-email"></i>
-		    Change Email
-		  </a>
-  		  <a class="item item-icon-left energized" href="#">
-		    <i class="icon ion-locked"></i>
-		    Change Password
-		  </a>
+		  <br />
+		  <div class="button-bar">
+			  <a class="button icon-left ion-ios-person button-energized" ng-click="changeDisplayName()">
+			    Change Display Name
+			  </a>
+			  <a class="button icon-left ion-ios-email button-energized" ng-click="changeEmail()">
+			    Change Email
+			  </a>
+	  		  <a class="button icon-left ion-locked button-energized" ng-click="changePassword()">
+			    Change Password
+			  </a>
+		</div>
 
 		</div>
   	</ion-content>

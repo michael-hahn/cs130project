@@ -19,37 +19,43 @@ angular.module('starter.controllers', [])
   });
 
 
-  $scope.register = function(em, pw, name) {
+  $scope.register = function(em, pw, confirmPw, name) {
     console.log("Create User Function called");
-    if (em && name && pw) {
-      $ionicLoading.show({
-              template: 'Registering...'
-      });
-      fbAuth.$createUser({
-        email: em, 
-        password: pw,
-        displayName: name
-      }).then(function(userData) {
-        //add to firebase at 'users' endpoint
-        firebaseObject.child("users").child(userData.uid).set({
-          email: em,
-          displayName: name
+    if (em && name && pw && confirmPw) {
+
+
+      if (pw !== confirmPw) {
+        alert("Password and Confirm password must match.");
+      } else {
+        $ionicLoading.show({
+          template: 'Registering...'
         });
-        //login after registering
-        return fbAuth.$authWithPassword({
-          email: em,
+        fbAuth.$createUser({
+          email: em, 
           password: pw,
           displayName: name
+        }).then(function(userData) {
+          //add to firebase at 'users' endpoint
+          firebaseObject.child("users").child(userData.uid).set({
+            email: em,
+            displayName: name
+          });
+          //login after registering
+          return fbAuth.$authWithPassword({
+            email: em,
+            password: pw,
+            displayName: name
+          });
+        }).then(function(authData) {
+          $ionicLoading.hide();
+          $scope.modal.hide();
+          $state.go("app.images");
+        }).catch(function(error){
+          alert("Error: " + em + " already taken.");
+          console.log("ERROR REGISTER: " + error);
+          $ionicLoading.hide();
         });
-      }).then(function(authData) {
-        $ionicLoading.hide();
-        $scope.modal.hide();
-        $state.go("app.images");
-      }).catch(function(error){
-        alert("Error: " + em + " already taken.");
-        console.log("ERROR REGISTER: " + error);
-        $ionicLoading.hide();
-      });
+      }
     } else {
       alert("Please fill out all details.");
     }
@@ -243,9 +249,20 @@ angular.module('starter.controllers', [])
     var fbAuth = firebaseObject.getAuth();
     console.log("fbAuth " + fbAuth);
     $scope.logout = function() {
+      firebaseObject.unauth();
+      alert("logged out!");
+      $state.go("login");
+    }
 
-    firebaseObject.unauth();
-    alert("logged out!");
-    $state.go("login");
-  }
+    $scope.changeDisplayName = function() {
+      alert("change name");
+    }
+
+    $scope.changeEmail = function() {
+      alert("change email");
+    }
+
+    $scope.changePassword = function() {
+      alert("change password");
+    }
 })
