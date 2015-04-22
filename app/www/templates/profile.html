@@ -3,7 +3,8 @@
     	<div class="list card">
 
 		  <div class="item item-avatar">
-		    <h1 style="text-align:center">User name</h1>
+		    <h1 style="text-align:center">{{userData.displayName}}</h1>
+		    <h3 style="text-align:center">{{userData.email}}</h3>
 		  </div>
 
 		  <div class="item item-image">
@@ -11,17 +12,18 @@
 		    <img style="width:250px; height:300px" src="/img/profile-pic.jpg">
 		  </div>
 		  <br />
-		  <div class="button-bar">
-			  <a class="button icon-left ion-ios-person button-energized" ng-click="changeDisplayName()">
+			  <a class="item item-icon-left energized" ng-click="modalDisplayName.show()">
+			  	<i class="icon ion-ios-person"></i>
 			    Change Display Name
 			  </a>
-			  <a class="button icon-left ion-ios-email button-energized" ng-click="changeEmail()">
+			  <a class="item item-icon-left energized" ng-click="modalEmail.show()">
+			  	<i class="icon ion-ios-email"></i>
 			    Change Email
 			  </a>
-	  		  <a class="button icon-left ion-locked button-energized" ng-click="changePassword()">
+	  		  <a class="item item-icon-left energized" ng-click="modalPassword.show()">
+	  		  	<i class="icon ion-locked"></i>
 			    Change Password
 			  </a>
-		</div>
 
 		</div>
   	</ion-content>
