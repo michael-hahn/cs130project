@@ -48,7 +48,8 @@ angular.module('starter.controllers', [])
           });
         }).then(function(authData) {
           $ionicLoading.hide();
-          $scope.modal.hide();
+          //$scope.modal.hide();
+          $scope.modal.remove();
           $state.go("app.images");
         }).catch(function(error){
           alert("Error: " + em + " already taken.");
@@ -245,24 +246,110 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ProfileController', function($scope, $state) {
+.controller('ProfileController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$firebaseArray', function($scope, $state, $ionicModal, $ionicLoading, $firebaseArray) {
+
     var fbAuth = firebaseObject.getAuth();
-    console.log("fbAuth " + fbAuth);
+
+    if(fbAuth) {
+       
+      var userReference = firebaseObject.child("users/" + fbAuth.uid);
+      userReference.on("value", function(snapshot) {
+          console.log(snapshot.val());
+          $scope.userData = snapshot.val();
+      }, function(error) {
+          console.log("Read failed: " + error);
+      });
+
+    }
+    else {
+      $state.go("login");
+    }
+
+    //Modal for Display Name
+    $ionicModal.fromTemplateUrl('templates/profileSettings/changeDisplayName.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalDisplayName = modal;
+    });
+    
+    //Modal for Email
+    $ionicModal.fromTemplateUrl('templates/profileSettings/changeEmail.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalEmail = modal;
+    });
+
+    //Modal for Password
+    $ionicModal.fromTemplateUrl('templates/profileSettings/changePassword.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalPassword = modal;
+    });
+
     $scope.logout = function() {
       firebaseObject.unauth();
       alert("logged out!");
       $state.go("login");
     }
 
-    $scope.changeDisplayName = function() {
-      alert("change name");
+    $scope.changeDisplayName = function(newName) {
+      if (newName) {
+        userReference.update({
+          displayName: newName
+        }, function(error) {
+          if (error) {
+            alert("Error: " + error);
+          } else {
+            alert("Changed display name to " + newName);
+            $scope.modalDisplayName.hide();
+          }
+        });
+      } else {
+        alert("Please choose new Display Name.");
+      }
+      
     }
 
-    $scope.changeEmail = function() {
-      alert("change email");
+    $scope.changeEmail = function(oldEm, newEm, pw) {
+      if (oldEm && newEm) {
+        userReference.changeEmail({
+          oldEmail : oldEm,
+          newEmail : newEm,
+          password : pw
+        }, function(error) {
+          if (error === null) {
+            alert("Email changed from " + oldEm + " to " + newEm);
+            userReference.update({
+              email : newEm
+            });
+            $scope.modalEmail.hide();
+          } else {
+            alert(error);
+          }
+        })
+      } else {
+        alert("Please fill out all details.");
+      }
     }
 
-    $scope.changePassword = function() {
-      alert("change password");
+    $scope.changePassword = function(em, oldPw, newPw, confirmPw) {
+      if ( em && oldPw && newPw && confirmPw ) {
+        userReference.changePassword({
+          email : em,
+          oldPassword : oldPw,
+          newPassword : newPw
+        }, function(error) {
+          if (error === null){
+            alert("Password successfully changed!");
+            $scope.modalPassword.hide();
+          } else {
+            alert(error);
+          }
+        });
+      } else {
+        alert("Please fill in all details.");
+
+
+      }
     }
-})
+}])
