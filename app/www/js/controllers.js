@@ -211,6 +211,10 @@ angular.module('starter.controllers', [])
           }
         });
       }
+
+      if(myEvents.length == 0) {
+        resolve();
+      }
     });
   }
 
