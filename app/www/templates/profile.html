@@ -2,30 +2,37 @@
   	<ion-content>
     	<div class="list card">
 
-		  <div class="item item-avatar">
-		    <h1 style="text-align:center">{{userData.displayName}}</h1>
-		    <h3 style="text-align:center">{{userData.email}}</h3>
-		  </div>
-
-		  <div class="item item-image">
-		  	<br/>
-		    <img style="width:250px; height:300px" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== null" />
-
-		    <img style="width:250px; height:300px" ng-src="./img/ionic.png" ng-if="userData.profilePicture === null" />
-		  </div>
-		  <br />
-			  <a class="item item-icon-left energized" ng-click="modalDisplayName.show()">
-			  	<i class="icon ion-ios-person"></i>
-			    Change Display Name
+		  	<a class="item energized" ng-click="modalDisplayName.show()" style="text-align:center">
+			  	<i class="icon ion-ios-person"></i>	
+			  	{{userData.displayName}} (Edit)
 			  </a>
-			  <a class="item item-icon-left energized" ng-click="modalEmail.show()">
+
+		  	<a class="item item-icon-left energized" ng-click="modalEmail.show()" style="text-align:center">
 			  	<i class="icon ion-ios-email"></i>
-			    Change Email
+			    {{userData.email}} (Edit)
 			  </a>
-	  		  <a class="item item-icon-left energized" ng-click="modalPassword.show()">
-	  		  	<i class="icon ion-locked"></i>
+
+
+			<div class="item item-image">
+			  	<br/>
+				<a class="item item-image energized" ng-click="modalProfilePicture.show()">
+					Edit Profile Picture 
+					<br />
+					<!-- Displays Profile Pic if not null --> 
+		    		<img style="width:250px; height:300px" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== undefined " />
+
+		    		<!-- Else display blank profile pic -->
+		    		<img style="width:250px; height:300px" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === undefined " />
+	    		</a>
+			</div>
+
+
+		  	<br />
+
+  		  	<a class="item item-icon-left energized" ng-click="modalPassword.show()">
+  		  		<i class="icon ion-locked"></i>
 			    Change Password
-			  </a>
+		  	</a>
 
 		</div>
   	</ion-content>
