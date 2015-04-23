@@ -90,17 +90,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
         templateUrl: "templates/images.html",
         controller: 'ImagesController'
       }
-    },
-    params: {'loginAuth' : null},
-    resolve: {
-        // controller will not be loaded until $requireAuth resolves
-          "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
-                  var ref = new Firebase('https://cs130project.firebaseio.com/');
-                  var authObj = $firebaseAuth(ref);
-                  return authObj.$requireAuth();
-              }
-          ]
-        }
+    }
   })
 
   .state("app.photo", {

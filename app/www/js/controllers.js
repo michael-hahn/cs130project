@@ -79,11 +79,16 @@ angular.module('starter.controllers', [])
   }
 }])
 
-.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $firebaseAuth, $state) {
+.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $ionicModal, $firebaseAuth, $state) {
     
     console.log("in details ctrl");
-    $scope.profilePic = null; 
-    $scope.displayPic = "/img/blank-profile.png";
+    $scope.profilePic = ""; 
+
+    $ionicModal.fromTemplateUrl('templates//registerDetails/registerChooseProfilePic.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalChooseProfilePic = modal;
+    });
 
     var fbAuth = firebaseObject.getAuth();
 
@@ -95,7 +100,7 @@ angular.module('starter.controllers', [])
       $state.go("login");
     }
 
-    $scope.profilePicture = function(type) {
+    $scope.chooseProfilePicture = function(type) {
       //from camera
       var options1 = {
         quality: 75,
@@ -307,8 +312,7 @@ $scope.uploadPost = function() {
   }
 })
 
-.controller('ProfileController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$firebaseArray', function($scope, $state, $ionicModal, $ionicLoading, $firebaseArray) {
-
+.controller('ProfileController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera) {
     var fbAuth = firebaseObject.getAuth();
 
     if(fbAuth) {
@@ -338,6 +342,13 @@ $scope.uploadPost = function() {
         scope: $scope
     }).then(function (modal) {
         $scope.modalEmail = modal;
+    });
+
+    //Modal for Profile Picture
+    $ionicModal.fromTemplateUrl('templates/profileSettings/changeProfilePicture.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalProfilePicture = modal;
     });
 
     //Modal for Password
@@ -391,6 +402,54 @@ $scope.uploadPost = function() {
       } else {
         alert("Please fill out all details.");
       }
+    }
+
+    $scope.changeProfilePicture = function(opt) {
+      //from camera
+      var options1 = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 500,
+        targetHeight: 500,
+        saveToPhotoAlbum: false
+      };
+      //from photo library
+      var options2 = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 500,
+        targetHeight: 500,
+        saveToPhotoAlbum: false
+      };
+
+      if (opt === 0) {
+        var options = options1;
+      } else {
+        var options = options2;
+      }
+
+      $cordovaCamera.getPicture(options).then(function(imageData) {
+        userReference.update({
+          profilePicture : imageData
+        }, function(error) {
+          if ( error === null ) {
+            alert("Profile picture changed!");
+            $scope.modalProfilePicture.hide();
+          } else {
+            alert(error);
+          }
+        });
+      });
+
+      $scope.$apply();//updates the view
     }
 
     $scope.changePassword = function(em, oldPw, newPw, confirmPw) {
