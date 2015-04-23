@@ -35,11 +35,16 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-
   .state('login', {
     url: "/login",
     templateUrl: "templates/login.html",
     controller: "LoginController",
+  })
+
+  .state('registerUserDetails', {
+    url: "/registerUserDetails",
+    templateUrl: "templates/registerUserDetails.html",
+    controller: "RegisterUserDetailsController",
   })
 
   .state('app', {
@@ -48,14 +53,13 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
     templateUrl: "templates/menu.html",
     //controller: 'AppCtrl'
     resolve: {
-        // controller will not be loaded until $requireAuth resolves
-          "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
-                  var ref = new Firebase('https://cs130project.firebaseio.com/');
-                  var authObj = $firebaseAuth(ref);
-                  return authObj.$requireAuth();
-              }
-          ]
-        }
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
   })
 
   .state('app.createEvent', {

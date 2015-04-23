@@ -1,0 +1,24 @@
+<ion-view view-title="Photo Content">
+  <ion-content>
+
+	<div class="list card">
+
+		  <div class="item item-avatar">
+		    <input ng-model="displayName" type="text" placeholder="Display Name">
+		  </div>
+
+		  <div class="item item-image">
+		  	<br/>
+		    <a ng-click="">
+		    	<img style="width:250px; height:300px" ng-src="./img/blank-profile.png" ng-if="profilePic === null">
+		    	<img style="width:250px; height:300px" ng-src="data:image/jpg;base64,{{profilePic}}" ng-if="profilePic !== null">
+		    </a>
+		  </div>
+		  <button class="button button-icon icon-left ion-camera" ng-click="profilePicture(0)">Take A Profile Picture (Optional)</button>
+		  <button class="button button-icon icon-left ion-camera" ng-click="profilePicture(1)">Choose A Profile Picture From Gallery(Optional)</button>
+	</div>
+
+    <button class="button button-full button-positive" ng-click="submit(displayName)">Done!</button>
+
+  </ion-content>
+</ion-view>

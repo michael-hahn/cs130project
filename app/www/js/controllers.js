@@ -4,10 +4,6 @@ var firebaseObject = new Firebase("https://cs130project.firebaseio.com/");
 
 angular.module('starter.controllers', [])
 
-/*
-.controller('AppCtrl', function($scope) {
-})
-*/
 .controller('LoginController', ['$scope', '$state', '$firebaseAuth', '$ionicModal', '$ionicLoading', function($scope, $state, $firebaseAuth, $ionicModal, $ionicLoading) {  
   
   var fbAuth = $firebaseAuth(firebaseObject); 
@@ -18,10 +14,9 @@ angular.module('starter.controllers', [])
       $scope.modal = modal;
   });
 
-
-  $scope.register = function(em, pw, confirmPw, name) {
+  $scope.register = function(em, pw, confirmPw) {
     console.log("Create User Function called");
-    if (em && name && pw && confirmPw) {
+    if (em && pw && confirmPw) {
 
 
       if (pw !== confirmPw) {
@@ -32,25 +27,23 @@ angular.module('starter.controllers', [])
         });
         fbAuth.$createUser({
           email: em, 
-          password: pw,
-          displayName: name
+          password: pw
         }).then(function(userData) {
+          /* do something here */
           //add to firebase at 'users' endpoint
           firebaseObject.child("users").child(userData.uid).set({
-            email: em,
-            displayName: name
+            email: em
           });
           //login after registering
           return fbAuth.$authWithPassword({
             email: em,
-            password: pw,
-            displayName: name
+            password: pw
           });
         }).then(function(authData) {
           $ionicLoading.hide();
           //$scope.modal.hide();
-          $scope.modal.remove();
-          $state.go("app.images");
+          $scope.modal.hide();
+          $state.go("registerUserDetails");
         }).catch(function(error){
           alert("Error: " + em + " already taken.");
           console.log("ERROR REGISTER: " + error);
@@ -84,14 +77,82 @@ angular.module('starter.controllers', [])
       alert("Please fill out all details.");
     }
   }
-/*
-  $scope.logout = function() {
-    firebaseObject.unauth();
-    alert("logged out!");
-    $state.go("login");
-  }
-  */
 }])
+
+.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $firebaseAuth, $state) {
+    
+    console.log("in details ctrl");
+    $scope.profilePic = null; 
+    $scope.displayPic = "/img/blank-profile.png";
+
+    var fbAuth = firebaseObject.getAuth();
+
+    console.log("id = " + fbAuth.uid);
+    if(fbAuth) {
+      var userReference = firebaseObject.child("users/" + fbAuth.uid);
+    }
+    else {
+      $state.go("login");
+    }
+
+    $scope.profilePicture = function(type) {
+      //from camera
+      var options1 = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 500,
+        targetHeight: 500,
+        saveToPhotoAlbum: false
+      };
+      //from photo library
+      var options2 = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 500,
+        targetHeight: 500,
+        saveToPhotoAlbum: false
+      };
+
+      if (type === 0) {
+        var options = options1;
+      } else {
+        var options = options2;
+      }
+
+      $cordovaCamera.getPicture(options).then(function(imageData) {
+        $scope.profilePic = imageData;
+      });
+
+      $scope.$apply();//updates the view
+    }
+
+    $scope.submit = function(name) {
+      if (name) {
+        userReference.update({
+          displayName : name,
+          profilePicture : $scope.profilePic
+        }, function(error) {
+          if(error === null) {
+            $state.go("app.images");
+          } else {
+            alert(error);
+          }
+        });
+      } else {
+        alert("A name is required.");
+      }
+
+    };
+
+  })
 
 .controller('createEventController', function($scope, $firebaseArray, $q, $state) {
   var fbAuth = firebaseObject.getAuth();
@@ -237,7 +298,7 @@ angular.module('starter.controllers', [])
     $state.go("login");
   }
   //upload to firebase, endpoint at testPosts
-  $scope.uploadPost = function() {
+$scope.uploadPost = function() {
     var timestamp = new Date().getTime();;
     testPosts.push({
       testPost: timestamp
@@ -256,10 +317,10 @@ angular.module('starter.controllers', [])
       userReference.on("value", function(snapshot) {
           console.log(snapshot.val());
           $scope.userData = snapshot.val();
+          $scope.$apply();
       }, function(error) {
           console.log("Read failed: " + error);
       });
-
     }
     else {
       $state.go("login");
