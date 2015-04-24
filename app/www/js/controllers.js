@@ -254,8 +254,18 @@ angular.module('starter.controllers', [])
   if(fbAuth) {
      
     var userReference = firebaseObject.child("users/" + fbAuth.uid);
+
+    userReference.on("value", function(snapshot) {
+          //console.log(snapshot.val());
+          $scope.userData = snapshot.val();
+          //$scope.$apply();
+      }, function(error) {
+          console.log("Read failed: " + error);
+      });
+
     var syncArray = $firebaseArray(userReference.child("images"));
     $scope.images = syncArray;
+    //console.log($scope.images);
   }
   else {
     $state.go("login");
@@ -275,7 +285,19 @@ angular.module('starter.controllers', [])
     };
 
     $cordovaCamera.getPicture(options).then(function(imageData) {
-      syncArray.$add({image: imageData}).then(function() {
+
+      var timestamp = new Date().getTime();
+      var date = new Date(timestamp);
+      var hours = date.getHours();
+      var minutes = "0" + date.getMinutes();
+      var seconds = "0" + date.getSeconds();
+      var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
+      
+      syncArray.$add({
+        image: imageData,
+        user: fbAuth.uid,
+        time: formattedTime
+      }).then(function() {
         alert("Image has been uploaded!");
       });
     }, function(error) {
@@ -287,13 +309,23 @@ angular.module('starter.controllers', [])
     $state.go("app.images");
   }
 
-  $scope.viewPhoto = function(photo) {
-    $state.go('app.photo', {'imageData' : photo });
+  $scope.viewPhoto = function(photoData) {
+    $state.go('app.photo', {'imageData' : photoData });
   }
 })
 
 .controller('PhotoController', function($scope, $stateParams) {
+  
   $scope.photoContent = $stateParams.imageData;
+
+  var userReference = firebaseObject.child("users/" + $stateParams.imageData.user);
+
+  userReference.on("value", function(snapshot) {;
+        $scope.userData = snapshot.val();
+        //$scope.$apply();
+    }, function(error) {
+        console.log("Read failed: " + error);
+    });
 })
 
 .controller('PostController', function($scope, $firebaseArray, $state) {
@@ -308,9 +340,17 @@ angular.module('starter.controllers', [])
   }
   //upload to firebase, endpoint at testPosts
 $scope.uploadPost = function() {
-    var timestamp = new Date().getTime();;
-    testPosts.push({
-      testPost: timestamp
+
+  //gets time
+  var timestamp = new Date().getTime();
+  var date = new Date(timestamp);
+  var hours = date.getHours();
+  var minutes = "0" + date.getMinutes();
+  var seconds = "0" + date.getSeconds();
+  var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
+  
+  testPosts.push({
+      testPost: formattedTime
     });
     alert("posted to firebase!");
   }
@@ -323,7 +363,7 @@ $scope.uploadPost = function() {
        
       var userReference = firebaseObject.child("users/" + fbAuth.uid);
       userReference.on("value", function(snapshot) {
-          console.log(snapshot.val());
+          //console.log(snapshot.val());
           $scope.userData = snapshot.val();
           $scope.$apply();
       }, function(error) {
