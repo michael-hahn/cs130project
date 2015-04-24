@@ -4,13 +4,13 @@
 	<div class="list card" ng-app="starter">
 
 	  <div class="item item-avatar">
-	    <img src="./img/ionic.png">
-	    <h2>Name</h2>
-	    <p>Time posted</p>
+	    <img src="data:image/jpg;base64,{{userData.profilePicture}}">
+	    <h2>{{userData.displayName}}</h2>
+	    <p>{{photoContent.time}}</p>
 	  </div>
 
-	  <div class="item item-image" ng-controller="ImagesController">
-	    <img ng-src="data:image/jpg;base64,{{photoContent}}"  width="10%" height="10%" />
+	  <div class="item item-image">
+	    <img ng-src="data:image/jpg;base64,{{photoContent.image}}"  width="10%" height="10%" />
 	  </div>
 
 	</div>
