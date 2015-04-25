@@ -247,7 +247,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ImagesController', function( $scope, $ionicHistory, $firebaseArray, $cordovaCamera, $state) {
-  $ionicHistory.clearHistory();
+  //$ionicHistory.clearHistory();
  
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
@@ -265,7 +265,6 @@ angular.module('starter.controllers', [])
 
     var syncArray = $firebaseArray(userReference.child("images"));
     $scope.images = syncArray;
-    //console.log($scope.images);
   }
   else {
     $state.go("login");
@@ -305,27 +304,62 @@ angular.module('starter.controllers', [])
     });
   }
 
-  $scope.goBack = function() {
-    $state.go("app.images");
-  }
-
-  $scope.viewPhoto = function(photoData) {
-    $state.go('app.photo', {'imageData' : photoData });
+  $scope.viewPhoto = function(photoData, index) {
+    $state.go('viewPhoto', {
+      'imageData' : photoData,
+      'imageIndex' : index
+       });
   }
 })
 
-.controller('PhotoController', function($scope, $stateParams) {
+.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray) {
   
+  $scope.currIndex = $stateParams.imageIndex;
   $scope.photoContent = $stateParams.imageData;
+  
+  var fbAuth = firebaseObject.getAuth();
+  
+  $scope.photosArr = [];
+  
+  if(fbAuth){
 
-  var userReference = firebaseObject.child("users/" + $stateParams.imageData.user);
+    var userReference = firebaseObject.child("users/" + $stateParams.imageData.user);
 
-  userReference.on("value", function(snapshot) {;
-        $scope.userData = snapshot.val();
-        //$scope.$apply();
-    }, function(error) {
-        console.log("Read failed: " + error);
-    });
+    userReference.on("value", function(snapshot) {;
+          $scope.userData = snapshot.val();
+      }, function(error) {
+          console.log("Read failed: " + error);
+      });
+
+    var syncArray = $firebaseArray(userReference.child("images"));
+    $scope.photosArr = syncArray;
+  } else {
+    $state.go("login");
+  }
+
+  $scope.swipedLeft = function() {
+    //doesn't go out of array bounds
+    if ($scope.currIndex < $scope.photosArr.length -1)
+      $scope.currIndex += 1;
+    else
+      $scope.currIndex = 0;
+
+    $scope.photoContent = $scope.photosArr[$scope.currIndex];
+  }
+
+  $scope.swipedRight = function() {
+    //doesn't go out of array bounds
+    if ($scope.currIndex > 0)
+      $scope.currIndex -= 1;
+    else
+      $scope.currIndex = $scope.photosArr.length - 1;
+
+    $scope.photoContent = $scope.photosArr[$scope.currIndex - 1];
+  }
+
+  $scope.close = function() {
+    $state.go("app.images");
+  }
 })
 
 .controller('PostController', function($scope, $firebaseArray, $state) {
@@ -363,9 +397,8 @@ $scope.uploadPost = function() {
        
       var userReference = firebaseObject.child("users/" + fbAuth.uid);
       userReference.on("value", function(snapshot) {
-          //console.log(snapshot.val());
           $scope.userData = snapshot.val();
-          $scope.$apply();
+          //$scope.$apply();
       }, function(error) {
           console.log("Read failed: " + error);
       });
@@ -416,8 +449,8 @@ $scope.uploadPost = function() {
           if (error) {
             alert("Error: " + error);
           } else {
-            alert("Changed display name to " + newName);
             $scope.modalDisplayName.hide();
+            alert("Changed display name to " + newName);
           }
         });
       } else {
@@ -434,11 +467,11 @@ $scope.uploadPost = function() {
           password : pw
         }, function(error) {
           if (error === null) {
-            alert("Email changed from " + oldEm + " to " + newEm);
+            $scope.modalEmail.hide();
             userReference.update({
               email : newEm
             });
-            $scope.modalEmail.hide();
+            alert("Email changed from " + oldEm + " to " + newEm);
           } else {
             alert(error);
           }
@@ -485,8 +518,8 @@ $scope.uploadPost = function() {
           profilePicture : imageData
         }, function(error) {
           if ( error === null ) {
-            alert("Profile picture changed!");
             $scope.modalProfilePicture.hide();
+            alert("Profile picture changed!");
           } else {
             alert(error);
           }
@@ -504,8 +537,8 @@ $scope.uploadPost = function() {
           newPassword : newPw
         }, function(error) {
           if (error === null){
-            alert("Password successfully changed!");
             $scope.modalPassword.hide();
+            alert("Password successfully changed!");
           } else {
             alert(error);
           }

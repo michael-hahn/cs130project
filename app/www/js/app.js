@@ -47,11 +47,28 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
     controller: "RegisterUserDetailsController",
   })
 
+  .state("viewPhoto", {
+    url: "/photo",
+    templateUrl: "templates/photo.html",
+    controller: 'PhotoController',
+    params: {'imageData' : null,
+             'imageIndex' : null
+    },
+    cache: false,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
   .state('app', {
     url: "/app",
     abstract: true,
     templateUrl: "templates/menu.html",
-    //controller: 'AppCtrl'
     resolve: {
     // controller will not be loaded until $requireAuth resolves
       "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
@@ -91,17 +108,6 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
         controller: 'ImagesController'
       }
     }
-  })
-
-  .state("app.photo", {
-    url: "/photo",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/photo.html",
-        controller: 'PhotoController'
-      }
-    },
-    params: {'imageData' : null }
   })
 
   .state("app.profile", {

@@ -1,19 +1,28 @@
-<ion-view view-title="Photo Content">
-  <ion-content>
+<ion-pane>
+	<ion-header-bar>
+		<h1 class="title">{{currIndex + 1}} / {{photosArr.length}}</h1>
 
-	<div class="list card" ng-app="starter">
+		<div class="buttons">
+			<button class="button button-assertive" ng-click="close()">Close</button>
+		</div>
+	</ion-header-bar>
 
-	  <div class="item item-avatar">
-	    <img src="data:image/jpg;base64,{{userData.profilePicture}}">
-	    <h2>{{userData.displayName}}</h2>
-	    <p>{{photoContent.time}}</p>
-	  </div>
+	<br />
+	<br />
 
-	  <div class="item item-image">
-	    <img ng-src="data:image/jpg;base64,{{photoContent.image}}"  width="10%" height="10%" />
-	  </div>
+	<div class="padding">
+		<div class="list card" on-swipe-left="swipedLeft()" on-swipe-right="swipedRight()">
 
+		  <div class="item item-avatar">
+		    <img src="data:image/jpg;base64,{{userData.profilePicture}}">
+		    <h2>{{userData.displayName}}</h2>
+		    <p>{{photoContent.time}}</p>
+		  </div>
+
+		  <div class="item item-image" >
+		    <img ng-src="data:image/jpg;base64,{{photoContent.image}}" style="width:350px;height:400px" />
+		  </div>
+
+		</div>
 	</div>
-
-  </ion-content>
-</ion-view>
+</ion-pane>
