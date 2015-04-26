@@ -11,7 +11,13 @@ angular.module('starter.controllers', [])
   $ionicModal.fromTemplateUrl('templates/register.html', {
       scope: $scope
   }).then(function (modal) {
-      $scope.modal = modal;
+      $scope.modalRegister = modal;
+  });
+
+  $ionicModal.fromTemplateUrl('templates/loginExtra/recoverPassword.html', {
+      scope: $scope
+  }).then(function (modal) {
+      $scope.modalRecoverPassword = modal;
   });
 
   $scope.register = function(em, pw, confirmPw) {
@@ -41,8 +47,7 @@ angular.module('starter.controllers', [])
           });
         }).then(function(authData) {
           $ionicLoading.hide();
-          //$scope.modal.hide();
-          $scope.modal.hide();
+          $scope.modalRegister.hide();
           $state.go("registerUserDetails");
         }).catch(function(error){
           alert("Error: " + em + " already taken.");
@@ -77,6 +82,31 @@ angular.module('starter.controllers', [])
       alert("Please fill out all details.");
     }
   }
+
+  $scope.recoverPassword = function(userEmail) {
+    if (userEmail) {
+
+      $ionicLoading.show({
+          template: 'Sending password reset email...'
+        });
+
+      firebaseObject.resetPassword({
+        email: userEmail
+      }, function(error) {
+        if (error === null) {
+          $ionicLoading.hide();
+          $scope.modalRecoverPassword.hide();
+          alert("Password reset email has been sent to " + userEmail + ".");
+        } else {
+          $ionicLoading.hide();
+          alert("Error sending reset password email :" + error);
+        }
+      })
+    } else {
+      alert("Please give your email.");
+    }
+  }
+
 }])
 
 .controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $ionicModal, $firebaseAuth, $state) {
