@@ -8,25 +8,60 @@
 		<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
 			<div class="col col-25" ng-if="$index < images.length">
 				<a href="" ng-click="viewPhoto(images[$index], $index)">
-					<img ng-src="data:image/jpg;base64,{{images[$index].image}}" width="100%" />
+					<div id="container">
+						<div id="image_container">
+							<img ng-src="data:image/jpg;base64,{{images[$index].image}}" width="100%" />
+						</div>
+						<div id="overlay_circle_container">
+							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" width="100%" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" width="100%" ng-if="userData.profilePicture === '' " />
+						</div>
+					</div>
 				</a>
 			</div>
 
 			<div class="col col-25" ng-if="$index + 1 < images.length">
 				<a href="" ng-click="viewPhoto(images[$index + 1], $index + 1)">
-					<img ng-src="data:image/jpg;base64,{{images[$index + 1].image}}" width="100%" />
+					<div id="container">
+						<div id="image_container">
+							<img ng-src="data:image/jpg;base64,{{images[$index + 1].image}}" width="100%" />
+						</div>
+						<div id="overlay_circle_container">
+							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" width="100%" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" width="100%" ng-if="userData.profilePicture === '' " />
+						</div>
+					</div>
+
 				</a>
 			</div>
 
 			<div class="col col-25" ng-if="$index + 2 < images.length">
 				<a href="" ng-click="viewPhoto(images[$index + 2], $index + 2)">
-					<img ng-src="data:image/jpg;base64,{{images[$index + 2].image}}" width="100%" />
+					<div id="container">
+						<div id="image_container">
+							<img ng-src="data:image/jpg;base64,{{images[$index + 2].image}}" width="100%" />
+						</div>
+						<div id="overlay_circle_container">
+							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" width="100%" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" width="100%" ng-if="userData.profilePicture === '' " />
+						</div>
+					</div>
+
 				</a>
 			</div>
 
 			<div class="col col-25" ng-if="$index + 3 < images.length">
 				<a href="" ng-click="viewPhoto(images[$index + 3], $index + 3)">
-					<img ng-src="data:image/jpg;base64,{{images[$index + 3].image}}" width="100%" />
+					<div id="container">
+						<div id="image_container">
+							<img ng-src="data:image/jpg;base64,{{images[$index + 3].image}}" width="100%" />
+						</div>
+						<div id="overlay_circle_container">
+							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" width="100%" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" width="100%" ng-if="userData.profilePicture === '' " />
+						</div>
+					</div>
+
 				</a>	
 			</div>
 		</div>
