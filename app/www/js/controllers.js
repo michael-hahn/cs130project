@@ -258,7 +258,6 @@ angular.module('starter.controllers', [])
     userReference.on("value", function(snapshot) {
           //console.log(snapshot.val());
           $scope.userData = snapshot.val();
-          //$scope.$apply();
       }, function(error) {
           console.log("Read failed: " + error);
       });
@@ -354,7 +353,7 @@ angular.module('starter.controllers', [])
     else
       $scope.currIndex = $scope.photosArr.length - 1;
 
-    $scope.photoContent = $scope.photosArr[$scope.currIndex - 1];
+    $scope.photoContent = $scope.photosArr[$scope.currIndex];
   }
 
   $scope.close = function() {
@@ -406,6 +405,7 @@ $scope.uploadPost = function() {
     else {
       $state.go("login");
     }
+    console.log($scope.userData);
 
     //Modal for Display Name
     $ionicModal.fromTemplateUrl('templates/profileSettings/changeDisplayName.html', {
@@ -509,9 +509,9 @@ $scope.uploadPost = function() {
 
       if (opt === 0) {
         var options = options1;
-      } else {
+      } else{
         var options = options2;
-      }
+      } 
 
       $cordovaCamera.getPicture(options).then(function(imageData) {
         userReference.update({
@@ -527,6 +527,19 @@ $scope.uploadPost = function() {
       });
 
       $scope.$apply();//updates the view
+    }
+
+    $scope.removeProfilePicture = function() {
+      userReference.update({
+          profilePicture : ''
+        }, function(error) {
+          if ( error === null ) {
+            $scope.modalProfilePicture.hide();
+            alert("Profile picture changed!");
+          } else {
+            alert(error);
+          }
+        })
     }
 
     $scope.changePassword = function(em, oldPw, newPw, confirmPw) {

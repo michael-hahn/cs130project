@@ -14,7 +14,8 @@
 		<div class="list card" on-swipe-left="swipedLeft()" on-swipe-right="swipedRight()">
 
 		  <div class="item item-avatar">
-		    <img src="data:image/jpg;base64,{{userData.profilePicture}}">
+		    <img src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
+		    <img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 		    <h2>{{userData.displayName}}</h2>
 		    <p>{{photoContent.time}}</p>
 		  </div>
