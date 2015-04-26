@@ -389,22 +389,27 @@ $scope.uploadPost = function() {
   }
 })
 
-.controller('ProfileController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera) {
+.controller('ProfileController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', '$timeout', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera, $timeout) {
     var fbAuth = firebaseObject.getAuth();
-
+    $scope.userData = null;
     if(fbAuth) {
        
       var userReference = firebaseObject.child("users/" + fbAuth.uid);
       userReference.on("value", function(snapshot) {
-          $scope.userData = snapshot.val();
-          //$scope.$apply();
+          //using timeout to schedule the changes to the scope in a future call stack. timeout period of 0ms makes it occur as soon as possible and $timeout will ensure code be called in single $apply block
+          $timeout(function() {
+            $scope.userData = snapshot.val();
+          }, 0);
       }, function(error) {
           console.log("Read failed: " + error);
       });
     }
     else {
       $state.go("login");
+    
+
     }
+     
     console.log($scope.userData);
 
     //Modal for Display Name
