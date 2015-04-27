@@ -1,4 +1,4 @@
-<ion-pane>
+<ion-content>
 	<ion-header-bar>
 		<h1 class="title">{{currIndex + 1}} / {{photosArr.length}}</h1>
 
@@ -11,19 +11,27 @@
 	<br />
 
 	<div class="padding">
-		<div class="list card" on-swipe-left="swipedLeft()" on-swipe-right="swipedRight()">
 
-		  <div class="item item-avatar">
-		    <img src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
-		    <img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
-		    <h2>{{userData.displayName}}</h2>
-		    <p>{{photoContent.time}}</p>
-		  </div>
+		<ion-slide-box ng-if="photosArr" on-slide-changed="photoChanged($index)" active-slide="activePhoto" show-pager="false">
 
-		  <div class="item item-image" >
-		    <img ng-src="data:image/jpg;base64,{{photoContent.image}}" style="width:350px;height:400px" />
-		  </div>
+			<ion-slide ng-repeat="photo in photosArr" >
+				<div class="item item-avatar">
+		    		<img src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
+			    	<img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+			    	<h2>{{userData.displayName}}</h2>
+			    	<p>{{photo.time}}</p>
+			  	</div>
 
-		</div>
+			 	<div class="item item-image" >
+		    		<img ng-src="data:image/jpg;base64,{{photo.image}}" style="width:350px;height:400px" />
+			  	</div>
+
+			</ion-slide>
+		</ion-slide-box>
+
 	</div>
-</ion-pane>
+
+	<div class="bar bar-footer">
+		<div class="title button-clear button-icon icon ion-arrow-swap"></div>
+	</div>
+</ion-content>

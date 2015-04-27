@@ -28,7 +28,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
         $state.go('login'); 
       }
     });
-    //$state.go('login')
+
   });
 }])
 
