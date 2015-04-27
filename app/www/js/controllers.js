@@ -109,12 +109,12 @@ angular.module('starter.controllers', [])
 
 }])
 
-.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $ionicModal, $firebaseAuth, $state) {
+.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $ionicModal, $firebaseAuth, $state, $timeout) {
     
     console.log("in details ctrl");
     $scope.profilePic = ""; 
 
-    $ionicModal.fromTemplateUrl('templates//registerDetails/registerChooseProfilePic.html', {
+    $ionicModal.fromTemplateUrl('templates/registerDetails/registerChooseProfilePic.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modalChooseProfilePic = modal;
@@ -166,7 +166,8 @@ angular.module('starter.controllers', [])
         $scope.profilePic = imageData;
       });
 
-      $scope.$apply();//updates the view
+      $timeout(function() {},0);
+      //$scope.$apply();//updates the view
     }
 
     $scope.submit = function(name) {
@@ -339,56 +340,51 @@ angular.module('starter.controllers', [])
       'imageIndex' : index
        });
   }
+
 })
 
-.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray) {
+.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray, $ionicSlideBoxDelegate, $timeout) {
   
+  var index = $stateParams.imageIndex;
+
   $scope.currIndex = $stateParams.imageIndex;
   $scope.photoContent = $stateParams.imageData;
-  
+
   var fbAuth = firebaseObject.getAuth();
   
+  $scope.activePhoto = $scope.currIndex;
   $scope.photosArr = [];
-  
+
   if(fbAuth){
 
     var userReference = firebaseObject.child("users/" + $stateParams.imageData.user);
 
     userReference.on("value", function(snapshot) {;
           $scope.userData = snapshot.val();
+
+          $timeout(function() {
+            $ionicSlideBoxDelegate.update();
+          }, 50);
+
       }, function(error) {
           console.log("Read failed: " + error);
       });
 
     var syncArray = $firebaseArray(userReference.child("images"));
     $scope.photosArr = syncArray;
+
   } else {
     $state.go("login");
   }
 
-  $scope.swipedLeft = function() {
-    //doesn't go out of array bounds
-    if ($scope.currIndex < $scope.photosArr.length -1)
-      $scope.currIndex += 1;
-    else
-      $scope.currIndex = 0;
-
-    $scope.photoContent = $scope.photosArr[$scope.currIndex];
-  }
-
-  $scope.swipedRight = function() {
-    //doesn't go out of array bounds
-    if ($scope.currIndex > 0)
-      $scope.currIndex -= 1;
-    else
-      $scope.currIndex = $scope.photosArr.length - 1;
-
-    $scope.photoContent = $scope.photosArr[$scope.currIndex];
+  $scope.photoChanged = function(index) {
+    $scope.currIndex = index;
   }
 
   $scope.close = function() {
     $state.go("app.images");
   }
+
 })
 
 .controller('PostController', function($scope, $firebaseArray, $state) {
