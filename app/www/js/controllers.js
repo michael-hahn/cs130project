@@ -452,13 +452,6 @@ $scope.uploadPost = function() {
         $scope.modalEmail = modal;
     });
 
-    //Modal for Profile Picture
-    $ionicModal.fromTemplateUrl('templates/profileSettings/changeProfilePicture.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modalProfilePicture = modal;
-    });
-
     //Modal for Password
     $ionicModal.fromTemplateUrl('templates/profileSettings/changePassword.html', {
         scope: $scope

@@ -24,6 +24,14 @@
 		    		<!-- Else display blank profile pic -->
 		    		<img style="width:250px; height:300px" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 	    		</a>
+	    		<div class="button-bar">
+		            <button class="button button-clear icon ion-camera" ng-click="changeProfilePicture(0)">
+		            </button>
+		            <button class="button button-clear icon ion-images" ng-click="changeProfilePicture(1)">     
+   		            </button>
+		            <button class="button button-clear icon ion-android-remove-circle" ng-click="removeProfilePicture()"> 
+		            </button>
+		        </div>
 			</div>
 
 
@@ -35,8 +43,6 @@
 		  	</a>
 
 		</div>
+		<button class="button button-full button-assertive" ng-click="logout()">Logout</button>
   	</ion-content>
-  	<div class="bar bar-footer">
-  		<button class="button button-full button-assertive" ng-click="logout()">Logout</button>
-  	</div>
 </ion-view>
