@@ -16,7 +16,7 @@
 			<div class="item item-image">
 			  	<br/>
 					<!-- Displays Profile Pic if not null --> 
-	    		<img style="width:250px; height:300px" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
+	    		<img style="width:250px; height:300px" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
 
 	    		<!-- Else display blank profile pic -->
 	    		<img style="width:250px; height:300px" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />

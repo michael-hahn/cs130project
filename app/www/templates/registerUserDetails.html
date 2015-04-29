@@ -13,7 +13,7 @@
 		    	Choose Profile Picture (Optional)
 		    	<br />
 		    	<img style="width:250px; height:300px" ng-src="./img/blank-profile.png" ng-if="profilePic === '' ">
-		    	<img style="width:250px; height:300px" ng-src="data:image/jpg;base64,{{profilePic}}" ng-if="profilePic !== '' ">
+		    	<img style="width:250px; height:300px" ng-src="{{profilePic}}" ng-if="profilePic !== '' ">
 		    </a>
 		  </div>
 	</div>

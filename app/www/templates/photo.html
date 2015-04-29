@@ -16,14 +16,14 @@
 
 			<ion-slide ng-repeat="photo in photosArr" >
 				<div class="item item-avatar">
-		    		<img src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
+		    		<img src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
 			    	<img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 			    	<h2>{{userData.displayName}}</h2>
 			    	<p>{{photo.time}}</p>
 			  	</div>
 
 			 	<div class="item item-image" >
-		    		<img ng-src="data:image/jpg;base64,{{photo.image}}" style="width:350px;height:400px" />
+		    		<img ng-src="{{photo.image}}" style="width:350px;height:400px" />
 			  	</div>
 
 			</ion-slide>

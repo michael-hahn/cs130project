@@ -10,10 +10,10 @@
 				<a href="" ng-click="viewPhoto(images[$index], $index)">
 					<div id="container">
 						<div id="image_container">
-							<img ng-src="data:image/jpg;base64,{{images[$index].image}}" width="100%" />
+							<img ng-src="{{images[$index].image}}" width="100%" />
 						</div>
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
 							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 						</div>
 					</div>
@@ -24,10 +24,10 @@
 				<a href="" ng-click="viewPhoto(images[$index + 1], $index + 1)">
 					<div id="container">
 						<div id="image_container">
-							<img ng-src="data:image/jpg;base64,{{images[$index + 1].image}}" width="100%" />
+							<img ng-src="{{images[$index + 1].image}}" width="100%" />
 						</div>
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
 							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 						</div>
 					</div>
@@ -39,10 +39,10 @@
 				<a href="" ng-click="viewPhoto(images[$index + 2], $index + 2)">
 					<div id="container">
 						<div id="image_container">
-							<img ng-src="data:image/jpg;base64,{{images[$index + 2].image}}" width="100%" />
+							<img ng-src="{{images[$index + 2].image}}" width="100%" />
 						</div>
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
 							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 						</div>
 					</div>
@@ -54,10 +54,10 @@
 				<a href="" ng-click="viewPhoto(images[$index + 3], $index + 3)">
 					<div id="container">
 						<div id="image_container">
-							<img ng-src="data:image/jpg;base64,{{images[$index + 3].image}}" width="100%" />
+							<img ng-src="{{images[$index + 3].image}}" width="100%" />
 						</div>
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="data:image/jpg;base64,{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
+							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
 							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
 						</div>
 					</div>

@@ -163,7 +163,7 @@ angular.module('starter.controllers', [])
       }
 
       $cordovaCamera.getPicture(options).then(function(imageData) {
-        $scope.profilePic = imageData;
+        $scope.profilePic = "data:image/jpeg;base64," +imageData;
       });
 
       $timeout(function() {},0);
@@ -323,7 +323,7 @@ angular.module('starter.controllers', [])
       var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
       
       syncArray.$add({
-        image: imageData,
+        image: "data:image/jpeg;base64," + imageData,
         user: fbAuth.uid,
         time: formattedTime
       }).then(function() {
@@ -539,7 +539,7 @@ $scope.uploadPost = function() {
 
       $cordovaCamera.getPicture(options).then(function(imageData) {
         userReference.update({
-          profilePicture : imageData
+          profilePicture : "data:image/jpeg;base64," +imageData
         }, function(error) {
           if ( error === null ) {
             $scope.modalProfilePicture.hide();
