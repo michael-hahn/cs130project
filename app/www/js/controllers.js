@@ -249,6 +249,15 @@ angular.module('starter.controllers', [])
     });
   }
 
+  // Get the name of the event with a given ID
+  function getEmailOfUserWithID(userID) {
+    return $q(function(resolve, reject) {
+      firebaseObject.child("users/" + userID).once("value", function(userData) {
+        resolve( userData.val()["email"] );
+      });
+    });
+  }
+
   $scope.createEvent = function(eventName, password, confirmPassword) {
     // First, refresh the list of events this user is hosting
     refreshMyEvents().then(function() {
@@ -256,11 +265,14 @@ angular.module('starter.controllers', [])
       eventNameIsAvailable(eventName).then(function() {
         // We're not hosting an event by that name yet, so we can add it
         if( password == confirmPassword ) {
-          var eventID = eventsReference.push({Host: fbAuth.uid, Name: eventName, Password: password, Active: 1}).key();
-          myEventsReference.child(eventID).set("host");
+          getEmailOfUserWithID(fbAuth.uid).then(function(email) {
+            var eventID = eventsReference.push({Host: email, Name: eventName, Password: password, Active: 1}).key();
+            myEventsReference.child(eventID).set("host");
 
-          alert("Event Created!");
-          $state.go("app.images");
+            alert("Event Created!");
+            $state.go("app.images");
+          });
+          
         }
         else {
           alert("The passwords do not match");
