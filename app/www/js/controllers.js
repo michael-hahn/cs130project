@@ -266,7 +266,13 @@ angular.module('starter.controllers', [])
         // We're not hosting an event by that name yet, so we can add it
         if( password == confirmPassword ) {
           getEmailOfUserWithID(fbAuth.uid).then(function(email) {
-            var eventID = eventsReference.push({Host: email, Name: eventName, Password: password, Active: 1}).key();
+            var timestamp = new Date().getTime();
+            var date = new Date(timestamp);
+            var hours = date.getHours();
+            var minutes = "0" + date.getMinutes();
+            var seconds = "0" + date.getSeconds();
+            var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
+            var eventID = eventsReference.push({Host: email, Name: eventName, Password: password, Timestamp: formattedTime, Active: 1}).key();
             myEventsReference.child(eventID).set("host");
 
             alert("Event Created!");
