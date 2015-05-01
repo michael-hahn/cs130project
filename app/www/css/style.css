@@ -21,19 +21,16 @@
 	width: 50%;
 	height: 35%;
 	border-radius: 50%;
-	background: orange;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: green;
 }
 
 #profile_pic {
 	border-radius: 50%;
 	width: 90%;
 	height: 90%;
-	margin: 0 auto;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-	display: block; 
-
 }
 
 
