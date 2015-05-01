@@ -78,7 +78,7 @@ angular.module('starter')
           userInfo.once('value', function(dataSnapshot) {
             if (dataSnapshot.child("Events/" + eventID).exists()) {
               reject();
-             // alert("You have joined this event already!");
+              alert("You have joined this event already!");
             }
             else {
               resolve();
