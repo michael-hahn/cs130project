@@ -36,7 +36,6 @@ angular.module('starter')
       quality: 75,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.CAMERA,
-      allowEdit: false,
       encodingTpe: Camera.EncodingType.JPEG,
       popoverOptions: CameraPopoverOptions,
       targetWidth: 500,
