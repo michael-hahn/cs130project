@@ -19,7 +19,7 @@
     `ionic platform add android`
  2. `ionic build ios` or `ionic build android`
  3. `ionic emulate ios` or `ionic emulate ios`
- 4. 
+  
  # Documentation
  ## Dependencies
   1. install [node](http://nodejs.org)
