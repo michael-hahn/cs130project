@@ -1,11 +1,21 @@
 'use strict';
+
+/**
+ * @ngdoc overview
+ * @name starter
+ * @description
+ * Main module of the application
+ *
+ */
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
+
+.value('firebaseObject', new Firebase("https://cs130project.firebaseio.com/"))
 
 .run(['$rootScope', '$ionicPlatform', '$state', function($rootScope, $ionicPlatform, $state) {
   $ionicPlatform.ready(function() {
@@ -90,7 +100,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
     }
   })
 
-    .state('app.joinEvent', {
+  .state('app.joinEvent', {
     url: "/joinEvent",
     views: {
       'menuContent': {
@@ -122,4 +132,5 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'starter.controller
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
-});
+})
+
