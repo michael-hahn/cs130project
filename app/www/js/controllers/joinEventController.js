@@ -7,7 +7,7 @@
  * Join event controller of the app.
  *
 **/
-angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
+angular.module('starter')
 
 .controller('joinEventController', function($scope, $firebaseArray, $q, $state, firebaseObject) {
   var fbAuth = firebaseObject.getAuth();
