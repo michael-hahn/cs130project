@@ -13,13 +13,13 @@ angular.module('starter')
   
   var fbAuth = $firebaseAuth(firebaseObject); 
 
-  $ionicModal.fromTemplateUrl('templates/register.html', {
+  $ionicModal.fromTemplateUrl('templates/registerHTML/register.html', {
       scope: $scope
   }).then(function (modal) {
       $scope.modalRegister = modal;
   });
 
-  $ionicModal.fromTemplateUrl('templates/loginExtra/recoverPassword.html', {
+  $ionicModal.fromTemplateUrl('templates/loginHTML/recoverPassword.html', {
       scope: $scope
   }).then(function (modal) {
       $scope.modalRecoverPassword = modal;

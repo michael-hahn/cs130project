@@ -14,7 +14,7 @@ angular.module('starter')
     console.log("in details ctrl");
     $scope.profilePic = ""; 
 
-    $ionicModal.fromTemplateUrl('templates/registerDetails/registerChooseProfilePic.html', {
+    $ionicModal.fromTemplateUrl('templates/registerHTML/registerChooseProfilePic.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modalChooseProfilePic = modal;

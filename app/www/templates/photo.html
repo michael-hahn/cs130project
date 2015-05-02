@@ -15,12 +15,14 @@
 		<ion-slide-box ng-if="photosArr" on-slide-changed="photoChanged($index)" active-slide="activePhoto" show-pager="false">
 
 			<ion-slide ng-repeat="photo in photosArr" >
-				<div class="item item-avatar">
-		    		<img src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
-			    	<img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
-			    	<h2>{{userData.displayName}}</h2>
-			    	<p>{{photo.time}}</p>
-			  	</div>
+				<a href="" ng-click="modalviewProfile.show()">
+					<div class="item item-avatar">
+			    		<img src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
+				    	<img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+				    	<h2>{{userData.displayName}}</h2>
+				    	<p>{{photo.time}}</p>
+				  	</div>
+			  	</a>
 
 			 	<div class="item item-image" >
 		    		<img ng-src="{{photo.image}}" style="width:350px;height:400px" />

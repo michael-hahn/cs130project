@@ -47,13 +47,13 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
 
   .state('login', {
     url: "/login",
-    templateUrl: "templates/login.html",
+    templateUrl: "templates/loginHTML/login.html",
     controller: "LoginController",
   })
 
   .state('registerUserDetails', {
     url: "/registerUserDetails",
-    templateUrl: "templates/registerUserDetails.html",
+    templateUrl: "templates/registerHTML/registerUserDetails.html",
     controller: "RegisterUserDetailsController",
   })
 
@@ -107,7 +107,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         templateUrl: "templates/joinEvent.html",
         controller: "joinEventController"
       }
-    }
+    },
+    cache: false
   })
 
   .state("app.images", {
@@ -120,12 +121,12 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     }
   })
 
-  .state("app.profile", {
-    url: "/profile",
+  .state("app.settings", {
+    url: "/settings",
     views: {
       'menuContent': {
-        templateUrl: "templates/profile.html",
-        controller: 'ProfileController'
+        templateUrl: "templates/settingsHTML/settings.html",
+        controller: 'SettingsController'
       }
     }
   })

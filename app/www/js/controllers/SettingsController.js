@@ -9,7 +9,7 @@
 **/
 angular.module('starter')
 
-.controller('ProfileController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', '$timeout', 'firebaseObject', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera, $timeout, firebaseObject) {
+.controller('SettingsController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', '$timeout', 'firebaseObject', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera, $timeout, firebaseObject) {
     var fbAuth = firebaseObject.getAuth();
     $scope.userData = null;
     if(fbAuth) {
@@ -33,21 +33,21 @@ angular.module('starter')
     console.log($scope.userData);
 
     //Modal for Display Name
-    $ionicModal.fromTemplateUrl('templates/profileSettings/changeDisplayName.html', {
+    $ionicModal.fromTemplateUrl('templates/settingsHTML/changeDisplayName.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modalDisplayName = modal;
     });
     
     //Modal for Email
-    $ionicModal.fromTemplateUrl('templates/profileSettings/changeEmail.html', {
+    $ionicModal.fromTemplateUrl('templates/settingsHTML/changeEmail.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modalEmail = modal;
     });
 
     //Modal for Password
-    $ionicModal.fromTemplateUrl('templates/profileSettings/changePassword.html', {
+    $ionicModal.fromTemplateUrl('templates/settingsHTML/changePassword.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modalPassword = modal;
