@@ -8,7 +8,7 @@
 **/
 angular.module('starter')
 
-.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray, $ionicSlideBoxDelegate, $timeout, firebaseObject) {
+.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal) {
   
   var index = $stateParams.imageIndex;
 
@@ -19,6 +19,13 @@ angular.module('starter')
   
   $scope.activePhoto = $scope.currIndex;
   $scope.photosArr = [];
+
+  //Modal for Display Name
+  $ionicModal.fromTemplateUrl('templates/viewProfile.html', {
+      scope: $scope
+  }).then(function (modal) {
+      $scope.modalviewProfile = modal;
+  });
 
   if(fbAuth){
 
@@ -36,6 +43,7 @@ angular.module('starter')
       });
 
     var syncArray = $firebaseArray(userReference.child("images"));
+
     $scope.photosArr = syncArray;
 
   } else {
@@ -48,6 +56,10 @@ angular.module('starter')
 
   $scope.close = function() {
     $state.go("app.images");
+  }
+
+  $scope.addUser = function() {
+    alert("TODO ADD");
   }
 
 })
