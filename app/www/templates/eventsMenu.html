@@ -1,15 +1,17 @@
 <ion-view view-title="Events Menu">
-  <ion-content>
+  
+  <div class="bar bar-subheader">
   	<div class="button-bar">
       <a class="button button-energized" href="#/createEvent">Create</a>
       <a class="button button-energized" href="#/joinEvent">Join</a>
     </div>
+  </div>
 
-    <hr>
-    <h1>My Events</h1>
+  <ion-content class="has-subheader" padding="true">
+    <h3>My Events</h3>
     <ion-list>
       <ion-item ng-repeat="event in eventInfo">
-        {{$index}}
+        #{{$index + 1}}
         <a href="" ng-click="goToEvent(event.key)">
           <p>Event name: {{event.Name}}</p>
           <p>Event host: {{event.Host}}</p>
