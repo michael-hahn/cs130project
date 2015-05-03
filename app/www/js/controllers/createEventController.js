@@ -9,7 +9,7 @@
 **/
 angular.module('starter')
 
-.controller('createEventController', function($scope, $firebaseArray, $q, $state, firebaseObject) {
+.controller('createEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory) {
   var fbAuth = firebaseObject.getAuth();
   var myEvents = [];
 
@@ -89,7 +89,7 @@ angular.module('starter')
             myEventsReference.child(eventID).set("host");
 
             alert("Event Created!");
-            $state.go("app.images");
+            $state.go("app.eventsPage", { 'eventUID' : eventID});
           });
           
         }
@@ -102,5 +102,9 @@ angular.module('starter')
         alert("You are already hosting an event by this name. Choose a different name.");
       });
     });
+  }
+
+  $scope.goBack = function() {
+    $ionicHistory.goBack();
   }
 })

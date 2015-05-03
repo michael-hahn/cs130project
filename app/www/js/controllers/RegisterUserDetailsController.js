@@ -77,7 +77,7 @@ angular.module('starter')
           profilePicture : $scope.profilePic
         }, function(error) {
           if(error === null) {
-            $state.go("app.images");
+            $state.go("app.eventsMenu");
           } else {
             alert(error);
           }

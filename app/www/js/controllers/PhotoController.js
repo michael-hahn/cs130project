@@ -8,7 +8,7 @@
 **/
 angular.module('starter')
 
-.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal) {
+.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal, $ionicHistory) {
   
   var index = $stateParams.imageIndex;
 
@@ -29,6 +29,8 @@ angular.module('starter')
 
   if(fbAuth){
 
+    var eventReference = firebaseObject.child("Events/" + $stateParams.eventUID);
+
     var userReference = firebaseObject.child("users/" + $stateParams.imageData.user);
 
     userReference.on("value", function(snapshot) {;
@@ -42,7 +44,7 @@ angular.module('starter')
           console.log("Read failed: " + error);
       });
 
-    var syncArray = $firebaseArray(userReference.child("images"));
+    var syncArray = $firebaseArray(eventReference.child("images"));
 
     $scope.photosArr = syncArray;
 
@@ -55,7 +57,8 @@ angular.module('starter')
   }
 
   $scope.close = function() {
-    $state.go("app.images");
+    //$state.go("app.eventsPage");
+    $ionicHistory.goBack();
   }
 
   $scope.addUser = function() {

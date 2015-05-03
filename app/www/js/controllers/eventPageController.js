@@ -8,14 +8,18 @@
 **/
 angular.module('starter')
 
-.controller('ImagesController', function( $scope, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject) {
-  //$ionicHistory.clearHistory();
- 
+.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout) {
+  
+  $scope.eventID = $stateParams.eventUID;
+  $timeout(function() {}, 0);
+  //alert($scope.eventID);
+
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
   if(fbAuth) {
      
     var userReference = firebaseObject.child("users/" + fbAuth.uid);
+    var eventReference = firebaseObject.child("Events/" + $scope.eventID);
 
     userReference.on("value", function(snapshot) {
           //console.log(snapshot.val());
@@ -24,7 +28,7 @@ angular.module('starter')
           console.log("Read failed: " + error);
       });
 
-    var syncArray = $firebaseArray(userReference.child("images"));
+    var syncArray = $firebaseArray(eventReference.child("images"));
     $scope.images = syncArray;
   }
   else {
@@ -67,8 +71,12 @@ angular.module('starter')
   $scope.viewPhoto = function(photoData, index) {
     $state.go('viewPhoto', {
       'imageData' : photoData,
-      'imageIndex' : index
-       });
+      'imageIndex' : index,
+      'eventUID' :  $scope.eventID });
+  }
+
+  $scope.goBack = function() {
+    $state.go("app.eventsMenu");
   }
 
 })

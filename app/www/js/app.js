@@ -57,12 +57,43 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     controller: "RegisterUserDetailsController",
   })
 
+  .state('createEvent', {
+    url: "/createEvent",
+    templateUrl: "templates/createEvent.html",
+    controller: "createEventController",
+    cache: false,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
+  .state('joinEvent', {
+    url: "/joinEvent",
+    templateUrl: "templates/joinEvent.html",
+    controller: "joinEventController",
+    cache: false,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
   .state("viewPhoto", {
     url: "/photo",
     templateUrl: "templates/photo.html",
     controller: 'PhotoController',
     params: {'imageData' : null,
-             'imageIndex' : null
+             'imageIndex' : null,
+             'eventUID': null
     },
     cache: false,
     resolve: {
@@ -89,47 +120,15 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     }
   })
 
-  .state('app.createEvent', {
-    url: "/createEvent",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/createEvent.html",
-        controller: "createEventController"
-      },
-      cache: false
-    }
-  })
-
-  .state('app.joinEvent', {
-    url: "/joinEvent",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/joinEvent.html",
-        controller: "joinEventController"
-      }
-    },
-    cache: false
-  })
-
-  .state('app.myEvent', {
-    url: "/myEvent",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/myEvent.html",
-        controller: "myEventController"
-      }
-    },
-    cache: false
-  })
-
-  .state("app.images", {
+  .state("app.eventsPage", {
     url: "/images",
     views: {
       'menuContent': {
-        templateUrl: "templates/images.html",
-        controller: 'ImagesController'
+        templateUrl: "templates/eventPage.html",
+        controller: 'eventPageController'
       }
-    }
+    },
+    params: {'eventUID' : null }
   })
 
   .state("app.settings", {
@@ -138,6 +137,16 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
       'menuContent': {
         templateUrl: "templates/settingsHTML/settings.html",
         controller: 'SettingsController'
+      }
+    }
+  })
+
+  .state("app.eventsMenu", {
+    url: "/eventsMenu",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/eventsMenu.html",
+        controller: 'eventsMenuController'
       }
     }
   })

@@ -9,7 +9,7 @@
 **/
 angular.module('starter')
 
-.controller('joinEventController', function($scope, $firebaseArray, $q, $state, firebaseObject) {
+.controller('joinEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory) {
   var fbAuth = firebaseObject.getAuth();
 
 
@@ -177,7 +177,7 @@ angular.module('starter')
 
                   myEventsReference.child(targetEventID).set("guest");
                   alert("Event joined!");
-                  $state.go("app.images");
+                  $state.go("app.eventsPage", { 'eventUID' : targetEventID });
               }
               else {
                 alert("Wrong Passowrd");
@@ -189,7 +189,8 @@ angular.module('starter')
       });
   }
 
-
-
+  $scope.goBack = function() {
+    $ionicHistory.goBack();
+  }
 
 })

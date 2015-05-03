@@ -1,27 +1,33 @@
-<ion-view view-title="Join Event">
-  <ion-content>
-  	<div class="padding-left padding-right">
-    	<h1>Event Name To Join</h1>
-    	<label class="item item-input">
-        <input ng-model="eventName" type="text" placeholder="Event Name" />
-      </label>
+<ion-header-bar>
+  <h1 class="title">Join Event</h1>
 
-      	<h1>Event Creator Name</h1>
-    	<label class="item item-input">
-      	<input ng-model="creatorName" type="text" placeholder="Creator Name" />
-    	</label>
+  <div class="buttons">
+    <button class="button button-assertive" ng-click="goBack()">Back</button>
+  </div>
+</ion-header-bar>
+<ion-content>
+	<div class="padding-left padding-right">
+  	<h1>Event Name To Join</h1>
+  	<label class="item item-input">
+      <input ng-model="eventName" type="text" placeholder="Event Name" />
+    </label>
 
-    	<h1>Password</h1>
-    	<label class="item item-input">
-      	<input ng-model="password" type="password" placeholder="Password" />
-    	</label>
+    	<h1>Event Creator Name</h1>
+  	<label class="item item-input">
+    	<input ng-model="creatorName" type="text" placeholder="Creator Name" />
+  	</label>
 
-      <br></br>
+  	<h1>Password</h1>
+  	<label class="item item-input">
+    	<input ng-model="password" type="password" placeholder="Password" />
+  	</label>
 
-    	<div class="button-bar">
-        <a class="button" ng-click="joinEvent(eventName, creatorName, password)">Join Event</a>
-      </div>
-	  </div>
-  </ion-content>
-</ion-view>
+    <br></br>
+
+  	<div class="button-bar">
+      <a class="button" ng-click="joinEvent(eventName, creatorName, password)">Join Event</a>
+    </div>
+  </div>
+</ion-content>
+
  
