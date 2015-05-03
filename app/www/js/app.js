@@ -111,6 +111,17 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     cache: false
   })
 
+  .state('app.myEvent', {
+    url: "/myEvent",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/myEvent.html",
+        controller: "myEventController"
+      }
+    },
+    cache: false
+  })
+
   .state("app.images", {
     url: "/images",
     views: {
