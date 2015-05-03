@@ -1,0 +1,21 @@
+<ion-view view-title="Events Menu">
+  <ion-content>
+  	<div class="button-bar">
+      <a class="button button-energized" href="#/createEvent">Create</a>
+      <a class="button button-energized" href="#/joinEvent">Join</a>
+    </div>
+
+    <hr>
+    <h1>My Events</h1>
+    <ion-list>
+      <ion-item ng-repeat="event in eventInfo">
+        {{$index}}
+        <a href="" ng-click="goToEvent(event.key)">
+          <p>Event name: {{event.Name}}</p>
+          <p>Event host: {{event.Host}}</p>
+          <p ng-if="event.Active === 1">Active</p>
+        </a>
+      </ion-item> 
+    </div>
+
+</ion-view>

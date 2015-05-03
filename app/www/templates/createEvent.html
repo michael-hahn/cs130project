@@ -1,26 +1,31 @@
-<ion-view view-title="Create Event">
-  <ion-content>
-  	<div class="padding-left padding-right">
-    	<h1>Event Name</h1>
-    	<label class="item item-input">
-        <input ng-model="eventName" type="text" placeholder="Event Name" />
-      </label>
+<ion-header-bar>
+  <h1 class="title">Create Event</h1>
 
-    	<h1>Password</h1>
-    	<label class="item item-input">
-      	<input ng-model="password" type="password" placeholder="Password" />
-    	</label>
+  <div class="buttons">
+    <button class="button button-assertive" ng-click="goBack()">Back</button>
+  </div>
+</ion-header-bar>
+<ion-content>
+  <div class="padding-left padding-right">
+  	<h1>Event Name</h1>
+  	<label class="item item-input">
+      <input ng-model="eventName" type="text" placeholder="Event Name" />
+    </label>
 
-    	<h1>Confirm Password</h1>
-    	<label class="item item-input">
-      	<input ng-model="confirmPassword" type="password" placeholder="Confirm Password" />
-    	</label>
+  	<h1>Password</h1>
+  	<label class="item item-input">
+    	<input ng-model="password" type="password" placeholder="Password" />
+  	</label>
 
-      <br></br>
+  	<h1>Confirm Password</h1>
+  	<label class="item item-input">
+    	<input ng-model="confirmPassword" type="password" placeholder="Confirm Password" />
+  	</label>
 
-    	<div class="button-bar">
-        <a class="button" ng-click="createEvent(eventName, password, confirmPassword)">Create Event</a>
-      </div>
-	  </div>
-  </ion-content>
-</ion-view>
+    <br></br>
+
+  	<div class="button-bar">
+      <a class="button" ng-click="createEvent(eventName, password, confirmPassword)">Create Event</a>
+    </div>
+  </div>
+</ion-content>

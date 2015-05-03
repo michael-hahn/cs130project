@@ -77,7 +77,7 @@ angular.module('starter')
         password: password
       }).then(function(authData) {
         $ionicLoading.hide();
-        $state.go("app.images");
+        $state.go("app.eventsMenu");
       }).catch(function(error) {
         alert("email or password is invalid"); 
         console.error("ERROR LOGIN: " + error);
