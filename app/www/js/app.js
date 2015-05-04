@@ -93,9 +93,10 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     controller: 'PhotoController',
     params: {'imageData' : null,
              'imageIndex' : null,
-             'eventUID': null
+             'eventUID': null,
+             'imagesArr': null
     },
-    cache: false,
+    cache: true,
     resolve: {
     // controller will not be loaded until $requireAuth resolves
       "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {

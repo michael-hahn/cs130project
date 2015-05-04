@@ -26,15 +26,13 @@ angular.module('starter')
       myEventKeys = Object.keys(myEvents);
       var eventList = [];
       for (var i in myEventKeys){
-        //console.log("key: " + myEventKeys[i]);
-        eventReference.orderByKey().equalTo(myEventKeys[i]).on("value",function(snapshot) {
+        //should only be called once or else keeps pushing to list when picture is taken
+        eventReference.orderByKey().equalTo(myEventKeys[i]).once("value",function(snapshot) {
           var theEvent = snapshot.val();
           var eventID = Object.keys(theEvent)[0];
-          for (var j in theEvent){
-            theEvent[eventID].key = eventID; //added key to lead to that event
-            eventList.push(theEvent[eventID]);
-            $timeout(function(){},0);
-          }
+          theEvent[eventID].key = eventID; //added key to lead to that event
+          eventList.push(theEvent[eventID]);
+          $timeout(function(){},0);
         }, function (error) {
           console.log("Read faild:" + error);
         });

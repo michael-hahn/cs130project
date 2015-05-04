@@ -1,27 +1,25 @@
 <ion-modal-view>
-
 	<ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">{{userData.displayName}}'s Profile</h1>
+        <h1 class="title">{{photoContent.displayName}}'s Profile</h1>
         <button class="button button-clear button-primary" ng-click="modalviewProfile.hide()">Cancel</button>
     </ion-header-bar>
-  	<ion-content>	
+  	<ion-content class="has-header">	
     	<div class="list card">
     		<h1 style="text-align:center">
-			  	{{userData.displayName}}
+			  	{{photoContent.displayName}}
 			</h1>
 
 			<div class="item item-image">
-			  	<br/>
 					<!-- Displays Profile Pic if not null --> 
-	    		<img style="width:250px; height:300px" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
+	    		<img style="width:250px; height:300px" ng-src="{{photoContent.profilePicture}}" ng-if="photoContent.profilePicture !== '' " />
 
 	    		<!-- Else display blank profile pic -->
-	    		<img style="width:250px; height:300px" ng-src="../../img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+	    		<img style="width:250px; height:300px" ng-src="../../img/blank-profile.png" ng-if="photoContent.profilePicture === '' " />
 
 	    		<br/ >
 
 	    		<p>
-	    			<p class="subdued">{{photosArr.length}} Photos Taken</p>
+	    			<p class="subdued">x Photos Taken</p>
 	    		</p>
 			</div>
 		  	

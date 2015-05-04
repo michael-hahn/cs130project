@@ -8,7 +8,7 @@
 **/
 angular.module('starter')
 
-.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout) {
+.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
   
   $scope.eventID = $stateParams.eventUID;
   $timeout(function() {}, 0);
@@ -18,18 +18,32 @@ angular.module('starter')
   $scope.images = [];
   if(fbAuth) {
      
-    var userReference = firebaseObject.child("users/" + fbAuth.uid);
+    var usersReference = firebaseObject.child("users");
     var eventReference = firebaseObject.child("Events/" + $scope.eventID);
-
-    userReference.on("value", function(snapshot) {
-          //console.log(snapshot.val());
-          $scope.userData = snapshot.val();
-      }, function(error) {
-          console.log("Read failed: " + error);
-      });
 
     var syncArray = $firebaseArray(eventReference.child("images"));
     $scope.images = syncArray;
+    
+    //updates pictures while in event page
+    syncArray.$watch(function(image) {
+      eventReference.child("images/" + image.key).on("value", function(snapshot) {
+        var userID = snapshot.val()["user"];
+        usersReference.child(userID).once("value", 
+          function(snapshot) {
+            var userData = snapshot.val();
+            //add user data to image info
+            var index = $scope.images.$indexFor(image.key);
+            $scope.images[index].displayName = userData.displayName;
+            $scope.images[index].profilePicture = userData.profilePicture;
+            //update firebase array with displayname and profilepic
+            syncArray.$save(index);
+          }, function(error) {
+            console.log("Error:" + error);
+        });
+      }, function(error) {
+        console.log("Error:" + error);
+      });
+    });
   }
   else {
     $state.go("login");
@@ -72,7 +86,8 @@ angular.module('starter')
     $state.go('viewPhoto', {
       'imageData' : photoData,
       'imageIndex' : index,
-      'eventUID' :  $scope.eventID });
+      'eventUID' :  $scope.eventID,
+      'imagesArr' : $scope.images });
   }
 
   $scope.goBack = function() {

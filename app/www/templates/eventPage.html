@@ -17,8 +17,8 @@
 					<div id="container">
 						<img id="image_container" ng-src="{{images[$index].image}}" />
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
-							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+							<img id="profile_pic" ng-src="{{images[$index].profilePicture}}" ng-if="images[$index].profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="images[$index].profilePicture === '' " />
 						</div>
 					</div>
 				</a>
@@ -29,8 +29,8 @@
 					<div id="container">
 						<img id="image_container" ng-src="{{images[$index + 1].image}}" />
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
-							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+							<img id="profile_pic" ng-src="{{images[$index + 1].profilePicture}}" ng-if="images[$index + 1].profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="images[$index + 1].profilePicture === '' " />
 						</div>
 					</div>
 				</a>
@@ -41,8 +41,8 @@
 					<div id="container">
 						<img id="image_container" ng-src="{{images[$index + 2].image}}" />
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
-							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+							<img id="profile_pic" ng-src="{{images[$index + 2].profilePicture}}" ng-if="images[$index + 2].profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="images[$index + 2].profilePicture === '' " />
 						</div>
 					</div>
 				</a>
@@ -53,8 +53,8 @@
 					<div id="container">
 						<img id="image_container" ng-src="{{images[$index + 3].image}}" />
 						<div id="overlay_circle_container">
-							<img id="profile_pic" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
-							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
+							<img id="profile_pic" ng-src="{{images[$index + 3].profilePicture}}" ng-if="images[$index + 3].profilePicture !== '' " />
+							<img id="profile_pic" ng-src="./img/blank-profile.png" ng-if="images[$index + 3].profilePicture === '' " />
 						</div>
 					</div>
 				</a>	

@@ -1,25 +1,23 @@
-<ion-content>
-	<ion-header-bar>
-		<h1 class="title">{{currIndex + 1}} / {{photosArr.length}}</h1>
+<ion-header-bar>
+	<h1 class="title">{{currIndex + 1}} / {{photosArr.length}}</h1>
 
-		<div class="buttons">
-			<button class="button button-assertive" ng-click="close()">Close</button>
-		</div>
-	</ion-header-bar>
+	<div class="buttons">
+		<button class="button button-assertive" ng-click="close()">Close</button>
+	</div>
+</ion-header-bar>
 
-	<br />
-	<br />
-
+<ion-content class="has-header">
 	<div class="padding">
 
 		<ion-slide-box ng-if="photosArr" on-slide-changed="photoChanged($index)" active-slide="activePhoto" show-pager="false">
 
-			<ion-slide ng-repeat="photo in photosArr" >
+			<ion-slide ng-repeat="photo in photosArr">
 				<a href="" ng-click="modalviewProfile.show()">
 					<div class="item item-avatar">
-			    		<img src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' ">
-				    	<img ng-src="./img/blank-profile.png" ng-if="userData.profilePicture === '' " />
-				    	<h2>{{userData.displayName}}</h2>
+		    			<img src="{{photo.profilePicture}}" ng-if="photo.profilePicture !== '' ">
+				    	<img ng-src="./img/blank-profile.png" ng-if="photo.profilePicture === '' "/>
+				    	
+				    	<h2>{{photo.displayName}}</h2>
 				    	<p>{{photo.time}}</p>
 				  	</div>
 			  	</a>
@@ -27,8 +25,8 @@
 			 	<div class="item item-image" >
 		    		<img ng-src="{{photo.image}}" style="width:350px;height:400px" />
 			  	</div>
-
 			</ion-slide>
+			
 		</ion-slide-box>
 
 	</div>
