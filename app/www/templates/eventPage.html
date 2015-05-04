@@ -10,7 +10,7 @@
 
 	</ion-nav-buttons>
 
-	<ion-content>
+	<ion-content has-bouncing="true">
 		<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
 			<div class="col col-25" ng-if="$index < images.length">
 				<a href="" ng-click="viewPhoto(images[$index], $index)">

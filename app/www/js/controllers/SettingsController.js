@@ -53,6 +53,13 @@ angular.module('starter')
         $scope.modalPassword = modal;
     });
 
+    //Modal for Password
+    $ionicModal.fromTemplateUrl('templates/settingsHTML/removeConfirm.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalremoveConfirm = modal;
+    });
+
     $scope.logout = function() {
       firebaseObject.unauth();
       alert("logged out!");
@@ -158,6 +165,7 @@ angular.module('starter')
             alert(error);
           }
         })
+      $scope.modalremoveConfirm.hide();
     }
 
     $scope.changePassword = function(em, oldPw, newPw, confirmPw) {
