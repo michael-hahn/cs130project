@@ -8,7 +8,7 @@
 **/
 angular.module('starter')
 
-.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
+.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout) {
   
   $scope.eventID = $stateParams.eventUID;
   $timeout(function() {}, 0);
@@ -23,7 +23,7 @@ angular.module('starter')
 
     var syncArray = $firebaseArray(eventReference.child("images"));
     $scope.images = syncArray;
-    
+
     //updates pictures while in event page
     syncArray.$watch(function(image) {
       eventReference.child("images/" + image.key).on("value", function(snapshot) {
