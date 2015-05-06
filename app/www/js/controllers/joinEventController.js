@@ -21,6 +21,7 @@ angular.module('starter')
       $state.go("login");
     }
 
+  //resolve if the event eventName exists
   function eventExist(eventName) {
     return $q(function(resolve, reject){
       var eventReference = firebaseObject.child('Events');
@@ -37,6 +38,7 @@ angular.module('starter')
     });
   }
 
+  //resolve if the current user has any events
   function userHasEvents() {
     return $q(function(resolve, reject) {
       var userInfo = firebaseObject.child("users/" + fbAuth.uid);
@@ -53,28 +55,15 @@ angular.module('starter')
     });
   }
 
+  //resolve if the even identified by the event ID has not been joined by the user
   function eventNotJoined(eventID) {
     return $q(function(resolve, reject){
-    //   var userEvents = firebaseObject.child("users/" + fbAuth.uid + "/Events");
-    //   userEvents.equalTo(eventName).on("value", function(oneEvent){
-    //     var eventinfo = oneEvent.val();
-    //     if(oneEvent.val() != null) {
-    //       reject();
-    //       alert("You have joined this event already!");
-    //     }
-    //     else {
-    //       resolve();
-    //       alert("You can join this event!");
-    //     }
-    //   });
-    // });
         var userInfo = firebaseObject.child("users/" + fbAuth.uid);
         if (!userHasEvents()) {
           resolve();
          // alert("You can join this event!");
         }
         else {
-          //var eventID = getEventID(eventName, userEmail);
           userInfo.once('value', function(dataSnapshot) {
             if (dataSnapshot.child("Events/" + eventID).exists()) {
               reject();
@@ -98,50 +87,9 @@ angular.module('starter')
     });
   }
 
-  function validEventHost(userEmail) {
-    return $q(function(resolve, reject){
-      var userReference = firebaseObject.child('users');
-      userReference.orderByChild("email").equalTo(userEmail).on("value", function(oneHost){
-          if (oneHost.val() == getEmailOfUserWithID(fbAuth.uid)) {
-            reject();
-            alert("You cannot join your own event!");
-          }
-          else if (oneHost.val() != null) {
-            resolve();
-            alert("Host Email is Valid");
-          }
-          else {
-            alert("NO USER MATCHED");
-            reject();
-          } 
-        }); 
-    });
-  }
-
   var targetEvent = null;
   var targetEventID = null;
-
-  // function getEventID(eventName, userEmail) {
-  //   var eventReference = firebaseObject.child('Events');
-  //   return $q(function(resolve, reject) {
-  //     eventReference.once('value', function(allEvents){
-  //       allEvents.forEach(function(singleEvent){
-  //         var singleEventName = singleEvent.child('Name').val();
-  //         var singleEventHost = singleEvent.child('Host').val();
-  //         if(singleEventName == eventName && singleEventHost == userEmail){
-  //           targetEvent = singleEvent.val();
-  //           resolve(singleEvent.key());
-  //           return true;
-  //         }
-  //       });
-  //         if (targetEvent == null) {
-  //         alert("NO EVENT FOUND");
-  //         reject();
-  //         }
-  //     });
-  //   });
-  // }
-
+  //If the given event name and host email address are vaild, return the event's password for checking
   function getEventPassword(eventName, userEmail) {
     targetEvent = null;
     var eventReference = firebaseObject.child('Events');
@@ -165,12 +113,11 @@ angular.module('starter')
     });
   }
 
-
+  //called when join event button is pushed. To test whether the event given event name and host email address can be
+  //joined by checking whether the user gives correct password. If the event can be joined, alert the user and 
+  //direct the user to the event image page. Otehrwise alert the user and let him try again
   $scope.joinEvent = function(eventName, userEmail, password) {
       eventExist(eventName).then(function() {
-        //validEventHost(userEmail).then(function(){
-          // eventNotJoined(eventName, userEmail).then(function(){
-          //   getEventPassword(eventName, userEmail).then(function(eventPassword) {
             getEventPassword(eventName, userEmail).then(function(eventPassword) {
                 eventNotJoined(targetEventID).then(function(){
                 if (password == eventPassword) {
