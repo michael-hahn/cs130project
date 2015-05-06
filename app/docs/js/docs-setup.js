@@ -10,7 +10,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "starter",
       "shortDescription": "Main module of the application",
-      "keywords": "api application main module overview starter"
+      "keywords": "$stateprovider angular api application array attribute common commonalities controller correspond create creating describes example factor global html main module modules navigation nested overview parameter place properties registering requires retrieving set starter terms things ui"
     },
     {
       "section": "api",
@@ -20,6 +20,15 @@ NG_DOCS={
       "moduleName": "starter",
       "shortDescription": "Create event controller of the app.",
       "keywords": "api app controller create event function starter"
+    },
+    {
+      "section": "api",
+      "id": "starter.controller:eventsPageController",
+      "shortName": "eventsPageController",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "events page controller of the app.",
+      "keywords": "api app controller events function starter"
     },
     {
       "section": "api",
