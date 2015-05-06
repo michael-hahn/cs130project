@@ -12,14 +12,16 @@
 
 	<div class="bar bar-subheader" ng-if="isHost()">
 		<div class="button-bar">
-	        <button ng-click="endEvent()" class="button button-assertive">
+	        <button ng-click="endEvent()" class="button button-assertive" ng-if="eventActive == 1">
 	            End Event
+	        </button>
+	        <button ng-click="reactivateEvent()" class="button button-balanced" ng-if="eventActive == 0">
+	            Reactivate Event
 	        </button>
 	    </div>
     </div>
 
-
-	<ion-content has-bouncing="true">
+	<ion-content ng-class="{'has-subheader': isHost()}" has-bouncing="true">
 		<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
 			<div class="col col-25" ng-if="$index < images.length">
 				<a href="" ng-click="viewPhoto(images[$index], $index)">

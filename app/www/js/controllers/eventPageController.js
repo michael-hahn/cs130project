@@ -113,8 +113,15 @@ angular.module('starter')
   }
 
   $scope.endEvent = function() {
+    $scope.eventActive = 0;
     eventReference.child("Active").set(0);
     alert("You have ended this event.");
+  }
+
+  $scope.reactivateEvent = function() {
+    $scope.eventActive = 1;
+    eventReference.child("Active").set(1);
+    alert("You have reactivated this event.");
   }
 
 })
