@@ -5,14 +5,19 @@
  * @name starter
  * @description
  * Main module of the application
+ * angular.module is a global place for creating, registering and retrieving Angular modules
  *
+ * 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+ *
+ * the 2nd parameter is an array of 'requires'
+ * 
+ * Uses $stateProvider to create states that correspond to a "place" in the application in terms of the overall UI and navigation.
+ *    - A state describes what the UI looks like and does at that place (via controller/template/view properties)
+ *    - States often have things in common, and can use nested states to factor out commonalities
+
  */
 
 // Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
 angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
 
 .value('firebaseObject', new Firebase("https://cs130project.firebaseio.com/"))
