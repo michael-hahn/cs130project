@@ -9,7 +9,7 @@
 **/
 angular.module('starter')
 
-.controller('createEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory) {
+.controller('createEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory, $ionicLoading) {
   var fbAuth = firebaseObject.getAuth();
   var myEvents = [];
 
@@ -78,6 +78,10 @@ angular.module('starter')
   }
 
   $scope.createEvent = function(eventName, password, confirmPassword) {
+    $ionicLoading.show({
+      template: 'Creating event...'
+    });
+
     // First, refresh the list of events this user is hosting
     refreshMyEvents().then(function() {
       // Then, check if the event name is available
@@ -88,18 +92,21 @@ angular.module('starter')
             var eventID = eventsReference.push({Host: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1}).key();
             myEventsReference.child(eventID).set("host");
 
+            $ionicLoading.hide();
             alert("Event Created!");
             $state.go("app.eventsPage", { 'eventUID' : eventID});
           });
           
         }
         else {
+          $ionicLoading.hide();
           alert("The passwords do not match");
         }
       },
       function() {
         // We're already hosting an event by that name, so we can't add it.
-        alert("You are already hosting an event by this name. Choose a different name.");
+        $ionicLoading.hide();
+        alert("You are already hosting an event by this name");
       });
     });
   }
