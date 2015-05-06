@@ -12,7 +12,7 @@
     <ion-list>
       <ion-item ng-repeat="event in eventInfo">
         #{{$index + 1}}
-        <a href="" ng-click="goToEvent(event.key)">
+        <a href="" ng-click="goToEvent(event)">
           <p>Event name: {{event.Name}}</p>
           <p>Event host: {{event.Host}}</p>
           <p ng-if="event.Active === 1">Active</p>

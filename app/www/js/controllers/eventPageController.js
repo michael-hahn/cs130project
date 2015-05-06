@@ -8,18 +8,26 @@
 **/
 angular.module('starter')
 
-.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout) {
+.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
   
   $scope.eventID = $stateParams.eventUID;
+  $scope.eventHost = $stateParams.eventHost;
+  $scope.eventActive = $stateParams.eventActive;
+  $scope.userEmail = $stateParams.userEmail;
+
   $timeout(function() {}, 0);
-  //alert($scope.eventID);
 
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
   if(fbAuth) {
-     
     var usersReference = firebaseObject.child("users");
     var eventReference = firebaseObject.child("Events/" + $scope.eventID);
+
+    if( $scope.userEmail == null ) {
+      usersReference.child(fbAuth.uid).once("value", function(userInfo) {
+        $scope.userEmail = userInfo.val()["email"];
+      })
+    }
 
     var syncArray = $firebaseArray(eventReference.child("images"));
     $scope.images = syncArray;
@@ -87,11 +95,26 @@ angular.module('starter')
       'imageData' : photoData,
       'imageIndex' : index,
       'eventUID' :  $scope.eventID,
-      'imagesArr' : $scope.images });
+      'imagesArr' : $scope.images,
+      'userEmail' : $scope.userEmail });
   }
 
   $scope.goBack = function() {
-    $state.go("app.eventsMenu");
+    $state.go("app.eventsMenu", {userEmail : $scope.userEmail});
+  }
+
+  $scope.isHost = function() {
+    if( $scope.userEmail == null ) {
+      return false;
+    }
+    else {
+      return ($scope.userEmail == $scope.eventHost);
+    }
+  }
+
+  $scope.endEvent = function() {
+    eventReference.child("Active").set(0);
+    alert("You have ended this event.");
   }
 
 })

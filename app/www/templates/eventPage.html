@@ -10,6 +10,15 @@
 
 	</ion-nav-buttons>
 
+	<div class="bar bar-subheader" ng-if="isHost()">
+		<div class="button-bar">
+	        <button ng-click="endEvent()" class="button button-assertive">
+	            End Event
+	        </button>
+	    </div>
+    </div>
+
+
 	<ion-content has-bouncing="true">
 		<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
 			<div class="col col-25" ng-if="$index < images.length">

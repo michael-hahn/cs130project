@@ -9,7 +9,7 @@
 **/
 angular.module('starter')
 
-.controller('eventsMenuController', function($scope, $firebaseArray, $q, $state, firebaseObject, $timeout) {
+.controller('eventsMenuController', function($scope, $stateParams, $firebaseArray, $q, $state, firebaseObject, $timeout) {
   var fbAuth = firebaseObject.getAuth();
   var myEvents = null;
   var myEventKeys = null;
@@ -46,8 +46,8 @@ angular.module('starter')
       $state.go("login");
   }
 
-  $scope.goToEvent = function(eventID) {
-    $state.go("app.eventsPage", { 'eventUID' : eventID });
+  $scope.goToEvent = function(event) {
+    $state.go("app.eventsPage", { 'eventUID' : event.key, 'eventHost' : event.Host, 'eventActive' : event.Active, 'userEmail' : $stateParams.userEmail });
   }
 
 })

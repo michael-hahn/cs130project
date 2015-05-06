@@ -99,7 +99,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     params: {'imageData' : null,
              'imageIndex' : null,
              'eventUID': null,
-             'imagesArr': null
+             'imagesArr': null,
+             'userEmail': null
     },
     cache: true,
     resolve: {
@@ -134,7 +135,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         controller: 'eventPageController'
       }
     },
-    params: {'eventUID' : null }
+    params: {'eventUID' : null, 'eventHost' : null, 'eventActive' : null, 'userEmail' : null}
   })
 
   .state("app.settings", {
@@ -154,7 +155,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         templateUrl: "templates/eventsMenu.html",
         controller: 'eventsMenuController'
       }
-    }
+    },
+    params: {'userEmail' : null}
   })
 
   // if none of the above states are matched, use this as the fallback

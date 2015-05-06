@@ -18,6 +18,7 @@ angular.module('starter')
   $scope.activePhoto = $scope.currIndex;
   //$scope.photosArr = [];
   $scope.photosArr = $stateParams.imagesArr;
+  $scope.userEmail = $stateParams.userEmail;
   $timeout(function(){
     $ionicSlideBoxDelegate.update();
   }, 0);
