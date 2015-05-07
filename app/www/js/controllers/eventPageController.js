@@ -25,12 +25,6 @@ angular.module('starter')
     var usersReference = firebaseObject.child("users");
     var eventReference = firebaseObject.child("Events/" + $scope.eventID);
 
-    if( $scope.userEmail == null ) {
-      usersReference.child(fbAuth.uid).once("value", function(userInfo) {
-        $scope.userEmail = userInfo.val()["email"];
-      })
-    }
-
     var syncArray = $firebaseArray(eventReference.child("images"));
     var userArray = $firebaseArray(eventReference.child("Users"));
     
@@ -129,12 +123,7 @@ angular.module('starter')
   }
 
   $scope.isHost = function() {
-    if( $scope.userEmail == null ) {
-      return false;
-    }
-    else {
-      return ($scope.userEmail == $scope.eventHost);
-    }
+    return (fbAuth.uid == $scope.eventHost);
   }
 
   $scope.endEvent = function() {
