@@ -66,6 +66,7 @@ angular.module('starter')
         $scope.profilePic = "data:image/jpeg;base64," +imageData;
       });
 
+      $scope.modalChooseProfilePic.hide();
       $timeout(function() {},0);
       //$scope.$apply();//updates the view
     }
