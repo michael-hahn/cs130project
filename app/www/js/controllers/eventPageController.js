@@ -12,6 +12,7 @@ angular.module('starter')
   
   $scope.eventID = $stateParams.eventUID;
   $scope.eventHost = $stateParams.eventHost;
+  $scope.eventHostEmail = $stateParams.eventHostEmail;
   $scope.eventActive = $stateParams.eventActive;
   $scope.userEmail = $stateParams.userEmail;
 
@@ -30,7 +31,10 @@ angular.module('starter')
     }
 
     var syncArray = $firebaseArray(eventReference.child("images"));
+    var userArray = $firebaseArray(eventReference.child("Users"));
+    
     $scope.images = syncArray;
+    $scope.users = userArray;
 
     //updates pictures while in event page
     syncArray.$watch(function(image) {
@@ -138,6 +142,18 @@ angular.module('starter')
     $scope.eventActive = 1;
     eventReference.child("Active").set(1);
     alert("You have reactivated this event.");
+  }
+
+  $scope.eventInfo = function() {
+    alert("event info");
+  }
+
+  $scope.eventUserList = function() {
+    $state.go('viewUserList', 
+      { userArr : $scope.users, 
+        host : $scope.eventHost,
+        hostEmail : $scope.eventHostEmail,
+        eventID : $scope.eventID })
   }
 
 })

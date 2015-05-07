@@ -97,7 +97,7 @@ angular.module('starter')
       eventReference.once('value', function(allEvents){
         allEvents.forEach(function(singleEvent){
           var singleEventName = singleEvent.child('Name').val();
-          var singleEventHost = singleEvent.child('Host').val();
+          var singleEventHost = singleEvent.child('HostEmail').val();
           if(singleEventName == eventName && singleEventHost == userEmail){
             targetEvent = singleEvent.val();
             targetEventID = singleEvent.key();

@@ -21,7 +21,7 @@
 	    </div>
     </div>
 
-	<ion-content ng-class="{'has-subheader': isHost()}" has-bouncing="true">
+	<ion-content ng-class="{'has-subheader': isHost(), 'has-footer':true}" has-bouncing="true">
 		<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
 			<div class="col col-25" ng-if="$index < images.length">
 				<a href="" ng-click="viewPhoto(images[$index], $index)">
@@ -72,4 +72,13 @@
 			</div>
 		</div>
 	</ion-content>
+
+	<div class="bar bar-footer">
+		<div class="button-bar">
+			<button class="button button-clear icon ion-information-circled" ng-click="eventInfo()">
+			</button>
+			<button class="button button-clear icon ion-ios-people" ng-click="eventUserList()">     
+			</button>
+    	</div>
+	</div>
 </ion-view>
