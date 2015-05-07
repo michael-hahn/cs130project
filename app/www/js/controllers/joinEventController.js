@@ -121,8 +121,9 @@ angular.module('starter')
             getEventPassword(eventName, userEmail).then(function(eventPassword) {
                 eventNotJoined(targetEventID).then(function(){
                 if (password == eventPassword) {
-
                   myEventsReference.child(targetEventID).set("guest");
+                  var eventAffected = firebaseObject.child("Events/" + targetEventID + "/Users");
+                  eventAffected.child(fbAuth.uid).set("guest");
                   alert("Event joined!");
                   $state.go("app.eventsPage", { 'eventUID' : targetEventID });
               }
