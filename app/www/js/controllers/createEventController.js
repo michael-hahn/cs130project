@@ -89,7 +89,7 @@ angular.module('starter')
         // We're not hosting an event by that name yet, so we can add it
         if( password == confirmPassword ) {
           getEmailOfUserWithID(fbAuth.uid).then(function(email) {
-            var eventID = eventsReference.push({Host: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1}).key();
+            var eventID = eventsReference.push({Host: fbAuth.uid, HostEmail: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1}).key();
             myEventsReference.child(eventID).set("host");
 
             $ionicLoading.hide();

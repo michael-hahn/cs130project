@@ -47,7 +47,7 @@ angular.module('starter')
   }
 
   $scope.goToEvent = function(event) {
-    $state.go("app.eventsPage", { 'eventUID' : event.key, 'eventHost' : event.Host, 'eventActive' : event.Active, 'userEmail' : $stateParams.userEmail });
+    $state.go("app.eventsPage", { 'eventUID' : event.key, 'eventHost' : event.Host, 'eventHostEmail' : event.HostEmail, 'eventActive' : event.Active, 'userEmail' : $stateParams.userEmail });
   }
 
 })

@@ -1,0 +1,24 @@
+<ion-header-bar>
+  <h1 class="title">Attendees</h1>
+
+  <div class="buttons">
+    <button class="button button-assertive" ng-click="goBack()">Back</button>
+  </div>
+</ion-header-bar>
+<ion-content class="has-header">
+  <div class="list">
+    
+    <a class="item item-thumbnail-left" href="" ng-click="">
+      <img src={{host.profilePicture}} ng-if="host.profilePicture !== '' ">
+      <img src="./img/blank-profile.png" ng-if="host.profilePicture === '' ">
+      <h2> <span >Host: </span>{{host.displayName}}</h2>
+      <p>{{host.email}}</p>
+    </a>
+    <br />
+    <a class="item item-thumbnail-left" href="" ng-click="" ng-repeat="user in usersData">
+      <img src={{user.profilePicture}} ng-if="user.profilePicture !== '' ">
+      <img src="./img/blank-profile.png" ng-if="user.profilePicture === '' ">
+      <h2>{{user.displayName}}</h2>
+      <p>{{user.email}}</p>
+    </a>
+</ion-content>

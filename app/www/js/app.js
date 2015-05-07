@@ -113,6 +113,22 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     }
   })
 
+  .state("viewUserList", {
+    url: "/viewUserList",
+    templateUrl: "templates/viewUserList.html",
+    controller: 'viewUserListController',
+    params: { 'userArr': null, 'host': null, 'hostEmail': null, eventID : null },
+    cache: true,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
   .state('app', {
     url: "/app",
     abstract: true,
@@ -135,7 +151,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         controller: 'eventPageController'
       }
     },
-    params: {'eventUID' : null, 'eventHost' : null, 'eventActive' : null, 'userEmail' : null}
+    params: {'eventUID' : null, 'eventHost' : null, 'eventHostEmail' : null, 'eventActive' : null, 'userEmail' : null}
   })
 
   .state("app.settings", {

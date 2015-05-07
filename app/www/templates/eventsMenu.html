@@ -9,15 +9,16 @@
 
   <ion-content class="has-subheader" padding="true">
     <h3>My Events</h3>
-    <ion-list>
-      <ion-item ng-repeat="event in eventInfo">
+    <div class="list">
+      <div ng-repeat="event in eventInfo">
         #{{$index + 1}}
-        <a href="" ng-click="goToEvent(event)">
-          <p>Event name: {{event.Name}}</p>
-          <p>Event host: {{event.Host}}</p>
+        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(event)">
+          <img src="./img/party.jpg">
+          <h2>Event name: {{event.Name}}</h2>
+          <p>Event host: {{event.HostEmail}}</p>
           <p ng-if="event.Active === 1">Active</p>
         </a>
-      </ion-item> 
+      </div> 
     </div>
 
 </ion-view>
