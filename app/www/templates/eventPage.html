@@ -33,6 +33,12 @@
 						</div>
 					</div>
 				</a>
+
+				<div class="button-bar">
+  					<a ng-click="like(images, images[$index])" ng-if="eventActive == 1" class="{{getLikeIcon(images[$index])}}" > 
+  						Likes: {{images[$index].numLikes}}
+  					</a>    				
+  				</div>
 			</div>
 
 			<div class="col col-25" ng-if="$index + 1 < images.length">
@@ -45,6 +51,11 @@
 						</div>
 					</div>
 				</a>
+				<div class="button-bar">
+  					<a ng-click="like(images, images[$index+1])" ng-if="eventActive == 1" class="{{getLikeIcon(images[$index+1])}}" > 
+  						Likes: {{images[$index+1].numLikes}}
+  					</a>    				
+  				</div>
 			</div>
 
 			<div class="col col-25" ng-if="$index + 2 < images.length">
@@ -57,6 +68,11 @@
 						</div>
 					</div>
 				</a>
+				<div class="button-bar">
+  					<a ng-click="like(images, images[$index+2])" ng-if="eventActive == 1" class="{{getLikeIcon(images[$index+2])}}" > 
+  						Likes: {{images[$index+2].numLikes}}
+  					</a>    				
+  				</div>
 			</div>
 
 			<div class="col col-25" ng-if="$index + 3 < images.length">
@@ -69,6 +85,11 @@
 						</div>
 					</div>
 				</a>	
+				<div class="button-bar">
+  					<a ng-click="like(images, images[$index+3])" ng-if="eventActive == 1" class="{{getLikeIcon(images[$index+3])}}" > 
+  						Likes: {{images[$index+3].numLikes}}
+  					</a>    				
+  				</div>
 			</div>
 		</div>
 	</ion-content>
