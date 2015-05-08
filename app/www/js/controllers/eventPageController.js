@@ -15,6 +15,7 @@ angular.module('starter')
   $scope.eventHostEmail = $stateParams.eventHostEmail;
   $scope.eventActive = $stateParams.eventActive;
   $scope.userEmail = $stateParams.userEmail;
+  $scope.numLikes = 0;
 
   $timeout(function() {}, 0);
 
@@ -87,11 +88,15 @@ angular.module('starter')
         var minutes = "0" + date.getMinutes();
         var seconds = "0" + date.getSeconds();
         var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
-        
+        var likedbyList = {};
+        likedbyList[fbAuth.uid] = 0;
+
         syncArray.$add({
           image: "data:image/jpeg;base64," + imageData,
           user: fbAuth.uid,
-          time: formattedTime
+          time: formattedTime,
+          numLikes: 0, // 0 likes for a new photo
+          likedBy: likedbyList // should be empty object ({}) but FB doesn't allow it.
         }).then(function() {
           alert("Image has been uploaded!");
         });
@@ -143,6 +148,56 @@ angular.module('starter')
         host : $scope.eventHost,
         hostEmail : $scope.eventHostEmail,
         eventID : $scope.eventID })
+  }
+
+  $scope.like = function(images, im) {
+
+    if (im.likedBy !== undefined) {
+
+      if (fbAuth.uid === im.user) {
+        if (im.likedBy[fbAuth.uid] === 0) {
+          im.numLikes++;
+          im.likedBy[fbAuth.uid] = 1;
+          images.$save(im);
+        }
+      } else if (im.likedBy[fbAuth.uid] === undefined) {
+        
+        if (im.numLikes !== undefined)
+          im.numLikes++;
+
+        im.likedBy[fbAuth.uid] = 1;
+        images.$save(im)
+      }
+    } else {
+      eventReference.child()
+    }
+  }
+
+  $scope.isLiked = function(im) {
+    if (im.likedBy !== undefined) {
+
+      if (im.likedBy[fbAuth.uid] === 1 ) {
+        return true;
+      } 
+    }
+    return false;
+  }
+
+  $scope.getLikeIcon = function(im) {
+    if (im.likedBy !== undefined) {
+
+      if (im.likedBy[fbAuth.uid] === 1 ) {
+        return "button button-icon icon ion-android-checkbox";
+      } 
+      else
+        return "button button-icon icon ion-android-done";
+    }
+    return false;
+  }
+
+  $scope.addUser2Event = function(photoData, index) {
+    $state.go('addUser', {
+      'eventUID' :  $scope.eventID, });
   }
 
 })
