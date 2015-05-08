@@ -30,7 +30,7 @@ angular.module('starter')
     
     $scope.images = syncArray;
     $scope.users = userArray;
-
+    
     //updates pictures while in event page
     syncArray.$watch(function(image) {
       eventReference.child("images/" + image.key).on("value", function(snapshot) {
@@ -51,6 +51,7 @@ angular.module('starter')
         console.log("Error:" + error);
       });
     });
+  
   }
   else {
     $state.go("login");
@@ -58,7 +59,7 @@ angular.module('starter')
 
   $scope.upload = function() {
     // We have to actually go check the value of Active in Firebase because it could have changed since the time they entered
-    $q(function(resolve, reject) {
+    /*$q(function(resolve, reject) {
       eventReference.once("value", function(eventData) {
         if( eventData.val()['Active'] == 1 ) {
           resolve();
@@ -68,45 +69,13 @@ angular.module('starter')
         }
       });
     }).then(function() {
-      //Succeed
-      var options = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        encodingTpe: Camera.EncodingType.JPEG,
-        popoverOptions: CameraPopoverOptions,
-        targetWidth: 500,
-        targetHeight: 500,
-        saveToPhotoAlbum: false
-      };
-
-      $cordovaCamera.getPicture(options).then(function(imageData) {
-
-        var timestamp = new Date().getTime();
-        var date = new Date(timestamp);
-        var hours = date.getHours();
-        var minutes = "0" + date.getMinutes();
-        var seconds = "0" + date.getSeconds();
-        var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
-        var likedbyList = {};
-        likedbyList[fbAuth.uid] = 0;
-
-        syncArray.$add({
-          image: "data:image/jpeg;base64," + imageData,
-          user: fbAuth.uid,
-          time: formattedTime,
-          numLikes: 0, // 0 likes for a new photo
-          likedBy: likedbyList // should be empty object ({}) but FB doesn't allow it.
-        }).then(function() {
-          alert("Image has been uploaded!");
-        });
-      }, function(error) {
-        console.error("ERROR UPLOAD: " + error);
-      });
+      //Succeed*/      
+      /*
     }, function() {
       //Fail
       alert("This event is no longer active");
     });
+*/
   }
 
   $scope.viewPhoto = function(photoData, index) {
