@@ -16,6 +16,12 @@ angular.module('starter')
   if(fbAuth) {
     var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
     var eventsReference = firebaseObject.child("Events");
+    var userReference = firebaseObject.child("users/"+ fbAuth.uid);
+    
+    userReference.child("profilePicture").on("value", function(pic) {
+      $scope.eventCoverPhoto = pic.val();
+    })
+    //alert($scope.eventCoverPhoto);
   }
   else {
     $state.go("login");
@@ -89,7 +95,7 @@ angular.module('starter')
         // We're not hosting an event by that name yet, so we can add it
         if( password == confirmPassword ) {
           getEmailOfUserWithID(fbAuth.uid).then(function(email) {
-            var eventID = eventsReference.push({Host: fbAuth.uid, HostEmail: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1}).key();
+            var eventID = eventsReference.push({Host: fbAuth.uid, HostEmail: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1, coverPhoto: $scope.eventCoverPhoto }).key();
             myEventsReference.child(eventID).set("host");
 
             $ionicLoading.hide();
