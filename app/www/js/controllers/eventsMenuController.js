@@ -13,31 +13,41 @@ angular.module('starter')
   var fbAuth = firebaseObject.getAuth();
   var myEvents = null;
   var myEventKeys = null;
-  $scope.eventInfo =[];
+  $scope.joinedEvents =[];
+  $scope.hostedEvents = [];
 
   if(fbAuth) {
-
     var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
     var eventReference = firebaseObject.child('Events');
+    var userReference = firebaseObject.child("users/" + fbAuth.uid);
 
+    userReference.on("value", function(userInfo) {
+      $scope.userEmail = userInfo.val().email;
+    })
     //get the keys of all events the user is in 
     myEventsReference.on("value",function(snapshot) {
       myEvents = snapshot.val();
       myEventKeys = Object.keys(myEvents);
-      var eventList = [];
+      var jEvents = [];
+      var hEvents = [];
       for (var i in myEventKeys){
         //should only be called once or else keeps pushing to list when picture is taken
         eventReference.orderByKey().equalTo(myEventKeys[i]).once("value",function(snapshot) {
           var theEvent = snapshot.val();
           var eventID = Object.keys(theEvent)[0];
           theEvent[eventID].key = eventID; //added key to lead to that event
-          eventList.push(theEvent[eventID]);
+          if (theEvent[eventID].HostEmail !== $scope.userEmail) {
+            jEvents.push(theEvent[eventID]);
+          } else {
+            hEvents.push(theEvent[eventID]);
+          }
           $timeout(function(){},0);
         }, function (error) {
           console.log("Read faild:" + error);
         });
       }
-      $scope.eventInfo = eventList;
+      $scope.joinedEvents = jEvents;
+      $scope.hostedEvents = hEvents;
     }, function(error){
       console.log("Read faild:" + error);
     });

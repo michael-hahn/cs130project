@@ -9,9 +9,10 @@
 **/
 angular.module('starter')
 
-.controller('createEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory, $ionicLoading) {
+.controller('createEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory, $ionicLoading, $cordovaCamera, $timeout) {
   var fbAuth = firebaseObject.getAuth();
   var myEvents = [];
+  $scope.eventCoverPhoto = '';
 
   if(fbAuth) {
     var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
@@ -19,7 +20,7 @@ angular.module('starter')
     var userReference = firebaseObject.child("users/"+ fbAuth.uid);
     
     userReference.child("profilePicture").on("value", function(pic) {
-      $scope.eventCoverPhoto = pic.val();
+      $scope.userProfilePic = pic.val();
     })
     //alert($scope.eventCoverPhoto);
   }
@@ -93,9 +94,16 @@ angular.module('starter')
       // Then, check if the event name is available
       eventNameIsAvailable(eventName).then(function() {
         // We're not hosting an event by that name yet, so we can add it
+        var coverPhoto;
+        if($scope.eventCoverPhoto === '') {
+          coverPhoto = $scope.userProfilePic;
+        } else {
+          coverPhoto = $scope.eventCoverPhoto;
+        }
+
         if( password == confirmPassword ) {
           getEmailOfUserWithID(fbAuth.uid).then(function(email) {
-            var eventID = eventsReference.push({Host: fbAuth.uid, HostEmail: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1, coverPhoto: $scope.eventCoverPhoto }).key();
+            var eventID = eventsReference.push({Host: fbAuth.uid, HostEmail: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1, coverPhoto: coverPhoto }).key();
             myEventsReference.child(eventID).set("host");
 
             $ionicLoading.hide();
@@ -119,5 +127,45 @@ angular.module('starter')
 
   $scope.goBack = function() {
     $ionicHistory.goBack();
+  }
+
+  $scope.takeCoverPhoto = function(opt) {
+    //from camera
+      var options1 = {
+        quality: 100,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 325,
+        targetHeight: 300,
+        saveToPhotoAlbum: false
+      };
+      //from photo library
+      var options2 = {
+        quality: 100,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 325,
+        targetHeight: 300,
+        saveToPhotoAlbum: false
+      };
+
+      if (opt === 0) {
+        var options = options1;
+      } else{
+        var options = options2;
+      } 
+
+      $cordovaCamera.getPicture(options).then(function(imageData) {
+        $scope.eventCoverPhoto = "data:image/jpeg;base64," +imageData;
+      });
+
+      $timeout(function() {}, 0);
+      //$scope.$apply();//updates the view
   }
 })
