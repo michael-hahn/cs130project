@@ -1,4 +1,9 @@
 <ion-view view-title="My Settings">
+  	<ion-nav-bar>
+	  	<ion-nav-buttons side="right">
+			<button class="button button-icon icon ion-close-circled assertive" ng-click="modalLogoutConfirm.show()"></button>
+		</ion-nav-buttons>
+  	</ion-nav-bar>
   	<ion-content>
     	<div class="list card">
 
@@ -31,15 +36,13 @@
 		        </div>
 			</div>
 
-
 		  	<br />
 
   		  	<a class="item item-icon-left energized" ng-click="modalPassword.show()">
   		  		<i class="icon ion-locked"></i>
 			    Change Password
 		  	</a>
-
 		</div>
-		<button class="button button-full button-assertive" ng-click="logout()">Logout</button>
+
   	</ion-content>
 </ion-view>

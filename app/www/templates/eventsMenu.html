@@ -1,5 +1,6 @@
 <ion-view view-title="Events Menu">
-  
+  <ion-nav-bar>
+  </ion-nav-bar>
   <div class="bar bar-subheader">
   	<div class="button-bar">
       <a class="button button-energized" href="#/createEvent">Create</a>
@@ -7,7 +8,7 @@
     </div>
   </div>
 
-  <ion-content class="has-subheader" padding="true">
+  <ion-content class="has-subheader has-tabs" padding="true">
     <h3>My Events</h3>
     <div class="list">
       <div ng-repeat="event in eventInfo">
