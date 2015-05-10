@@ -91,10 +91,10 @@ angular.module('starter')
       
     }
 
-    $scope.changeEmail = function(oldEm, newEm, pw) {
-      if (oldEm && newEm) {
+    $scope.changeEmail = function(newEm, pw) {
+      if (newEm && pw) {
         userReference.changeEmail({
-          oldEmail : oldEm,
+          oldEmail : $scope.userData.email,
           newEmail : newEm,
           password : pw
         }, function(error) {
@@ -103,7 +103,7 @@ angular.module('starter')
             userReference.update({
               email : newEm
             });
-            alert("Email changed from " + oldEm + " to " + newEm);
+            alert("Email changed from " + $scope.userData.email + " to " + newEm);
           } else {
             alert(error);
           }
@@ -175,10 +175,10 @@ angular.module('starter')
       $scope.modalremoveConfirm.hide();
     }
 
-    $scope.changePassword = function(em, oldPw, newPw, confirmPw) {
-      if ( em && oldPw && newPw && confirmPw ) {
+    $scope.changePassword = function(oldPw, newPw, confirmPw) {
+      if ( oldPw && newPw && confirmPw ) {
         userReference.changePassword({
-          email : em,
+          email : $scope.userData.email,
           oldPassword : oldPw,
           newPassword : newPw
         }, function(error) {
