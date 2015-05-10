@@ -13,8 +13,14 @@ angular.module('starter')
   var fbAuth = firebaseObject.getAuth();
   var myEvents = null;
   var myEventKeys = null;
-  $scope.joinedEvents =[];
-  $scope.hostedEvents = [];
+  $scope.joinedEvents = {
+    events: [],
+    show: false
+  };
+  $scope.hostedEvents = {
+    events: [],
+    show: false
+  };
 
   if(fbAuth) {
     var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
@@ -46,8 +52,8 @@ angular.module('starter')
           console.log("Read faild:" + error);
         });
       }
-      $scope.joinedEvents = jEvents;
-      $scope.hostedEvents = hEvents;
+      $scope.joinedEvents.events = jEvents;
+      $scope.hostedEvents.events = hEvents;
     }, function(error){
       console.log("Read faild:" + error);
     });
@@ -60,4 +66,14 @@ angular.module('starter')
     $state.go("app.eventsPage", { 'eventUID' : event.key, 'eventHost' : event.Host, 'eventHostEmail' : event.HostEmail, 'eventActive' : event.Active, 'userEmail' : $stateParams.userEmail });
   }
 
+ /*
+   * if given group is the selected group, deselect it
+   * else, select the given group
+   */
+  $scope.toggleGroup = function(group) {
+    group.show = !group.show;
+  };
+  $scope.isGroupShown = function(group) {
+    return group.show;
+  };
 })
