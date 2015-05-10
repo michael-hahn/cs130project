@@ -6,15 +6,12 @@
     <ion-content class="padding">
         <div class="list">
             <label class="item item-input">
-                <input ng-model="oldEmail" type="email" placeholder="Old Email">
-            </label>
-            <label class="item item-input">
                 <input ng-model="newEmail" type="email" placeholder="New Email">
             </label>
             <label class="item item-input">
                 <input ng-model="password" type="password" placeholder="Password">
             </label>
-            <button class="button button-full button-positive" ng-click="changeEmail(oldEmail, newEmail, password)">Change!</button>
+            <button class="button button-full button-positive" ng-click="changeEmail(newEmail, password)">Change!</button>
         </div>
     </ion-content>
 </ion-modal-view>
