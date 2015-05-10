@@ -1,39 +1,18 @@
-/* Empty. Add your own CSS if you like */
-
 /* CSS for images.html */
-
-#container{
+.square {
+	float: left;
 	position: relative;
-	width: 100%;
-	height: 200px;
+	width: 30%;
+	padding-bottom: 30%;
+	margin: 1.66%;
+	overflow: hidden;
+	background-color: #1E1E1E;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover;
 }
 
-#image_container{
-	width: 100%;
-	height: 100%;
-	background: black;
-}
-
-#overlay_circle_container{
-	position: absolute;
-	top: 2%;
-	left: 2%;
-	width: 50%;
-	height: 35%;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: green;
-}
-
-#profile_pic {
-	border-radius: 50%;
-	width: 90%;
-	height: 90%;
-}
-
-
+/* CSS for EventsMenu.html */
 .list .item.item-accordion {
   padding-top: 0;
   padding-bottom: 0;

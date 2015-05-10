@@ -34,23 +34,6 @@ angular.module('starter')
 
     var eventReference = firebaseObject.child("Events/" + $stateParams.eventUID);
 
-    //var userReference = firebaseObject.child("users/" + $stateParams.imageData.user);
-/*
-    userReference.on("value", function(snapshot) {;
-          $scope.userData = snapshot.val();
-
-          $timeout(function() {
-            $ionicSlideBoxDelegate.update();
-          }, 50);
-
-      }, function(error) {
-          console.log("Read failed: " + error);
-      });
-*/
-    //var syncArray = $firebaseArray(eventReference.child("images"));
-    
-    //$scope.photosArr = syncArray;
-
   } else {
     $state.go("login");
   }
@@ -62,12 +45,62 @@ angular.module('starter')
   }
 
   $scope.close = function() {
-    //$state.go("app.eventsPage");
     $ionicHistory.goBack();
   }
 
   $scope.addUser = function() {
     alert("TODO ADD");
   }
+
+  $scope.like = function(images, im) {
+
+    if (im.likedBy !== undefined) {
+
+      if (fbAuth.uid === im.user) {
+        if (im.likedBy[fbAuth.uid] === 0) {
+          im.numLikes++;
+          im.likedBy[fbAuth.uid] = 1;
+          images.$save(im);
+        }
+      } else if (im.likedBy[fbAuth.uid] === undefined) {
+        
+        if (im.numLikes !== undefined)
+          im.numLikes++;
+
+        im.likedBy[fbAuth.uid] = 1;
+        images.$save(im)
+      }
+    } else {
+      eventReference.child()
+    }
+  }
+
+  $scope.isLiked = function(im) {
+    if (im.likedBy !== undefined) {
+
+      if (im.likedBy[fbAuth.uid] === 1 ) {
+        return true;
+      } 
+    }
+    return false;
+  }
+
+  $scope.getLikeIcon = function(im) {
+    if (im.likedBy !== undefined) {
+
+      if (im.likedBy[fbAuth.uid] === 1 ) {
+        return "button button-icon icon ion-thumbsup";
+      } 
+      else
+        return "button button-clear icon ion-thumbsup";
+    }
+    return false;
+  }
+
+  $scope.addUser2Event = function(photoData, index) {
+    $state.go('addUser', {
+      'eventUID' :  $scope.eventID, });
+  }
+
 
 })

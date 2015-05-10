@@ -25,13 +25,21 @@
 			 	<div class="item item-image" >
 		    		<img ng-src="{{photo.image}}" style="width:350px;height:400px" />
 			  	</div>
+
+			  	<div class="item tabs tabs-secondary tabs-icon-left">
+		  			<a class="tab-item" href="" ng-click="addUser()">
+		  				<i class="icon ion-person-add"></i>
+		  				Add
+		  			</a>
+		  			<a class="tab-item" href="" ng-click="like(photosArr, photo)">
+		  				<i class="{{getLikeIcon(photo)}}"></i>
+		  				{{photo.numLikes}}
+		  			</a>
+		  	</div>
 			</ion-slide>
 			
 		</ion-slide-box>
 
 	</div>
 
-	<div class="bar bar-footer">
-		<div class="title button-clear button-icon icon ion-arrow-swap"></div>
-	</div>
 </ion-content>
