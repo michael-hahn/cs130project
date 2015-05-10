@@ -1,4 +1,5 @@
 {
   "name": "app",
-  "app_id": "29359353"
+  "app_id": "29359353",
+  "defaultBrowser": "firefox"
 }

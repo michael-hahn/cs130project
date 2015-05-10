@@ -143,21 +143,10 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     }
   })
 
-  .state("app.eventsPage", {
-    url: "/images",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/eventPage.html",
-        controller: 'eventPageController'
-      }
-    },
-    params: {'eventUID' : null, 'eventHost' : null, 'eventHostEmail' : null, 'eventActive' : null, 'userEmail' : null}
-  })
-
   .state("app.settings", {
     url: "/settings",
     views: {
-      'menuContent': {
+      'tab-settings': {
         templateUrl: "templates/settingsHTML/settings.html",
         controller: 'SettingsController'
       }
@@ -167,7 +156,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
   .state("app.eventsMenu", {
     url: "/eventsMenu",
     views: {
-      'menuContent': {
+      'tab-eventsMenu': {
         templateUrl: "templates/eventsMenu.html",
         controller: 'eventsMenuController'
       }
@@ -175,6 +164,16 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     params: {'userEmail' : null}
   })
 
+  .state("app.eventsPage", {
+    url: "/images",
+    views: {
+      'tab-eventsMenu': {
+        templateUrl: "templates/eventPage.html",
+        controller: 'eventPageController'
+      }
+    },
+    params: {'eventUID' : null, 'eventHost' : null, 'eventHostEmail' : null, 'eventActive' : null, 'userEmail' : null}
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 })

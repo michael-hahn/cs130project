@@ -53,16 +53,23 @@ angular.module('starter')
         $scope.modalPassword = modal;
     });
 
-    //Modal for Password
+    //Modal for Profile Picture
     $ionicModal.fromTemplateUrl('templates/settingsHTML/removeConfirm.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modalremoveConfirm = modal;
     });
 
+  //Modal for Logout
+    $ionicModal.fromTemplateUrl('templates/settingsHTML/logoutConfirm.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modalLogoutConfirm = modal;
+    });
+
     $scope.logout = function() {
       firebaseObject.unauth();
-      alert("logged out!");
+      $scope.modalLogoutConfirm.hide();
       $state.go("login");
     }
 
@@ -184,8 +191,6 @@ angular.module('starter')
         });
       } else {
         alert("Please fill in all details.");
-
-
       }
     }
 }])

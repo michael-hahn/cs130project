@@ -1,15 +1,13 @@
-<ion-view title="Event Page ({{images.length}} Pictures)" ng-init="">
-	<ion-nav-buttons side="left">
-		<button class="button button-icon icon ion-arrow-left-a" ng-click="goBack()"></button>
+<ion-view view-title="Event Page ({{images.length}} Pictures)" ng-init="">
+	<ion-nav-bar>
+		<ion-nav-buttons side="left">
+			<button class="button button-icon icon ion-arrow-left-a" ng-click="goBack()"></button>
+		</ion-nav-buttons>
 
-	</ion-nav-buttons>
-
-
-	<ion-nav-buttons side="right">
-		<!--<button class="button button-icon icon ion-android-add" ng-click="addUser2Event()"></button>-->
-		<button class="button button-icon icon ion-camera" ng-click="upload()"></button>
-
-	</ion-nav-buttons>
+		<ion-nav-buttons side="right">
+			<button class="button button-icon icon ion-camera" ng-click="upload()"></button>
+		</ion-nav-buttons>
+	</ion-nav-bar>
 
 	<div class="bar bar-subheader" ng-if="isHost()">
 		<div class="button-bar">
@@ -95,11 +93,11 @@
 		</div>
 	</ion-content>
 
-	<div class="bar bar-footer">
+	<div class="bar bar-footer has-tabs">
 		<div class="button-bar">
 			<button class="button button-clear icon ion-information-circled" ng-click="eventInfo()">
 			</button>
-			<button class="button button-clear icon ion-ios-people" ng-click="eventUserList()">     
+			<button class="button button-clear icon ion-android-contacts" ng-click="eventUserList()">     
 			</button>
     	</div>
 	</div>
