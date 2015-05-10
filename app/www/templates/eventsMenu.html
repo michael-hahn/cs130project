@@ -9,17 +9,35 @@
   </div>
 
   <ion-content class="has-subheader has-tabs" padding="true">
-    <h3>My Events</h3>
-    <div class="list">
-      <div ng-repeat="event in eventInfo">
+  
+    <div class="list" ng-if="hostedEvents.length !== 0">
+
+      <div class="item item-divider">My Hosted Events</div>
+
+      <div ng-repeat="event in hostedEvents">
         #{{$index + 1}}
         <a class="item item-thumbnail-left" href="" ng-click="goToEvent(event)">
-          <img src={{event.coverPhoto}}>
-          <h2>Event name: {{event.Name}}</h2>
-          <p>Event host: {{event.HostEmail}}</p>
+          <img src={{event.coverPhoto}} ng-if="event.coverPhoto !== '' ">
+          <img ng-src="./././img/blank-coverphoto.png" ng-if="event.coverPhoto === '' ">
+          <h2>{{event.Name}}</h2>
+          <p>Host</p>
+          <p ng-if="event.Active === 1">Active</p>
+        </a>
+      </div>
+
+      <br/>
+      
+      <div class="item item-divider">My Joined Events</div>
+
+      <div ng-repeat="event in joinedEvents">
+        #{{$index + 1}}
+        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(event)">
+          <img src={{event.coverPhoto}} ng-if="event.coverPhoto !== '' ">
+          <img ng-src="./././img/blank-coverphoto.png" ng-if="event.coverPhoto === '' ">
+          <h2>{{event.Name}}</h2>
+          <p>Host:{{event.HostEmail}}</p>
           <p ng-if="event.Active === 1">Active</p>
         </a>
       </div> 
     </div>
-
 </ion-view>

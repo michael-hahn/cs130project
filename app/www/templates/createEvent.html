@@ -7,21 +7,34 @@
 </ion-header-bar>
 <ion-content>
   <div class="padding-left padding-right">
-  	<h1>Event Name</h1>
+
   	<label class="item item-input">
       <input ng-model="eventName" type="text" placeholder="Event Name" />
     </label>
 
-  	<h1>Password</h1>
   	<label class="item item-input">
-    	<input ng-model="password" type="password" placeholder="Password" />
+    	<input ng-model="password" type="password" placeholder="Event Password" />
   	</label>
 
-  	<h1>Confirm Password</h1>
   	<label class="item item-input">
-    	<input ng-model="confirmPassword" type="password" placeholder="Confirm Password" />
+    	<input ng-model="confirmPassword" type="password" placeholder="Confirm Event Password" />
   	</label>
 
+    <div class="item item-image">
+        <br/>
+        <div class="item energized">
+          Choose Cover Photo (Optional)
+          <br />
+          <img style="width:100px; height:100px" ng-src="./././img/blank-coverphoto.png" ng-if="eventCoverPhoto === '' ">
+          <img style="width:100px; height:100px" ng-src="{{eventCoverPhoto}}" ng-if="eventCoverPhoto !== '' ">
+        </div>
+        <div class="button-bar">
+          <button class="button button-clear icon ion-camera" ng-click="takeCoverPhoto(0)">
+          </button>
+          <button class="button button-clear icon ion-images" ng-click="takeCoverPhoto(1)">     
+          </button>
+            </div>
+      </div>
     <br></br>
 
   	<div class="button-bar">
