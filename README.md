@@ -23,7 +23,7 @@
 OR (Preferred)
 
   1. Download 'Ionic View' app from Google Play Store or Apple Store
-  2. Preview App with code: 29359353 
+  2. Choose 'Preview Shared App' and input App ID: 29359353 
   
 # Documentation
 
