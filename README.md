@@ -20,6 +20,10 @@
   2. `ionic build ios` or `ionic build android`
   3. `ionic emulate ios` or `ionic emulate ios`
   
+  OR (Preferred)
+  1. Download 'Ionic View' app from Google Play Store or Apple Store
+  2. Preview App with code: 29359353 
+  
 # Documentation
 
 ## Dependencies
