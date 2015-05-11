@@ -47,7 +47,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
   });
 }])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $stateProvider
 
   .state('login', {
@@ -176,5 +176,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
   })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
+
+  //make sure android and iOS tabs on bottom and not default
+  $ionicConfigProvider.tabs.position("bottom");
 })
 
