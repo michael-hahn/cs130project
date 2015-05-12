@@ -9,28 +9,26 @@
 **/
 angular.module('starter')
 
-.controller('SettingsController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', '$timeout', 'firebaseObject', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera, $timeout, firebaseObject) {
+.controller('SettingsController', ['$scope', '$state', '$ionicModal', '$ionicLoading', '$cordovaCamera', '$timeout', 'firebaseObject', '$ionicHistory', function($scope, $state, $ionicModal, $ionicLoading, $cordovaCamera, $timeout, firebaseObject, $ionicHistory) {
+
     var fbAuth = firebaseObject.getAuth();
     $scope.userData = null;
+
     if(fbAuth) {
-       
+      console.log("id = " + fbAuth.uid);
+      $scope.uid = fbAuth.uid;
       var userReference = firebaseObject.child("users/" + fbAuth.uid);
       userReference.on("value", function(snapshot) {
           //using timeout to schedule the changes to the scope in a future call stack. timeout period of 0ms makes it occur as soon as possible and $timeout will ensure code be called in single $apply block
-          $timeout(function() {
-            $scope.userData = snapshot.val();
-          }, 0);
+          $scope.userData = snapshot.val();
+          $timeout(function() {}, 0);
       }, function(error) {
           console.log("Read failed: " + error);
       });
     }
     else {
       $state.go("login");
-    
-
     }
-     
-    console.log($scope.userData);
 
     //Modal for Display Name
     $ionicModal.fromTemplateUrl('templates/settingsHTML/changeDisplayName.html', {
@@ -69,8 +67,11 @@ angular.module('starter')
 
     $scope.logout = function() {
       firebaseObject.unauth();
+      //$scope.userData = null;
+      $ionicHistory.clearHistory();
       $scope.modalLogoutConfirm.hide();
       $state.go("login");
+      //$window.location.reload();
     }
 
     $scope.changeDisplayName = function(newName) {
