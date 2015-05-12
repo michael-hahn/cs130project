@@ -150,7 +150,8 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         templateUrl: "templates/settingsHTML/settings.html",
         controller: 'SettingsController'
       }
-    }
+    },
+    cache: false
   })
 
   .state("app.eventsMenu", {
