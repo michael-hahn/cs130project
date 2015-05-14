@@ -57,7 +57,6 @@ angular.module('starter')
         images.push(im);
         $timeout(function(){},0);
       });
-      
     });
     $scope.images = images;
   }
@@ -119,7 +118,7 @@ angular.module('starter')
           likedBy: likedbyList // should be empty object ({}) but FB doesn't allow it.});
         });
 
-        firebaseObject.child("user_images").child(fbAuth.uid).child(imageID).set(1);
+        firebaseObject.child("user_images").child(fbAuth.uid).child(imageID).set($scope.eventID);
 
         alert("Image has been uploaded!");
 
