@@ -100,7 +100,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
              'imageIndex' : null,
              'eventUID': null,
              'imagesArr': null,
-             'userEmail': null
+             'allUsersData': null
     },
     cache: true,
     resolve: {
@@ -117,7 +117,9 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     url: "/viewUserList",
     templateUrl: "templates/viewUserList.html",
     controller: 'viewUserListController',
-    params: { 'userArr': null, 'host': null, 'hostEmail': null, eventID : null },
+    params: { 
+      'allUsersData': null 
+    },
     cache: true,
     resolve: {
     // controller will not be loaded until $requireAuth resolves
@@ -173,7 +175,12 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         controller: 'eventPageController'
       }
     },
-    params: {'eventUID' : null, 'eventHost' : null, 'eventHostEmail' : null, 'eventActive' : null, 'userEmail' : null}
+    params: {
+      'eventUID' : null, 
+      'eventHost' : null, 
+      'eventHostEmail' : null, 
+      'eventActive' : null, 
+      'userEmail' : null}
   })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

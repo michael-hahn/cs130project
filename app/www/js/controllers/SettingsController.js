@@ -17,7 +17,7 @@ angular.module('starter')
     if(fbAuth) {
       console.log("id = " + fbAuth.uid);
       $scope.uid = fbAuth.uid;
-      var userReference = firebaseObject.child("users/" + fbAuth.uid);
+      var userReference = firebaseObject.child("user_data/" + fbAuth.uid);
       userReference.on("value", function(snapshot) {
           //using timeout to schedule the changes to the scope in a future call stack. timeout period of 0ms makes it occur as soon as possible and $timeout will ensure code be called in single $apply block
           $scope.userData = snapshot.val();
@@ -104,7 +104,7 @@ angular.module('starter')
             userReference.update({
               email : newEm
             });
-            alert("Email changed from " + $scope.userData.email + " to " + newEm);
+            alert("Email changed to " + newEm);
           } else {
             alert(error);
           }

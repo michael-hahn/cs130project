@@ -8,14 +8,14 @@
 <ion-content class="has-header">
   <div class="list">
     
-    <a class="item item-thumbnail-left" href="" ng-click="">
+    <a class="item item-thumbnail-left" href="" ng-click="viewProfile(host)">
       <img src={{host.profilePicture}} ng-if="host.profilePicture !== '' ">
       <img src="./img/blank-profile.png" ng-if="host.profilePicture === '' ">
       <h2> <span >Host: </span>{{host.displayName}}</h2>
       <p>{{host.email}}</p>
     </a>
     <br />
-    <a class="item item-thumbnail-left" href="" ng-click="" ng-repeat="user in usersData">
+    <a class="item item-thumbnail-left" href="" ng-click="viewProfile(user)" ng-repeat="user in usersData">
       <img src={{user.profilePicture}} ng-if="user.profilePicture !== '' ">
       <img src="./img/blank-profile.png" ng-if="user.profilePicture === '' ">
       <h2>{{user.displayName}}</h2>

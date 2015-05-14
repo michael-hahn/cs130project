@@ -24,7 +24,7 @@ angular.module('starter')
 
     console.log("id = " + fbAuth.uid);
     if(fbAuth) {
-      var userReference = firebaseObject.child("users/" + fbAuth.uid);
+      var userReference = firebaseObject.child("user_data/" + fbAuth.uid);
     }
     else {
       $state.go("login");

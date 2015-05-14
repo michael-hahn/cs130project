@@ -8,17 +8,15 @@
 **/
 angular.module('starter')
 
-.controller('PhotoController', function($scope, $stateParams, $state, $firebaseArray, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal, $ionicHistory) {
+.controller('PhotoController', function($scope, $stateParams, $state, $firebaseObject, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal, $ionicHistory) {
   
-  var index = $stateParams.imageIndex;
-
   $scope.currIndex = $stateParams.imageIndex;
   $scope.photoContent = $stateParams.imageData;
   var fbAuth = firebaseObject.getAuth();
   $scope.activePhoto = $scope.currIndex;
-  //$scope.photosArr = [];
   $scope.photosArr = $stateParams.imagesArr;
-  $scope.userEmail = $stateParams.userEmail;
+  $scope.allUsersData = $stateParams.allUsersData;
+
   $timeout(function(){
     $ionicSlideBoxDelegate.update();
   }, 0);
@@ -31,8 +29,9 @@ angular.module('starter')
   });
 
   if(fbAuth){
-
-    var eventReference = firebaseObject.child("Events/" + $stateParams.eventUID);
+    console.log(fbAuth.uid);
+    var eventReference = firebaseObject.child("event_data/" + $stateParams.eventUID);
+    var imageLikesReference = firebaseObject.child("image_likes");
 
   } else {
     $state.go("login");
@@ -41,6 +40,7 @@ angular.module('starter')
   $scope.photoChanged = function(index) {
     $scope.currIndex = index;
     $scope.photoContent = $scope.photosArr[$scope.currIndex];
+    $scope.photoContent.userInfo = $scope.allUsersData[$scope.photoContent.user];
     $ionicSlideBoxDelegate.update();
   }
 
@@ -48,27 +48,28 @@ angular.module('starter')
     $ionicHistory.goBack();
   }
 
-  $scope.addUser = function() {
-    alert("TODO ADD");
-  }
-
-  $scope.like = function(images, im) {
+  $scope.like = function(im) {
 
     if (im.likedBy !== undefined) {
 
       if (fbAuth.uid === im.user) {
         if (im.likedBy[fbAuth.uid] === 0) {
           im.numLikes++;
-          im.likedBy[fbAuth.uid] = 1;
-          images.$save(im);
+          //im.likedBy[fbAuth.uid] = 1;
+          imageLikesReference.child(im.id).update({
+            'numLikes': im.numLikes});
+          imageLikesReference.child(im.id +'/likedBy').child(fbAuth.uid).set(1);
         }
       } else if (im.likedBy[fbAuth.uid] === undefined) {
         
         if (im.numLikes !== undefined)
           im.numLikes++;
 
-        im.likedBy[fbAuth.uid] = 1;
-        images.$save(im)
+        //im.likedBy[fbAuth.uid] = 1;
+        
+        imageLikesReference.child(im.id).update({
+            'numLikes': im.numLikes});
+          imageLikesReference.child(im.id +'/likedBy').child(fbAuth.uid).set(1);
       }
     } else {
       eventReference.child()
@@ -102,5 +103,9 @@ angular.module('starter')
       'eventUID' :  $scope.eventID, });
   }
 
+  $scope.viewProfile = function(user) {
+    $scope.person = user;
+    $scope.modalviewProfile.show();
+  }
 
 })

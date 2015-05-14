@@ -23,12 +23,12 @@ angular.module('starter')
   };
 
   if(fbAuth) {
-    var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
-    var eventReference = firebaseObject.child('Events');
-    var userReference = firebaseObject.child("users/" + fbAuth.uid);
+    var myEventsReference = firebaseObject.child("user_events/" + fbAuth.uid);
+    var eventReference = firebaseObject.child('event_data');
+    var userReference = firebaseObject.child("user_data/" + fbAuth.uid);
 
-    userReference.on("value", function(userInfo) {
-      $scope.userEmail = userInfo.val().email;
+    userReference.child("email").on("value", function(userInfo) {
+      $scope.userEmail = userInfo.val();
     })
     //get the keys of all events the user is in 
     myEventsReference.on("value",function(snapshot) {
@@ -55,7 +55,7 @@ angular.module('starter')
       $scope.joinedEvents.events = jEvents;
       $scope.hostedEvents.events = hEvents;
     }, function(error){
-      console.log("Read faild:" + error);
+      console.log("Read failed:" + error);
     });
   }
   else {
@@ -63,7 +63,12 @@ angular.module('starter')
   }
 
   $scope.goToEvent = function(event) {
-    $state.go("app.eventsPage", { 'eventUID' : event.key, 'eventHost' : event.Host, 'eventHostEmail' : event.HostEmail, 'eventActive' : event.Active, 'userEmail' : $stateParams.userEmail });
+    $state.go("app.eventsPage", { 
+      'eventUID' : event.key, 
+      'eventHost' : event.Host, 
+      'eventHostEmail' : event.HostEmail, 
+      'eventActive' : event.Active, 
+      'userEmail' : $stateParams.userEmail });
   }
 
  /*
