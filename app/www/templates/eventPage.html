@@ -1,4 +1,4 @@
-<ion-view view-title="Event Page ({{images.length}} Pictures)" ng-init="">
+<ion-view view-title="Event Page ({{images.length}} Pictures" init="">
 	<ion-nav-bar>
 		<ion-nav-buttons side="left">
 			<button class="button button-icon icon ion-arrow-left-a" ng-click="goBack()"></button>
@@ -22,7 +22,7 @@
 
 	<ion-content ng-class="{'has-subheader': isHost(), 'has-footer':true}" has-bouncing="true">
 		
-		<a class="square" ng-repeat="image in images" style="background-image:url({{image.image}})" href="" ng-click="viewPhoto(images[$index], $index)"></a>
+		<a class="square" ng-repeat="image in images" style="background-image:url({{image.image}})" href="" ng-click="viewPhoto(image, $index)"></a>
 
 	</ion-content>
 

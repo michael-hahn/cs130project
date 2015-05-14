@@ -12,12 +12,12 @@
 		<ion-slide-box ng-if="photosArr" on-slide-changed="photoChanged($index)" active-slide="activePhoto" show-pager="false">
 
 			<ion-slide ng-repeat="photo in photosArr">
-				<a href="" ng-click="modalviewProfile.show()">
+				<a href="" ng-click="viewProfile(photo.userInfo)">
 					<div class="item item-avatar">
-		    			<img src="{{photo.profilePicture}}" ng-if="photo.profilePicture !== '' ">
-				    	<img ng-src="./img/blank-profile.png" ng-if="photo.profilePicture === '' "/>
+		    			<img src="{{photo.userInfo.profilePicture}}" ng-if="photo.userInfo.profilePicture !== '' ">
+				    	<img src="./img/blank-profile.png" ng-if="photo.userInfo.profilePicture === '' "/>
 				    	
-				    	<h2>{{photo.displayName}}</h2>
+				    	<h2>{{photo.userInfo.displayName}}</h2>
 				    	<p>{{photo.time}}</p>
 				  	</div>
 			  	</a>
@@ -27,13 +27,9 @@
 			  	</div>
 
 			  	<div class="item tabs tabs-secondary tabs-icon-left">
-		  			<a class="tab-item" href="" ng-click="addUser()">
-		  				<i class="icon ion-person-add"></i>
-		  				Add
-		  			</a>
-		  			<a class="tab-item" href="" ng-click="like(photosArr, photo)">
+		  			<a class="tab-item" href="" ng-click="like(photo)">
 		  				<i class="{{getLikeIcon(photo)}}"></i>
-		  				{{photo.numLikes}}
+		  				# {{photo.numLikes}}
 		  			</a>
 		  	</div>
 			</ion-slide>

@@ -8,50 +8,40 @@
 **/
 angular.module('starter')
 
-.controller('viewUserListController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout) {
+.controller('viewUserListController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $ionicModal) {
+
+  //Modal for Display Name
+  $ionicModal.fromTemplateUrl('templates/viewProfile.html', {
+      scope: $scope
+  }).then(function (modal) {
+      $scope.modalviewProfile = modal;
+  });
 
   var fbAuth = firebaseObject.getAuth();
-  $scope.users = $stateParams.userArr;
-  $scope.hostUID = $stateParams.host;
+  $scope.users = $stateParams.allUsersData;
   $scope.usersData = [];
-  $scope.eventID = $stateParams.eventID;
 
   if(fbAuth) {
+    console.log($scope.users);
 
-    var usersReference = firebaseObject.child("users");
-    var eventReference = firebaseObject.child("Events/" + $scope.eventID);
-    
-    usersReference.child($scope.hostUID).once("value", function(snapshot) {
-      $scope.host = snapshot.val();
-    }, function(error) {
-      console.log("Read failed:" + error);
-    })
+    var idKeys = Object.keys($scope.users);
 
-    var usersObjs = [];  
-    for (var i = 0; i < $scope.users.length; i++) {
-      console.log($scope.users[i].$id);
-      usersReference.child($scope.users[i].$id).on("value",function(snapshot) {
-        var user = snapshot.val();
-        console.log(user);
-        var userObj = {};
-        userObj.uid = Object.keys(user)[0];
-        userObj.displayName = user.displayName;
-        userObj.profilePicture = user.profilePicture;
-        userObj.email = user.email;
-        usersObjs.push(userObj);
-        //console.log(usersObjs);
-        $timeout(function(){},0);
-      }, function (error) {
-        console.log("Read failed:" + error);
-      });
+    for(var u of idKeys) {
+      if($scope.users[u].role === "host") {
+        $scope.host = $scope.users[u];
+      } else {
+        $scope.usersData.push($scope.users[u]);
+      }
     }
-    $scope.usersData = usersObjs;
-    //console.log("test: " + $scope.usersData);
   }
   else {
       $state.go("login");
   }
 
+  $scope.viewProfile = function(user) {
+    $scope.person = user;
+    $scope.modalviewProfile.show();
+  }
   $scope.goBack = function() {
     $ionicHistory.goBack();
   }

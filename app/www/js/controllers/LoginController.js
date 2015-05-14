@@ -42,7 +42,7 @@ angular.module('starter')
         }).then(function(userData) {
           /* do something here */
           //add to firebase at 'users' endpoint
-          firebaseObject.child("users").child(userData.uid).set({
+          firebaseObject.child("user_data").child(userData.uid).set({
             email: em
           });
           //login after registering

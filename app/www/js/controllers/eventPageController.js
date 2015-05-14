@@ -8,50 +8,58 @@
 **/
 angular.module('starter')
 
-.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
-  
+.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $firebaseObject, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
+
   $scope.eventID = $stateParams.eventUID;
   $scope.eventHost = $stateParams.eventHost;
   $scope.eventHostEmail = $stateParams.eventHostEmail;
   $scope.eventActive = $stateParams.eventActive;
   $scope.userEmail = $stateParams.userEmail;
   $scope.numLikes = 0;
-
+  $scope.allUsersData = {};
   $timeout(function() {}, 0);
 
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
   if(fbAuth) {
-    var usersReference = firebaseObject.child("users");
-    var eventReference = firebaseObject.child("Events/" + $scope.eventID);
+    var usersReference = firebaseObject.child("user_data");
+    var eventImagesReference = firebaseObject.child("event_images/" + $scope.eventID);
+    var eventAttendeesReference = firebaseObject.child("event_attendees/" + $scope.eventID);
+    var imageDataReference = firebaseObject.child("image_data");
+    var imageLikesReference = firebaseObject.child("image_likes");
 
-    var syncArray = $firebaseArray(eventReference.child("images"));
-    var userArray = $firebaseArray(eventReference.child("Users"));
-    
-    $scope.images = syncArray;
-    $scope.users = userArray;
-    
-    //updates pictures while in event page
-    syncArray.$watch(function(image) {
-      eventReference.child("images/" + image.key).on("value", function(snapshot) {
-        var userID = snapshot.val()["user"];
-        usersReference.child(userID).once("value", 
-          function(snapshot) {
-            var userData = snapshot.val();
-            //add user data to image info
-            var index = $scope.images.$indexFor(image.key);
-            $scope.images[index].displayName = userData.displayName;
-            $scope.images[index].profilePicture = userData.profilePicture;
-            //update firebase array with displayname and profilepic
-            syncArray.$save(index);
-          }, function(error) {
-            console.log("Error:" + error);
-        });
-      }, function(error) {
-        console.log("Error:" + error);
+    var u = {};
+    eventAttendeesReference.on("child_added", function(attendee) {
+      usersReference.child(attendee.key()).on("value", function(info) {
+        u[info.key()] = info.val();
+        u[info.key()].role = attendee.val();
+        $timeout(function(){},0);        
       });
     });
-  
+    $scope.allUsersData = u;
+
+    var images = [];
+    eventImagesReference.on("child_added", function(img) {
+      var im = {};
+      
+      imageDataReference.child(img.key()).on("value", function(p) {
+        if(p.val() !== null) {
+          im.id = img.key();
+          im.image = p.val().image;
+          im.time = p.val().time;
+          im.user = p.val().user;
+        }
+      });
+
+      imageLikesReference.child(img.key()).on("value", function(likeInfo) {
+        im.numLikes = likeInfo.val().numLikes;
+        im.likedBy = likeInfo.val().likedBy;
+        images.push(im);
+        $timeout(function(){},0);
+      });
+      
+    });
+    $scope.images = images;
   }
   else {
     $state.go("login");
@@ -98,27 +106,36 @@ angular.module('starter')
         var likedbyList = {};
         likedbyList[fbAuth.uid] = 0;
 
-        syncArray.$add({
-          image: "data:image/jpeg;base64," + imageData,
+        var imageID = eventImagesReference.push(1).key();
+          
+        imageDataReference.child(imageID).set({
           user: fbAuth.uid,
           time: formattedTime,
-          numLikes: 0, // 0 likes for a new photo
-          likedBy: likedbyList // should be empty object ({}) but FB doesn't allow it.
-        }).then(function() {
-          alert("Image has been uploaded!");
+          image: "data:image/jpeg;base64," + imageData
         });
+
+        firebaseObject.child("image_likes").child(imageID).set({
+          numLikes: 0, // 0 likes for a new photo
+          likedBy: likedbyList // should be empty object ({}) but FB doesn't allow it.});
+        });
+
+        firebaseObject.child("user_images").child(fbAuth.uid).child(imageID).set(1);
+
+        alert("Image has been uploaded!");
+
       }, function(error) {
         console.error("ERROR UPLOAD: " + error);
       });
   }
 
   $scope.viewPhoto = function(photoData, index) {
+    photoData.userInfo = $scope.allUsersData[photoData.user];
     $state.go('viewPhoto', {
       'imageData' : photoData,
       'imageIndex' : index,
       'eventUID' :  $scope.eventID,
       'imagesArr' : $scope.images,
-      'userEmail' : $scope.userEmail });
+      'allUsersData' : $scope.allUsersData });
   }
 
   $scope.goBack = function() {
@@ -146,11 +163,7 @@ angular.module('starter')
   }
 
   $scope.eventUserList = function() {
-    $state.go('viewUserList', 
-      { userArr : $scope.users, 
-        host : $scope.eventHost,
-        hostEmail : $scope.eventHostEmail,
-        eventID : $scope.eventID })
+    $state.go('viewUserList', { 'allUsersData': $scope.allUsersData })
   }
   
 })

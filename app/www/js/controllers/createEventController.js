@@ -15,9 +15,9 @@ angular.module('starter')
   $scope.eventCoverPhoto = '';
 
   if(fbAuth) {
-    var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
-    var eventsReference = firebaseObject.child("Events");
-    var userReference = firebaseObject.child("users/"+ fbAuth.uid);
+    var myEventsReference = firebaseObject.child("user_events/" + fbAuth.uid);
+    var eventsReference = firebaseObject.child("event_data");
+    var userReference = firebaseObject.child("user_data/"+ fbAuth.uid);
     
     userReference.child("profilePicture").on("value", function(pic) {
       $scope.userProfilePic = pic.val();
@@ -31,7 +31,7 @@ angular.module('starter')
   // Get the name of the event with a given ID
   function getNameOfEventWithID(eventID) {
     return $q(function(resolve, reject) {
-      firebaseObject.child("Events/" + eventID).once("value", function(eventData) {
+      firebaseObject.child("event_data/" + eventID).once("value", function(eventData) {
         resolve( eventData.val()["Name"] );
       });
     });
@@ -41,7 +41,7 @@ angular.module('starter')
   function refreshMyEvents() {
     return $q(function(resolve, reject) {
       myEvents = [];
-      firebaseObject.child("users/" + fbAuth.uid + "/Events").once("value", function(events) {
+      firebaseObject.child("user_events/" + fbAuth.uid).once("value", function(events) {
         events.forEach(function(event) {
           if(event.val() == "host") {
             myEvents.push(event.key());
@@ -78,7 +78,7 @@ angular.module('starter')
   // Get the name of the event with a given ID
   function getEmailOfUserWithID(userID) {
     return $q(function(resolve, reject) {
-      firebaseObject.child("users/" + userID).once("value", function(userData) {
+      firebaseObject.child("user_data/" + userID).once("value", function(userData) {
         resolve( userData.val()["email"] );
       });
     });
@@ -103,8 +103,18 @@ angular.module('starter')
 
         if( password == confirmPassword ) {
           getEmailOfUserWithID(fbAuth.uid).then(function(email) {
-            var eventID = eventsReference.push({Host: fbAuth.uid, HostEmail: email, Name: eventName, Password: password, Timestamp: Firebase.ServerValue.TIMESTAMP, Active: 1, coverPhoto: coverPhoto }).key();
+            var eventID = eventsReference.push({Host: fbAuth.uid, 
+              HostEmail: email, 
+              Name: eventName, 
+              Password: password, 
+              Timestamp: Firebase.ServerValue.TIMESTAMP, 
+              Active: 1, 
+              coverPhoto: coverPhoto 
+            }).key();
+            
             myEventsReference.child(eventID).set("host");
+
+            firebaseObject.child("event_attendees").child(eventID).child(fbAuth.uid).set("host");
 
             $ionicLoading.hide();
             alert("Event Created!");

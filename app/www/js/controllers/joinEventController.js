@@ -14,8 +14,9 @@ angular.module('starter')
 
 
   if(fbAuth) {
-      var myEventsReference = firebaseObject.child("users/" + fbAuth.uid + "/Events");
-      var eventReference = firebaseObject.child('Events');
+      var myEventsReference = firebaseObject.child("user_events/" + fbAuth.uid);
+      var eventReference = firebaseObject.child('event_data');
+      var eventAffected = firebaseObject.child("event_attendees");
     }
     else {
       $state.go("login");
@@ -24,7 +25,7 @@ angular.module('starter')
   //resolve if the event eventName exists
   function eventExist(eventName) {
     return $q(function(resolve, reject){
-      var eventReference = firebaseObject.child('Events');
+      var eventReference = firebaseObject.child('event_data');
       eventReference.orderByChild("Name").equalTo(eventName).on("value", function(oneEvent){
           if (oneEvent.val() != null){
             resolve();
@@ -41,9 +42,9 @@ angular.module('starter')
   //resolve if the current user has any events
   function userHasEvents() {
     return $q(function(resolve, reject) {
-      var userInfo = firebaseObject.child("users/" + fbAuth.uid);
+      var userInfo = firebaseObject.child("user_events/" + fbAuth.uid);
       userInfo.once('value', function(dataSnapshot) {
-        if (dataSnapshot.hasChild("Events")) {
+        if (dataSnapshot) {
           resolve();
         //  alert("You have some event(s)");
         }
@@ -58,14 +59,15 @@ angular.module('starter')
   //resolve if the even identified by the event ID has not been joined by the user
   function eventNotJoined(eventID) {
     return $q(function(resolve, reject){
-        var userInfo = firebaseObject.child("users/" + fbAuth.uid);
+        var userEvents = firebaseObject.child("user_events/" + fbAuth.uid).child(eventID);
         if (!userHasEvents()) {
           resolve();
          // alert("You can join this event!");
         }
         else {
-          userInfo.once('value', function(dataSnapshot) {
-            if (dataSnapshot.child("Events/" + eventID).exists()) {
+          userEvents.once('value', function(dataSnapshot) {
+            if (dataSnapshot.val()) {
+              console.log(dataSnapshot.val())
               reject();
               alert("You have joined this event already!");
             }
@@ -81,7 +83,7 @@ angular.module('starter')
   // Get the name of the event with a given ID
   function getEmailOfUserWithID(userID) {
     return $q(function(resolve, reject) {
-      firebaseObject.child("users/" + userID).once("value", function(userData) {
+      firebaseObject.child("user_data/" + userID).once("value", function(userData) {
         resolve( userData.val()["email"] );
       });
     });
@@ -92,7 +94,7 @@ angular.module('starter')
   //If the given event name and host email address are vaild, return the event's password for checking
   function getEventPassword(eventName, userEmail) {
     targetEvent = null;
-    var eventReference = firebaseObject.child('Events');
+    var eventReference = firebaseObject.child('event_data');
     return $q(function(resolve, reject){
       eventReference.once('value', function(allEvents){
         allEvents.forEach(function(singleEvent){
@@ -122,8 +124,7 @@ angular.module('starter')
                 eventNotJoined(targetEventID).then(function(){
                 if (password == eventPassword) {
                   myEventsReference.child(targetEventID).set("guest");
-                  var eventAffected = firebaseObject.child("Events/" + targetEventID + "/Users");
-                  eventAffected.child(fbAuth.uid).set("guest");
+                  eventAffected.child(targetEventID).child(fbAuth.uid).set("guest");
                   alert("Event joined!");
                   $state.go("app.eventsPage", { 'eventUID' : targetEventID });
               }
@@ -131,7 +132,7 @@ angular.module('starter')
                 alert("Wrong Passowrd");
               }
             }, function() {
-              alert("Cannot join the event");
+              //alert("Cannot join the event");
             });
           }); 
       });
