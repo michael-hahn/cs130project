@@ -52,11 +52,13 @@ angular.module('starter')
       });
 
       imageLikesReference.child(img.key()).on("value", function(likeInfo) {
-        im.numLikes = likeInfo.val().numLikes;
-        im.likedBy = likeInfo.val().likedBy;
-        images.push(im);
-        $timeout(function(){},0);
+        if (likeInfo.val() !== null) {
+          im.numLikes = likeInfo.val().numLikes;
+          im.likedBy = likeInfo.val().likedBy;
+          $timeout(function(){},0);
+        }
       });
+      images.push(im);
     });
     $scope.images = images;
   }
@@ -158,6 +160,7 @@ angular.module('starter')
   }
 
   $scope.eventInfo = function() {
+    console.log($scope.images);
     alert("event info");
   }
 
