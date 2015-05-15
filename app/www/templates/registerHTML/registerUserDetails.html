@@ -9,12 +9,18 @@
 
 		  <div class="item item-image">
 		  	<br/>
-		    <a class="item energized" ng-click="modalChooseProfilePic.show()">
+		    <div class="item energized">
 		    	Choose Profile Picture (Optional)
 		    	<br />
 		    	<img style="width:250px; height:300px" ng-src="./././img/blank-profile.png" ng-if="profilePic === '' ">
 		    	<img style="width:250px; height:300px" ng-src="{{profilePic}}" ng-if="profilePic !== '' ">
-		    </a>
+		    </div>
+		    <div class="button-bar">
+	            <button class="button button-clear icon ion-camera" ng-click="chooseProfilePicture(0)">
+	            </button>
+	            <button class="button button-clear icon ion-images" ng-click="chooseProfilePicture(1)">     
+	            </button>
+        	</div>
 		  </div>
 	</div>
 

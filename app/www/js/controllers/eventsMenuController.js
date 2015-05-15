@@ -33,27 +33,32 @@ angular.module('starter')
     //get the keys of all events the user is in 
     myEventsReference.on("value",function(snapshot) {
       myEvents = snapshot.val();
-      myEventKeys = Object.keys(myEvents);
-      var jEvents = [];
-      var hEvents = [];
-      for (var i in myEventKeys){
-        //should only be called once or else keeps pushing to list when picture is taken
-        eventReference.orderByKey().equalTo(myEventKeys[i]).once("value",function(snapshot) {
-          var theEvent = snapshot.val();
-          var eventID = Object.keys(theEvent)[0];
-          theEvent[eventID].key = eventID; //added key to lead to that event
-          if (theEvent[eventID].HostEmail !== $scope.userEmail) {
-            jEvents.push(theEvent[eventID]);
-          } else {
-            hEvents.push(theEvent[eventID]);
-          }
-          $timeout(function(){},0);
-        }, function (error) {
-          console.log("Read faild:" + error);
-        });
+      if (myEvents !== null) {
+        myEventKeys = Object.keys(myEvents);
+        var jEvents = [];
+        var hEvents = [];
+        for (var i in myEventKeys){
+          //should only be called once or else keeps pushing to list when picture is taken
+          eventReference.orderByKey().equalTo(myEventKeys[i]).once("value",function(snapshot) {
+            var theEvent = snapshot.val();
+            var eventID = Object.keys(theEvent)[0];
+            theEvent[eventID].key = eventID; //added key to lead to that event
+            if (theEvent[eventID].HostEmail !== $scope.userEmail) {
+              jEvents.push(theEvent[eventID]);
+            } else {
+              hEvents.push(theEvent[eventID]);
+            }
+            $timeout(function(){},0);
+          }, function (error) {
+            console.log("Read faild:" + error);
+          });
+        }
+        $scope.joinedEvents.events = jEvents;
+        $scope.hostedEvents.events = hEvents;
+      } else {
+        $scope.joinedEvents.events = [];
+        $scope.hostedEvents.events = [];
       }
-      $scope.joinedEvents.events = jEvents;
-      $scope.hostedEvents.events = hEvents;
     }, function(error){
       console.log("Read failed:" + error);
     });

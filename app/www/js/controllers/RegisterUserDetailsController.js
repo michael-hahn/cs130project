@@ -9,16 +9,10 @@
 **/
 angular.module('starter')
 
-.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $ionicModal, $firebaseAuth, $state, $timeout, firebaseObject) {
+.controller('RegisterUserDetailsController', function( $scope, $cordovaCamera, $ionicModal, $firebaseAuth, $state, $timeout, firebaseObject, $ionicLoading) {
     
     console.log("in details ctrl");
     $scope.profilePic = ""; 
-
-    $ionicModal.fromTemplateUrl('templates/registerHTML/registerChooseProfilePic.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modalChooseProfilePic = modal;
-    });
 
     var fbAuth = firebaseObject.getAuth();
 
@@ -65,10 +59,7 @@ angular.module('starter')
       $cordovaCamera.getPicture(options).then(function(imageData) {
         $scope.profilePic = "data:image/jpeg;base64," +imageData;
       });
-
-      $scope.modalChooseProfilePic.hide();
       $timeout(function() {},0);
-      //$scope.$apply();//updates the view
     }
 
     $scope.submit = function(name) {
@@ -78,6 +69,7 @@ angular.module('starter')
           profilePicture : $scope.profilePic
         }, function(error) {
           if(error === null) {
+            alert("Register completed!");
             $state.go("app.eventsMenu");
           } else {
             alert(error);
