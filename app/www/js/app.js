@@ -131,6 +131,24 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     }
   })
 
+  .state("viewProfile", {
+    url: "/viewProfile",
+    templateUrl: "templates/viewProfile.html",
+    controller: 'viewProfileController',
+    params: { 
+      'user': null 
+    },
+    cache: false,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
   .state('app', {
     url: "/app",
     abstract: true,
@@ -142,6 +160,16 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         var authObj = $firebaseAuth(ref);
         return authObj.$requireAuth();
       }]
+    }
+  })
+
+  .state("app.friends", {
+    url: "/friends",
+    views: {
+      'tab-friends': {
+        templateUrl: "templates/friends.html",
+        controller: 'FriendsController'
+      }
     }
   })
 

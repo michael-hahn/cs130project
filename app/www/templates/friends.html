@@ -1,0 +1,16 @@
+<ion-view view-title="Friends">
+  <ion-nav-bar>
+  </ion-nav-bar>
+
+  <ion-content class="has-header has-tabs" padding="true">
+    <h1 ng-if="friendsIDArr.length === 0 ">No Friends Yet</h1>
+    <div class="item item-thumbnail-left" ng-repeat="fUID in friendsIDArr | orderBy:'-name' ">
+      <img src={{friendData[fUID].profilePicture}} ng-if="friendData[fUID].profilePicture !== '' " ng-click="viewProfile(friendData[fUID])">
+      <img src="./img/blank-profile.png" ng-if="friendData[fUID].profilePicture === '' " ng-click="viewProfile(friendData[fUID])">
+      <h2>{{friendData[fUID].displayName}}</h2>
+      <p>{{friendData[fUID].email}}</p>
+      <p>{{friendData[fUID].status}}</p>
+      <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">Accept Friend Request</button>
+    </div>
+  </ion-content>
+</ion-view>

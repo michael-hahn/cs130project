@@ -34,6 +34,7 @@ angular.module('starter')
       usersReference.child(attendee.key()).on("value", function(info) {
         u[info.key()] = info.val();
         u[info.key()].role = attendee.val();
+        u[info.key()].uid = attendee.key();
         $timeout(function(){},0);        
       });
     });
