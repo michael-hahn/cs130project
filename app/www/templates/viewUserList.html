@@ -14,7 +14,7 @@
       <h2> <span >Host: </span>{{host.displayName}}</h2>
       <p>{{host.email}}</p>
     </a>
-    <br />
+    
     <a class="item item-thumbnail-left" href="" ng-click="viewProfile(user)" ng-repeat="user in usersData">
       <img src={{user.profilePicture}} ng-if="user.profilePicture !== '' ">
       <img src="./img/blank-profile.png" ng-if="user.profilePicture === '' ">

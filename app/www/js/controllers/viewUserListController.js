@@ -10,27 +10,27 @@ angular.module('starter')
 
 .controller('viewUserListController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $ionicModal) {
 
-  //Modal for Display Name
+  //Modal for User Profile
   $ionicModal.fromTemplateUrl('templates/viewProfile.html', {
       scope: $scope
   }).then(function (modal) {
       $scope.modalviewProfile = modal;
   });
-
+  
   var fbAuth = firebaseObject.getAuth();
   $scope.users = $stateParams.allUsersData;
   $scope.usersData = [];
 
   if(fbAuth) {
-    console.log($scope.users);
 
     var idKeys = Object.keys($scope.users);
 
-    for(var u of idKeys) {
-      if($scope.users[u].role === "host") {
-        $scope.host = $scope.users[u];
+    for(var i in idKeys) {
+      var id = idKeys[i];
+      if($scope.users[id].role === "host") {
+        $scope.host = $scope.users[id];
       } else {
-        $scope.usersData.push($scope.users[u]);
+        $scope.usersData.push($scope.users[id]);
       }
     }
   }
