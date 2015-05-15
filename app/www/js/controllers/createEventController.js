@@ -117,7 +117,11 @@ angular.module('starter')
             firebaseObject.child("event_attendees").child(eventID).child(fbAuth.uid).set("host");
 
             $ionicLoading.hide();
-            alert("Event Created!");
+            
+            $timeout(function(){
+              alert("Event Created!");
+            }, 0);
+
             $state.go("app.eventsPage", { 'eventUID' : eventID});
           });
           
