@@ -9,7 +9,7 @@
 **/
 angular.module('starter')
 
-.controller('joinEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory) {
+.controller('joinEventController', function($scope, $firebaseArray, $q, $state, firebaseObject, $ionicHistory, $timeout) {
   var fbAuth = firebaseObject.getAuth();
 
 
@@ -125,7 +125,9 @@ angular.module('starter')
                 if (password == eventPassword) {
                   myEventsReference.child(targetEventID).set("guest");
                   eventAffected.child(targetEventID).child(fbAuth.uid).set("guest");
-                  alert("Event joined!");
+                  $timeout(function(){
+                    alert("Event joined!");
+                  },0);
                   $state.go("app.eventsPage", { 'eventUID' : targetEventID });
               }
               else {
