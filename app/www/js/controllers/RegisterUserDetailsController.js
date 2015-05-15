@@ -13,7 +13,7 @@ angular.module('starter')
     
     console.log("in details ctrl");
     $scope.profilePic = ""; 
-
+    
     var fbAuth = firebaseObject.getAuth();
 
     console.log("id = " + fbAuth.uid);

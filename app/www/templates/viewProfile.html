@@ -1,7 +1,7 @@
 <ion-modal-view>
 	<ion-header-bar class="bar bar-header bar-positive">
         <h1 class="title">{{person.displayName}}'s Profile</h1>
-        <button class="button button-clear button-primary" ng-click="modalviewProfile.hide()">Cancel</button>
+        <button class="button button-clear button-primary" ng-click="goBack()">Cancel</button>
     </ion-header-bar>
   	<ion-content class="has-header">	
     	<div class="list card">
@@ -25,8 +25,7 @@
 		  	
 		  	<div class="item tabs tabs-secondary tabs-icon-left">
 		  		<a class="tab-item" href="" ng-click="addUser()">
-		  			<i class="icon ion-person-add"></i>
-		  			Add
+		  			<i class="{{getAddIcon()}}"></i>
 		  		</a>
 		  	</div>
 		</div>

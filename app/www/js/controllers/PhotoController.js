@@ -21,15 +21,7 @@ angular.module('starter')
     $ionicSlideBoxDelegate.update();
   }, 0);
 
-  //Modal for Display Name
-  $ionicModal.fromTemplateUrl('templates/viewProfile.html', {
-      scope: $scope
-  }).then(function (modal) {
-      $scope.modalviewProfile = modal;
-  });
-
   if(fbAuth){
-    console.log(fbAuth.uid);
     var eventReference = firebaseObject.child("event_data/" + $stateParams.eventUID);
     var imageLikesReference = firebaseObject.child("image_likes");
 
@@ -104,8 +96,7 @@ angular.module('starter')
   }
 
   $scope.viewProfile = function(user) {
-    $scope.person = user;
-    $scope.modalviewProfile.show();
+    $state.go("viewProfile", {'user' : user});
   }
 
 })
