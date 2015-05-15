@@ -50,6 +50,7 @@ angular.module('starter')
     });
 
     userFriendsReference.child(fbAuth.uid).on("child_changed", function(friend) {
+      console.log("changed");
       $scope.firstEntry = false; //no longer looking at child_added data
       $scope.friendData[friend.key()].status = friend.val();
       $timeout(function() {}, 0);
@@ -57,10 +58,15 @@ angular.module('starter')
       console.log(error);
     });
 
+    userFriendsReference.child(fbAuth.uid).on("child_removed", function(friend) {
+      delete $scope.friendData[friend.key()]; //object now undefined
+      $timeout(function() {}, 0);
+    }, function(error) {
+      console.log(error);
+    });
+
     $scope.friendsIDArr = friendsIDArr;
     $scope.friendData = friendData;
-
-    console.log($scope.friendsIDArr);
 
   } else {
     $state.go("login");
@@ -72,8 +78,7 @@ angular.module('starter')
 
   $scope.add = function(friend) {
     $scope.friendIndex = $scope.friends.indexOf(friend);
-
-    console.log($scope.AcceptFriendIndex);
+    
     userFriendsReference.child(fbAuth.uid).child(friend.uid).transaction(function(status) {
       return "friend";
     });
@@ -82,4 +87,35 @@ angular.module('starter')
     });
   }
 
+  $scope.delete = function(friend) {
+    //log msg when delete finished sync
+    var onDelete = function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Friend deleted");
+      }
+    }
+
+    userFriendsReference.child(fbAuth.uid).child(friend.uid).remove(onDelete);
+    userFriendsReference.child(friend.uid).child(fbAuth.uid).remove(onDelete);
+  }
+
+  $scope.getFriendProfilePicture = function(profilePic) {
+    if (profilePic === "") {
+      return "./img/blank-profile.png";
+    } else {
+      return profilePic;
+    }
+  }
+
+  $scope.getStatusIcon = function(status) {
+    if (status === "friend") {
+      return "icon ion-android-happy";
+    } else if (status === "pending") {
+      return "icon ion-load-a";
+    } else if (status === "waiting") {
+      return "icon ion-load-b";
+    }
+  }
 });
