@@ -90,10 +90,10 @@ angular.module('starter')
     if (im.likedBy !== undefined) {
 
       if (im.likedBy[fbAuth.uid] === 1 ) {
-        return "button button-icon icon ion-thumbsup";
+        return "button button-clear button-icon icon ion-thumbsup";
       } 
       else
-        return "button button-clear icon ion-thumbsup";
+        return "button button-icon icon ion-thumbsup balanced";
     }
     return false;
   }
