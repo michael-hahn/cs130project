@@ -22,7 +22,8 @@ angular.module('starter')
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
   if(fbAuth) {
-    var usersReference = firebaseObject.child("user_data");
+    var usersReference = firebaseObject.child("user_data");    
+    var eventDataReference = firebaseObject.child("event_data/" + $scope.eventID);
     var eventImagesReference = firebaseObject.child("event_images/" + $scope.eventID);
     var eventAttendeesReference = firebaseObject.child("event_attendees/" + $scope.eventID);
     var imageDataReference = firebaseObject.child("image_data");
@@ -149,13 +150,13 @@ angular.module('starter')
 
   $scope.endEvent = function() {
     $scope.eventActive = 0;
-    eventReference.child("Active").set(0);
+    eventDataReference.child("Active").set(0);
     alert("You have ended this event.");
   }
 
   $scope.reactivateEvent = function() {
     $scope.eventActive = 1;
-    eventReference.child("Active").set(1);
+    eventDataReference.child("Active").set(1);
     alert("You have reactivated this event.");
   }
 
