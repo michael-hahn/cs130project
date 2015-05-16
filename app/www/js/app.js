@@ -120,7 +120,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     params: { 
       'allUsersData': null 
     },
-    cache: true,
+    cache: false,
     resolve: {
     // controller will not be loaded until $requireAuth resolves
       "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {

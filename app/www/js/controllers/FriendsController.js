@@ -9,63 +9,88 @@
 **/
 angular.module('starter')
 
-.controller('FriendsController', function($scope, $stateParams, $firebaseArray, $state, firebaseObject, $timeout) {
-
-  $scope.friends = [];
+.controller('FriendsController', function($scope, $stateParams, $firebaseArray, $state, firebaseObject, $timeout, $ionicHistory, Scopes) {
+  $scope.inviteFriends = $stateParams.inviteFriends;
   $scope.friendData = {};
-  $scope.firstEntry;
+  $scope.friendsObjs = {ids: [], show: false};
+  $scope.pendAndWaitObjs = {ids: [], show: false};
+  $timeout(function(){},0);
+  
+  Scopes.store('FriendsController', $scope); //saving to service
+  
   var fbAuth = firebaseObject.getAuth();
-
   if(fbAuth) {
-
     var userFriendsReference = firebaseObject.child("user_friends");
 
     var userDataReference = firebaseObject.child("user_data");
 
     var friendsIDArr = [];
-    var friendUIDs = {};
+    var pendingAndWaitingIDArr = [];
     var friendData = {};
 
     userFriendsReference.child(fbAuth.uid).on("child_added", function(friend) {
       var id = friend.key();
-      $scope.firstEntry = true;
+  
       userDataReference.child(id).on("value", function(info) {
         var f = info.val();
-        //console.log($scope.firstEntry);
-        if ($scope.firstEntry === true) { //only get child_added version of status once
-          f.status = friend.val();
-        } else {
-          f.status = $scope.friendData[friend.key()].status;
-        }
+        f.status = friend.val();
         f.uid = id;
-        if($scope.friends === [] || friendUIDs[f.uid] !== 1) {
+
+        if (f.status === "friend") {
           friendsIDArr.push(id);
-        } 
+        } else if (f.status === "pending" || f.status === "waiting") {
+          pendingAndWaitingIDArr.push(id);
+        }
+        $timeout(function(){},0);
+
         friendData[id] = f;
-        friendUIDs[id] = 1;
         $timeout(function(){},0);
       });
     }, function(error) {
       console.log(error);
     });
 
+    //only changes from "pending" to "friend"
     userFriendsReference.child(fbAuth.uid).on("child_changed", function(friend) {
       console.log("changed");
-      $scope.firstEntry = false; //no longer looking at child_added data
-      $scope.friendData[friend.key()].status = friend.val();
+      var status = friend.val();
+
+      //remove id from pendingIDs and put in friendsID
+      var i = $scope.pendAndWaitObjs.ids.indexOf(friend.key());
+      if (i > -1) {
+        $scope.pendAndWaitObjs.ids.splice(i,1);
+        $scope.friendsObjs.ids.push(friend.key());
+        $timeout(function() {}, 0);
+      }
+
+      $scope.friendData[friend.key()].status = status;
+
       $timeout(function() {}, 0);
     }, function(error) {
       console.log(error);
     });
 
     userFriendsReference.child(fbAuth.uid).on("child_removed", function(friend) {
-      delete $scope.friendData[friend.key()]; //object now undefined
+      var id = friend.key();
+      delete $scope.friendData[id]; //object now undefined
+      var i = $scope.pendAndWaitObjs.ids.indexOf(id);
+      var j = $scope.friendsObjs.ids.indexOf(id);
+      
+      if (i > -1) {
+        $scope.pendAndWaitObjs.ids.splice(i,1);
+      }
+
+      if (j > -1) {
+        $scope.friendsObjs.ids.splice(i,1);
+      }
+
       $timeout(function() {}, 0);
     }, function(error) {
       console.log(error);
     });
 
-    $scope.friendsIDArr = friendsIDArr;
+    $scope.friendsObjs.ids = friendsIDArr;
+    $scope.pendAndWaitObjs.ids = pendingAndWaitingIDArr;
     $scope.friendData = friendData;
 
   } else {
@@ -76,9 +101,7 @@ angular.module('starter')
     $state.go("viewProfile", {'user' : friend});
   }
 
-  $scope.add = function(friend) {
-    $scope.friendIndex = $scope.friends.indexOf(friend);
-    
+  $scope.add = function(friend) { 
     userFriendsReference.child(fbAuth.uid).child(friend.uid).transaction(function(status) {
       return "friend";
     });
@@ -114,8 +137,14 @@ angular.module('starter')
       return "icon ion-android-happy";
     } else if (status === "pending") {
       return "icon ion-load-a";
-    } else if (status === "waiting") {
-      return "icon ion-load-b";
     }
+  }
+
+  $scope.toggleGroup = function(group) {
+    group.show = !group.show;
+  }
+
+  $scope.isGroupShown = function(group) {
+    return group.show;
   }
 });

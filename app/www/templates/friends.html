@@ -3,35 +3,86 @@
   </ion-nav-bar>
 
   <ion-content class="has-header has-tabs" padding="true">
-    <h1 ng-if="friendsIDArr.length === 0 ">No Friends Yet</h1>
+
+    <ion-list ng-if="pendAndWaitObjs.ids.length !== 0">
+      <a class="button button-bar item-stable" ng-click="toggleGroup(pendAndWaitObjs)" ng-class="{active: isGroupShown(pendAndWaitObjs)}">
+        <i class="icon" ng-class="isGroupShown(pendAndWaitObjs) ? 'ion-minus' : 'ion-plus' "></i>
+        &nbsp;
+        Pending List
+        &nbsp;
+        <span class="badge badge-positive">
+          {{pendAndWaitObjs.ids.length}}
+        </span>
+      </a>
+      <div class="item-accordion" ng-repeat="fUID in pendAndWaitObjs.ids" ng-show="isGroupShown(pendAndWaitObjs)" ng-if="friendData[fUID] !== undefined">
+        <ion-item class="item item-avatar" >
+            
+            <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
+
+            <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
+            
+            <p ng-click="viewProfile(friendData[fUID])">
+              <i class="icon ion-email"></i>
+              {{friendData[fUID].email}}
+            </p>
+
+            <p>
+              <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
+              {{friendData[fUID].status}}
+            </p>
+
+          <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept Friend Request
+          </button>
+
+          <p class="item-icon-right">
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </p>
+          
+          <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">Delete
+          </ion-option-button>
+
+        </ion-item>
+      </div>
+    </ion-list>
     <ion-list>
-      <ion-item class="item item-avatar" ng-repeat="fUID in friendsIDArr | orderBy:'-name' " ng-if="friendData[fUID] !== undefined ">
+      <a class="button button-bar item-stable" ng-click="toggleGroup(friendsObjs)" ng-class="{active: isGroupShown(friendsObjs)}">
+        <i class="icon" ng-class="isGroupShown(friendsObjs) ? 'ion-minus' : 'ion-plus' "></i>
+        &nbsp;
+        Friends
+        &nbsp;
+        <span class="badge badge-positive">
+          {{friendsObjs.ids.length}}
+        </span>
+      </a>
+      <div class="item-accordion" ng-repeat="fUID in friendsObjs.ids" ng-show="isGroupShown(friendsObjs)" ng-if="friendData[fUID] !== undefined">
+        <ion-item class="item item-avatar" >
+            
+            <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
 
-        <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])" />
+            <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
+            
+            <p ng-click="viewProfile(friendData[fUID])">
+              <i class="icon ion-email"></i>
+              {{friendData[fUID].email}}
+            </p>
 
-        <h2>{{friendData[fUID].displayName}}</h2>
-        
-        <p>
-          <i class="icon ion-email"></i>
-          {{friendData[fUID].email}}
-        </p>
+            <p>
+              <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
+              {{friendData[fUID].status}}
+            </p>
 
-        <p>
-          <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
-          {{friendData[fUID].status}}
-        </p>
-        
-        <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept Friend Request
-        </button>
+          <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept Friend Request
+          </button>
 
-        <p class="item-icon-right">
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </p>
-        
-        <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">Delete
-        </ion-option-button>
+          <p class="item-icon-right">
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </p>
+          
+          <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">Delete
+          </ion-option-button>
 
-      </ion-item>
+        </ion-item>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>
