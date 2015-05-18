@@ -13,6 +13,9 @@ angular.module('starter')
 	var mem = {};
 
 	return {
+		isEmpty: function() {
+			return Object.keys(mem).length === 0;
+		},
 		store: function(key, value) {
 			mem[key] = value;
 		},

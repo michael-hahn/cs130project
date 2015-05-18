@@ -1,34 +1,32 @@
-<ion-modal-view>
-	<ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">{{person.displayName}}'s Profile</h1>
-        <button class="button button-clear button-primary" ng-click="goBack()">Cancel</button>
-    </ion-header-bar>
-  	<ion-content class="has-header">	
-    	<div class="list card">
-    		<h1 style="text-align:center">
-			  	{{person.displayName}}
-			</h1>
+<ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">{{person.displayName}}'s Profile</h1>
+    <button class="button button-clear button-primary" ng-click="goBack()">Cancel</button>
+</ion-header-bar>
+	<ion-content class="has-header">	
+	<div class="list card">
+		<h1 style="text-align:center">
+		  	{{person.displayName}}
+		</h1>
 
-			<div class="item item-image">
-					<!-- Displays Profile Pic if not null --> 
-	    		<img style="width:250px; height:300px" ng-src="{{person.profilePicture}}" ng-if="person.profilePicture !== '' " />
+		<div class="item item-image">
+				<!-- Displays Profile Pic if not null --> 
+    		<img style="width:250px; height:300px" ng-src="{{person.profilePicture}}" ng-if="person.profilePicture !== '' " />
 
-	    		<!-- Else display blank profile pic -->
-	    		<img style="width:250px; height:300px" ng-src="././img/blank-profile.png" ng-if="person.profilePicture === '' " />
+    		<!-- Else display blank profile pic -->
+    		<img style="width:250px; height:300px" ng-src="././img/blank-profile.png" ng-if="person.profilePicture === '' " />
 
-	    		<br/ >
+    		<br/ >
 
-	    		<p>
-	    			<p class="subdued">x Photos Taken</p>
-	    		</p>
-			</div>
-		  	
-		  	<div class="item tabs tabs-secondary tabs-icon-left">
-		  		<a class="tab-item" href="" ng-click="addUser()">
-		  			<i class="{{getAddIcon()}}"></i>
-		  		</a>
-		  	</div>
+    		<p>
+    			<p class="subdued">x Photos Taken</p>
+    		</p>
 		</div>
+	  	
+	  	<div class="item tabs tabs-secondary tabs-icon-left">
+	  		<a class="tab-item" href="" ng-click="addUser()">
+	  			<i class="{{getAddIcon()}}"></i>
+	  		</a>
+	  	</div>
+	</div>
 
-  	</ion-content>
-</ion-modal-view>
+	</ion-content>

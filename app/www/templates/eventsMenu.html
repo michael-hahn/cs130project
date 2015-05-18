@@ -11,21 +11,21 @@
   <ion-content class="has-subheader has-tabs" padding="true">
 
     <div class="list">
+
       <a class="button button-bar item-stable" ng-click="toggleGroup(hostedEvents)" ng-class="{active: isGroupShown(hostedEvents)}">
         <i class="icon" ng-class="isGroupShown(hostedEvents) ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         Hosted Events
         &nbsp;
         <span class="badge badge-positive">
-          {{hostedEvents.events.length}}</span>
+          {{hostedEvents.eventIDs.length}}</span>
       </a>
-      <div class="item-accordion" ng-repeat="event in hostedEvents.events" ng-show="isGroupShown(hostedEvents)">
-        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(event)">
-          <img src={{event.coverPhoto}} ng-if="event.coverPhoto !== '' ">
-          <img ng-src="./././img/blank-coverphoto.png" ng-if="event.coverPhoto === '' ">
-          <h2>{{event.Name}}</h2>
+      <div class="item-accordion" ng-repeat="eventID in hostedEvents.eventIDs" ng-show="isGroupShown(hostedEvents)" ng-if="eventData[eventID] !== undefined">
+        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(eventID)">
+          <img src={{getCoverPhoto(eventData[eventID].coverPhoto)}}>
+          <h2>{{eventData[eventID].Name}}</h2>
           <p>Host</p>
-          <p ng-if="event.Active === 1">Active</p>
+          <p ng-if="eventData[eventID].Active === 1">Active</p>
         </a>
       </div>
 
@@ -37,19 +37,42 @@
         Joined Events
         &nbsp;
         <span class="badge badge-positive">
-          {{joinedEvents.events.length}}</span>
+          {{joinedEvents.eventIDs.length}}</span>
       </a>
-      <div class="item-accordion" ng-repeat="event in joinedEvents.events" ng-show="isGroupShown(joinedEvents)">
-        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(event)">
-          <img src={{event.coverPhoto}} ng-if="event.coverPhoto !== '' ">
-          <img ng-src="./././img/blank-coverphoto.png" ng-if="event.coverPhoto === '' ">
-          <h2>{{event.Name}}</h2>
-          <p>Host:{{event.HostEmail}}</p>
-          <p ng-if="event.Active === 1">Active</p>
+      <div class="item-accordion" ng-repeat="eventID in joinedEvents.eventIDs" ng-show="isGroupShown(joinedEvents)" ng-if="eventData[eventID] !== undefined">
+        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(eventID)">
+          <img src={{getCoverPhoto(eventData[eventID].coverPhoto)}}>
+          <h2>{{eventData[eventID].Name}}</h2>
+          <p>Host:{{eventData[eventID].HostEmail}}</p>
+          <p ng-if="eventData[eventID].Active === 1">Active</p>
         </a>
       </div>
+      
+      <br />
 
+      <a class="button button-bar item-stable" ng-click="toggleGroup(pendingEvents)" ng-class="{active: isGroupShown(pendingEvents)}">
+        <i class="icon" ng-class="isGroupShown(pendingEvents) ? 'ion-minus' : 'ion-plus'"></i>
+        &nbsp;
+        Pending Events
+        &nbsp;
+        <span class="badge badge-positive">
+          {{pendingEvents.eventIDs.length}}</span>
+      </a>
+      <div class="item-accordion" ng-repeat="eventID in pendingEvents.eventIDs" ng-show="isGroupShown(pendingEvents)" ng-if="eventData[eventID] !== undefined">
+        <div class="item item-thumbnail-left">
+          <img src={{getCoverPhoto(eventData[eventID].coverPhoto)}}>
+          <h2>{{eventData[eventID].Name}}</h2>
+          <p>Invited by {{eventData[eventID].HostEmail}}</p>
+          <p ng-if="eventData[eventID].Active === 1">Active</p>
+          <div class="button-bar">
+          <button class="button button-small button-balanced" ng-click="joinEvent(eventID)">Accept
+          </button>
+          <button class="button button-small button-assertive" ng-click="rejectEvent(eventID)">Decline
+          </button>
+          </div>
+        </div>
+      </div>
+    
     </div>
-
   </ion-content>
 </ion-view>

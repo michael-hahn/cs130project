@@ -8,23 +8,18 @@
 **/
 angular.module('starter')
 
-.controller('viewUserListController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $cordovaCamera, $state, firebaseObject, $timeout, $ionicModal) {
+.controller('viewUserListController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $state, firebaseObject, $timeout) {
   
-  var fbAuth = firebaseObject.getAuth();
+  $scope.eventID = $stateParams.eventID;
   $scope.users = $stateParams.allUsersData;
+
+  var fbAuth = firebaseObject.getAuth();
   $scope.usersData = [];
 
-  //Modal for Invite Friends
-    $ionicModal.fromTemplateUrl('templates/inviteFriends.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modalInviteFriends = modal;
-    });
-
   if(fbAuth) {
-    
-    var idKeys = Object.keys($scope.users);
 
+    var idKeys = Object.keys($scope.users);
+  
     for(var i in idKeys) {
       var id = idKeys[i];
       var user = $scope.users[id];
@@ -44,15 +39,6 @@ angular.module('starter')
     return (fbAuth.uid === $scope.host.uid);
   }
 
-  $scope.contentPadding = function() {
-    console.log($scope.isHost());
-    if($scope.isHost() === true) {
-      return "has-subheader";
-    } else {
-      return "has-header";
-    }
-  }
-
   $scope.viewProfile = function(user) {
     $state.go("viewProfile", {'user' : user});
   }
@@ -69,6 +55,7 @@ angular.module('starter')
     }
   }
 
-  $scope.inviteFriends = function() {
+  $scope.inviteFriends = function(selected) {
+    $state.go("inviteFriends", {'eventID': $scope.eventID});
   }
 })

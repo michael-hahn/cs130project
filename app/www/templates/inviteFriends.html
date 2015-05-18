@@ -1,8 +1,36 @@
-<ion-modal-view>
-    <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">Invite Friends</h1>
-        <button class="button button-clear button-primary" ng-click="modalInviteFriends.hide()">Cancel</button>
-    </ion-header-bar>
-    <ion-content class="has-header" ng-controller="FriendsController">
-    </ion-content>
-</ion-modal-view>
+<ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Invite Friends</h1>
+    <button class="button button-clear button-primary" ng-click="goBack()">Cancel</button>
+</ion-header-bar>
+
+<div class="bar bar-subheader">
+	<div class='button-bar'>
+		<button class="button" ng-click="checkAll()">Check All</button>
+
+		<button class="button" ng-click="uncheckAll()">Uncheck All</button>
+	</div>
+</div>
+
+<ion-content ng-class="{'has-subheader':true, 'has-footer': invitedIds.ids.length !== 0}">
+	<h3 ng-if="myFriendIDs.length === 0">No Friends to Invite</h3>
+	<ul class="list" ng-if="myFriendIDs.length !== 0">
+		<li class="item item-avatar-right item-checkbox" ng-repeat="fUID in myFriendIDs" ng-if="friendData[fUID] !== undefined">
+			<img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} />
+		    
+		    <label class="checkbox">
+		    	<input type="checkbox" checklist-model="invitedIDs.ids" checklist-value="fUID">
+	    	</label>
+	    	
+			<h2>{{friendData[fUID].displayName}}</h2>
+
+			<p>
+			  <i class="icon ion-email"></i>
+			  {{friendData[fUID].email}}
+			</p>
+		</li>
+	</ul>
+</ion-content>
+
+<div class="bar bar-footer" ng-if="invitedIDs.ids.length !== 0">
+	<button class="button button-block" ng-click="inviteFriends(invitedIDs.ids)">Invite Friends</button>
+</div>
