@@ -10,70 +10,100 @@
 angular.module('starter')
 
 .controller('eventsMenuController', function($scope, $stateParams, $firebaseArray, $q, $state, firebaseObject, $timeout) {
-  var fbAuth = firebaseObject.getAuth();
-  var myEvents = null;
-  var myEventKeys = null;
   $scope.joinedEvents = {
-    events: [],
+    eventIDs: [],
     show: false
   };
   $scope.hostedEvents = {
-    events: [],
+    eventIDs: [],
     show: false
   };
+
+  $scope.pendingEvents = {
+    eventIDs: [],
+    show: false
+  }
+  var fbAuth = firebaseObject.getAuth();
 
   if(fbAuth) {
     var myEventsReference = firebaseObject.child("user_events/" + fbAuth.uid);
     var eventReference = firebaseObject.child('event_data');
     var userReference = firebaseObject.child("user_data/" + fbAuth.uid);
+    var eventAttendeesReference = firebaseObject.child('event_attendees');
 
-    userReference.child("email").on("value", function(userInfo) {
-      $scope.userEmail = userInfo.val();
-    })
-    //get the keys of all events the user is in 
-    myEventsReference.on("value",function(snapshot) {
-      myEvents = snapshot.val();
-      if (myEvents !== null) {
-        myEventKeys = Object.keys(myEvents);
-        var jEvents = [];
-        var hEvents = [];
-        for (var i in myEventKeys){
-          //should only be called once or else keeps pushing to list when picture is taken
-          eventReference.orderByKey().equalTo(myEventKeys[i]).once("value",function(snapshot) {
-            var theEvent = snapshot.val();
-            var eventID = Object.keys(theEvent)[0];
-            theEvent[eventID].key = eventID; //added key to lead to that event
-            if (theEvent[eventID].HostEmail !== $scope.userEmail) {
-              jEvents.push(theEvent[eventID]);
-            } else {
-              hEvents.push(theEvent[eventID]);
-            }
-            $timeout(function(){},0);
-          }, function (error) {
-            console.log("Read faild:" + error);
-          });
-        }
-        $scope.joinedEvents.events = jEvents;
-        $scope.hostedEvents.events = hEvents;
-      } else {
-        $scope.joinedEvents.events = [];
-        $scope.hostedEvents.events = [];
+    var myEvents = {};
+    var hEventIDs = []; //host
+    var jEventIDs = []; //joined
+    var pEventIDs = []; //pending
+    //var myEventKeys = null;
+    myEventsReference.on("child_added", function(event){
+      var eventID = event.key();
+      var eventRole = event.val();
+
+      if(eventRole === "host") {
+        hEventIDs.push(eventID);
+      } else if (eventRole === "guest") {
+        jEventIDs.push(eventID);
+      } else if (eventRole === "pending") {
+        pEventIDs.push(eventID);
       }
-    }, function(error){
-      console.log("Read failed:" + error);
+
+      eventReference.child(eventID).on("value", function(eventData) {
+        //store events data
+        myEvents[eventID] = eventData.val();
+      });
     });
+
+    //when role changes (pending -> guest)
+    myEventsReference.on("child_changed", function(event){
+      console.log("changed " + event.key() + " " + event.val());
+
+      var i = $scope.pendingEvents.eventIDs.indexOf(event.key());
+
+      if (i > -1) {
+        $scope.pendingEvents.eventIDs.splice(i,1);
+        $scope.joinedEvents.eventIDs.push(event.key());
+        $timeout(function(){},0);
+      }
+    });
+
+    //when declining/removing event invite
+    myEventsReference.on("child_removed", function(event){
+      console.log("removed " + event.key() + " " + event.val());
+      delete $scope.eventData[event.key()];
+      var role = event.val();
+      var index;
+      var arrRef;
+      if (role === "host") {
+        index = $scope.hostedEvents.eventIDs.indexOf(event.key());
+        arrRef = $scope.hostedEvents.eventIDs;
+      } else if (role === "guest") {
+        index = $scope.joinedEvents.eventIDs.indexOf(event.key());
+        arrRef = $scope.joinedEvents.eventIDs;
+      } else if (role === "pending") {
+        index = $scope.pendingEvents.eventIDs.indexOf(event.key());
+        arrRef = $scope.pendingEvents.eventIDs;
+      }
+      if (index > -1) {
+        arrRef.splice(index,1);
+      }
+      $timeout(function(){},0);
+
+    });
+
+    $scope.eventData = myEvents;
+    $scope.hostedEvents.eventIDs = hEventIDs;
+    $scope.joinedEvents.eventIDs = jEventIDs;
+    $scope.pendingEvents.eventIDs = pEventIDs;
   }
   else {
       $state.go("login");
   }
 
-  $scope.goToEvent = function(event) {
+  $scope.goToEvent = function(eventID) {
     $state.go("app.eventsPage", { 
-      'eventUID' : event.key, 
-      'eventHost' : event.Host, 
-      'eventHostEmail' : event.HostEmail, 
-      'eventActive' : event.Active, 
-      'userEmail' : $stateParams.userEmail });
+      'eventUID' : eventID, 
+      'eventData' : $scope.eventData[eventID] });
   }
 
  /*
@@ -86,4 +116,31 @@ angular.module('starter')
   $scope.isGroupShown = function(group) {
     return group.show;
   };
+
+  $scope.getCoverPhoto = function(photo) {
+    if (photo === "") {
+      return "./././img/blank-coverphoto.png";
+    } else {
+      return photo;
+    }
+  }
+
+  $scope.joinEvent = function(eventID) {
+    myEventsReference.child(eventID).transaction(function(role) {
+      return "guest";
+    });
+    eventAttendeesReference.child(eventID).child(fbAuth.uid).set("guest");
+  }
+
+  $scope.rejectEvent = function(eventID) {
+    var onDelete = function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Event declined");
+      }
+    }
+
+    myEventsReference.child(eventID).remove(onDelete);
+  }
 })

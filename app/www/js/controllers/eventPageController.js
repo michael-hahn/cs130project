@@ -11,10 +11,7 @@ angular.module('starter')
 .controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $firebaseObject, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
 
   $scope.eventID = $stateParams.eventUID;
-  $scope.eventHost = $stateParams.eventHost;
-  $scope.eventHostEmail = $stateParams.eventHostEmail;
-  $scope.eventActive = $stateParams.eventActive;
-  $scope.userEmail = $stateParams.userEmail;
+  $scope.eventData = $stateParams.eventData;
   $scope.numLikes = 0;
   $scope.allUsersData = {};
   $timeout(function() {}, 0);
@@ -142,7 +139,7 @@ angular.module('starter')
   }
 
   $scope.goBack = function() {
-    $state.go("app.eventsMenu", {userEmail : $scope.userEmail});
+    $state.go("app.eventsMenu");
   }
 
   $scope.isHost = function() {
@@ -167,7 +164,7 @@ angular.module('starter')
   }
 
   $scope.eventUserList = function() {
-    $state.go('viewUserList', { 'allUsersData': $scope.allUsersData })
+    $state.go('viewUserList', { 'allUsersData': $scope.allUsersData, 'eventID' : $scope.eventID })
   }
   
 })

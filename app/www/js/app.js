@@ -18,7 +18,7 @@
  */
 
 // Ionic Starter App
-angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
+angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'checklist-model'])
 
 .value('firebaseObject', new Firebase("https://cs130project.firebaseio.com/"))
 
@@ -118,8 +118,25 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     templateUrl: "templates/viewUserList.html",
     controller: 'viewUserListController',
     params: { 
-      'allUsersData': null 
+      'allUsersData': null,
+      'eventID': null
     },
+    cache: false,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
+  .state("inviteFriends", {
+    url: "/inviteFriends",
+    templateUrl: "templates/inviteFriends.html",
+    controller: 'inviteFriendsController',
+    params: {'eventID': null},
     cache: false,
     resolve: {
     // controller will not be loaded until $requireAuth resolves
@@ -191,8 +208,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
         templateUrl: "templates/eventsMenu.html",
         controller: 'eventsMenuController'
       }
-    },
-    params: {'userEmail' : null}
+    }
   })
 
   .state("app.eventsPage", {
@@ -205,10 +221,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic'])
     },
     params: {
       'eventUID' : null, 
-      'eventHost' : null, 
-      'eventHostEmail' : null, 
-      'eventActive' : null, 
-      'userEmail' : null}
+      'eventData' : null}
   })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

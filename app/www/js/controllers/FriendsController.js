@@ -10,7 +10,6 @@
 angular.module('starter')
 
 .controller('FriendsController', function($scope, $stateParams, $firebaseArray, $state, firebaseObject, $timeout, $ionicHistory, Scopes) {
-  $scope.inviteFriends = $stateParams.inviteFriends;
   $scope.friendData = {};
   $scope.friendsObjs = {ids: [], show: false};
   $scope.pendAndWaitObjs = {ids: [], show: false};
