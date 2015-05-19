@@ -19,21 +19,15 @@ angular.module('starter')
 
     	if(fbAuth.uid !== $scope.person.uid) {
 			userFriendsReference.child(fbAuth.uid).child($scope.person.uid).on("value", function(status) {
-				console.log(status.val());
 				if(status.val() === null) {
-					console.log("0");
 					$scope.status = 0;
 				} else {
-					console.log("1");
 					$scope.status = 1;
 				}
 			});
     	} else {
-    		console.log("11");
     		$scope.status = 1;
     	}
-
-    	console.log($scope.status);
 	} else {
 	$state.go("login");
 	}
