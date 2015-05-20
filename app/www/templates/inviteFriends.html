@@ -6,7 +6,7 @@
 <div class="bar bar-subheader">
 	<div class='button-bar'>
 		<button class="button" ng-click="checkAll()">Check All</button>
-
+		<button class="button button-balanced" ng-click="inviteFriends(invitedIDs.ids)" ng-if="invitedIDs.ids.length !== 0">Invite Friends</button>
 		<button class="button" ng-click="uncheckAll()">Uncheck All</button>
 	</div>
 </div>
@@ -30,7 +30,3 @@
 		</li>
 	</ul>
 </ion-content>
-
-<div class="bar bar-footer" ng-if="invitedIDs.ids.length !== 0">
-	<button class="button button-block" ng-click="inviteFriends(invitedIDs.ids)">Invite Friends</button>
-</div>

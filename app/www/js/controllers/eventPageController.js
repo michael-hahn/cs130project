@@ -15,7 +15,6 @@ angular.module('starter')
   $scope.numLikes = 0;
   $scope.allUsersData = {};
   $timeout(function() {}, 0);
-
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
   if(fbAuth) {
