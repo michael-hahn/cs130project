@@ -144,10 +144,29 @@ angular.module('starter')
     myEventsReference.child(eventID).remove(onDelete);
   }
 
+
+  $scope.removeEvent = function(eventID) {
+    if(confirm("Are you sure you want to delete this event? All associated photos will be lost.")) {
+      // First remove all guests associated with the event, then remove the whole event
+      $q(function(resolve, reject) {
+        eventAttendeesReference.child(eventID).once("value", function(users) {
+          users.forEach(function(user) {
+            removeGuestFromEvent(user.key(), eventID);
+          });
+          resolve();
+        });
+      }).then(function() {
+        myEventsReference.child(eventID).remove();
+        eventReference.child(eventID).remove();
+      });
+    }
+  }
+
   function removeGuestFromEvent(userID, eventID) {
     return $q(function(resolve, reject) {
-      myEventsReference.child(eventID).remove();
+      firebaseObject.child("user_events/" + userID + "/" + eventID).remove();
       eventAttendeesReference.child(eventID + "/" + userID).remove();
+      resolve();
     });
   }
 
