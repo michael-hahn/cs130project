@@ -57,7 +57,7 @@ angular.module('starter')
           $timeout(function(){},0);
         }
       });
-      images.push(im);
+      images.unshift(im);
     });
     $scope.images = images;
   }
@@ -65,7 +65,7 @@ angular.module('starter')
     $state.go("login");
   }
 
-  $scope.upload = function() {
+  $scope.upload = function(type) {
     // We have to actually go check the value of Active in Firebase because it could have changed since the time they entered
     /*$q(function(resolve, reject) {
       eventReference.once("value", function(eventData) {
@@ -84,7 +84,7 @@ angular.module('starter')
       alert("This event is no longer active");
     });
 */ 
-      var options = {
+      var option1 = {
         quality: 75,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
@@ -94,6 +94,24 @@ angular.module('starter')
         targetHeight: 500,
         saveToPhotoAlbum: false
       };
+
+      var option2 = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        encodingTpe: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        targetWidth: 500,
+        targetHeight: 500,
+        saveToPhotoAlbum: false
+      };
+
+      var options;
+      if(type === 0 ) {
+        options = option1;
+      } else {
+        options = option2;
+      }
 
       $cordovaCamera.getPicture(options).then(function(imageData) {
 
@@ -166,5 +184,4 @@ angular.module('starter')
   $scope.eventUserList = function() {
     $state.go('viewUserList', { 'allUsersData': $scope.allUsersData, 'eventID' : $scope.eventID })
   }
-  
 })

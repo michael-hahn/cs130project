@@ -1,11 +1,7 @@
-<ion-view view-title="Event Page ({{images.length}} Pictures" init="">
+<ion-view view-title="Event ({{images.length}} Pictures)" init="">
 	<ion-nav-bar>
 		<ion-nav-buttons side="left">
-			<button class="button button-icon icon ion-arrow-left-a" ng-click="goBack()"></button>
-		</ion-nav-buttons>
-
-		<ion-nav-buttons side="right">
-			<button class="button button-icon icon ion-camera" ng-click="upload()"></button>
+			<button class="button button-large button-icon icon ion-arrow-left-a" ng-click="goBack()"></button>
 		</ion-nav-buttons>
 	</ion-nav-bar>
 
@@ -22,6 +18,25 @@
 
 	<ion-content ng-class="{'has-subheader': isHost(), 'has-footer':true}" has-bouncing="true">
 		
+		<div class="square" style="border-style: dotted;">
+			<div class="content">
+				<div class="button half" ng-click="upload(0)">
+					<div class="table">
+						<div class="table-cell">
+							<button class="button button-small button-icon icon ion-camera"></button>
+						</div>
+					</div>
+				</div>
+				<div class="button half" ng-click="upload(1)">
+					<div class="table">
+						<div class="table-cell">
+							<button class="button button-small button-icon icon ion-images" ></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<a class="square" ng-repeat="image in images" style="background-image:url({{image.image}})" href="" ng-click="viewPhoto(image, $index)"></a>
 
 	</ion-content>
@@ -29,7 +44,7 @@
 	<div class="bar bar-footer has-tabs">
 		<div class="button-bar">
 			<button class="button button-clear icon ion-information-circled" ng-click="eventInfo()">
-			</button>
+			</button> 
 			<button class="button button-clear icon ion-android-contacts" ng-click="eventUserList()">     
 			</button>
     	</div>
