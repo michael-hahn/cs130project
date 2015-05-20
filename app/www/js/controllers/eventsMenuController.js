@@ -48,6 +48,7 @@ angular.module('starter')
         pEventIDs.push(eventID);
       }
 
+      $timeout(function() {}, 0);
       eventReference.child(eventID).on("value", function(eventData) {
         //store events data
         myEvents[eventID] = eventData.val();
