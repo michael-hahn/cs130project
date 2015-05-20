@@ -40,12 +40,15 @@
           {{joinedEvents.eventIDs.length}}</span>
       </a>
       <div class="item-accordion" ng-repeat="eventID in joinedEvents.eventIDs" ng-show="isGroupShown(joinedEvents)" ng-if="eventData[eventID] !== undefined">
-        <a class="item item-thumbnail-left" href="" ng-click="goToEvent(eventID)">
-          <img src={{getCoverPhoto(eventData[eventID].coverPhoto)}}>
-          <h2>{{eventData[eventID].Name}}</h2>
-          <p>Host:{{eventData[eventID].HostEmail}}</p>
-          <p ng-if="eventData[eventID].Active === 1">Active</p>
-        </a>
+        <ion-list can-swipe="true">
+          <ion-item class="item item-thumbnail-left" href="" ng-click="goToEvent(eventID)">
+            <img src={{getCoverPhoto(eventData[eventID].coverPhoto)}}>
+            <h2>{{eventData[eventID].Name}}</h2>
+            <p>Host:{{eventData[eventID].HostEmail}}</p>
+            <p ng-if="eventData[eventID].Active === 1">Active</p>
+            <ion-option-button class="button-assertive icon ion-trash-a" ng-click="leaveEvent(eventID)"></ion-option-button>
+          </ion-item>
+        </ion-list>
       </div>
       
       <br />

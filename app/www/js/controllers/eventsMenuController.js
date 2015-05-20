@@ -143,4 +143,18 @@ angular.module('starter')
 
     myEventsReference.child(eventID).remove(onDelete);
   }
+
+  function removeGuestFromEvent(userID, eventID) {
+    return $q(function(resolve, reject) {
+      myEventsReference.child(eventID).remove();
+      eventAttendeesReference.child(eventID + "/" + userID).remove();
+    });
+  }
+
+  $scope.leaveEvent = function(eventID) {
+    if(confirm("Are you sure you want to leave this event?")) {
+      // Then leave the event in database
+      removeGuestFromEvent(fbAuth.uid, eventID);
+    }
+  }
 })
