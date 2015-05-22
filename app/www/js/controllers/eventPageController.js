@@ -17,6 +17,8 @@ angular.module('starter')
   $timeout(function() {}, 0);
   var fbAuth = firebaseObject.getAuth();
   $scope.images = [];
+  var AllImages = [];
+
   if(fbAuth) {
     var usersReference = firebaseObject.child("user_data");    
     var eventDataReference = firebaseObject.child("event_data/" + $scope.eventID);
@@ -58,11 +60,94 @@ angular.module('starter')
       });
       images.unshift(im);
     });
+
+    AllImages = images;
     $scope.images = images;
   }
   else {
     $state.go("login");
   }
+
+
+  $scope.filter = function(userEmail, timeLower, timeUpper) {
+    var UserEmail = null;
+    var users = $scope.allUsersData;
+    var theUserId = null;
+    var filterImages = [];
+    var TimeLower = new Date("1980-06-09T15:20:00-07:00");
+    var TimeUpper = new Date();
+
+
+
+    //check if input is null, after the second input empty input will become length of 
+    //of one intead of null, so solution is test its length
+    if( (userEmail != null)&&(userEmail.length > 5) ){
+      UserEmail = userEmail;
+    }
+    if((timeLower!=null)&&(timeLower.length > 5) ){
+      timeLower = timeLower.substr(0,10) + "T" + timeLower.substr(11,timeLower.length);
+      TimeLower = new Date(timeLower + ":00-07:00") ;
+
+    }
+    if((timeUpper!=null)&&(timeUpper.length >5)){
+      timeUpper = timeUpper.substr(0,10) + "T" + timeUpper.substr(11,timeUpper.length);    
+      TimeUpper = new Date(timeUpper + ":00-07:00");
+
+    }
+
+
+
+    //get the id of the attendence with the email
+    for(var i in users){
+      if(UserEmail == users[i].email){
+          theUserId = users[i].uid;
+      //    console.log(theUserId);
+      }
+    }
+
+
+    //filter by email, if no input, then don't filter by email
+    //console.log(AllImages);
+    if(UserEmail != null){
+      for(var j in AllImages){
+        if(AllImages[j].user == theUserId){
+            filterImages.push(AllImages[j]);
+        }
+      }
+    }
+    else{
+      for(var l in AllImages){
+            filterImages.push(AllImages[l]);
+      }
+    }
+
+    //filter by time
+   var imageDate;
+   for(var k=filterImages.length -1 ; k>=0; k--){
+        //console.log(filterImages[k].time);
+     imageDate = new Date(filterImages[k].time);
+     if( ( imageDate <= TimeLower) || ( imageDate >= TimeUpper) ){
+        console.log(imageDate);
+        filterImages.splice(k,1);
+     }
+   }
+
+    $scope.images = filterImages;
+
+    //time = AllImages[0].time;
+    //console.log(time2<time);
+
+  }
+
+  $scope.unfilter = function () {
+    $scope.images = AllImages;
+  }
+
+
+
+
+
+
 
   $scope.upload = function(type) {
     // We have to actually go check the value of Active in Firebase because it could have changed since the time they entered
@@ -114,12 +199,15 @@ angular.module('starter')
 
       $cordovaCamera.getPicture(options).then(function(imageData) {
 
-        var timestamp = new Date().getTime();
-        var date = new Date(timestamp);
-        var hours = date.getHours();
-        var minutes = "0" + date.getMinutes();
-        var seconds = "0" + date.getSeconds();
-        var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
+        // var timestamp = new Date().getTime();
+        // // var date = new Date(timestamp);
+        // // var hours = date.getHours();
+        // // var minutes = "0" + date.getMinutes();
+        // // var seconds = "0" + date.getSeconds();
+        // // var formattedTime = hours + ':' + minutes.substr(minutes.length - 2) + ':' + seconds.substr(seconds.length - 2);
+
+        var date = new Date();
+        var formattedTime = date.toString();
         var likedbyList = {};
         likedbyList[fbAuth.uid] = 0;
 

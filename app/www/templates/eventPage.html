@@ -45,8 +45,24 @@
 		<div class="button-bar">
 			<button class="button button-clear icon ion-information-circled" ng-click="eventInfo()">
 			</button> 
-			<button class="button button-clear icon ion-android-contacts" ng-click="eventUserList()">     
+			<button class="button button-clear icon ion-android-contacts" ng-click="eventUserList()"> 
 			</button>
-    	</div>
+
+			<label class="item item-input">
+      		<input ng-model="userEmail" type="text" placeholder="User Email" />
+    	    </label>
+
+    	    <label class="item item-input">
+    		<input ng-model="timeLower" type="text" placeholder="YYYY-MM-DD,hh:mm" />
+  			</label>
+
+     	    <label class="item item-input">
+    		<input ng-model="timeUpper" type="text" placeholder="YYYY-MM-DD,hh:mm" />
+  			</label>
+
+  			<button ng-click="filter(userEmail, timeLower, timeUpper)">Filter</button>
+  			<button ng-click="unfilter()">Unfilter</button>
+    
+		</div>
 	</div>
 </ion-view>
