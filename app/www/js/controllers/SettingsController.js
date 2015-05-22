@@ -69,6 +69,7 @@ angular.module('starter')
       firebaseObject.unauth();
       //$scope.userData = null;
       $ionicHistory.clearHistory();
+      $ionicHistory.clearCache()
       $scope.modalLogoutConfirm.hide();
       $state.go("login");
       //$window.location.reload();
