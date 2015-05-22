@@ -30,6 +30,13 @@ angular.module('starter')
     var eventReference = firebaseObject.child('event_data');
     var userReference = firebaseObject.child("user_data/" + fbAuth.uid);
     var eventAttendeesReference = firebaseObject.child('event_attendees');
+    var eventImagesReference = firebaseObject.child('event_images');
+    var imageCommentsReference = firebaseObject.child('image_comments');
+    var userCommentsReference = firebaseObject.child('user_comments');
+    var userImagesReference = firebaseObject.child('user_images');
+    var imageDataReference = firebaseObject.child('image_data');
+    var imageLikesReference = firebaseObject.child('image_likes');
+
 
     var myEvents = {};
     var hEventIDs = []; //host
@@ -148,19 +155,48 @@ angular.module('starter')
 
   $scope.removeEvent = function(eventID) {
     if(confirm("Are you sure you want to delete this event? All associated photos will be lost.")) {
-      // First remove all guests associated with the event, then remove the whole event
-      $q(function(resolve, reject) {
-        eventAttendeesReference.child(eventID).once("value", function(users) {
-          users.forEach(function(user) {
-            removeGuestFromEvent(user.key(), eventID);
-          });
-          resolve();
+      // First, remove all associations of people with the event
+      // Takes care of event_attendees and user_events
+      eventAttendeesReference.child(eventID).once("value", function(users) {
+        users.forEach(function(user) {
+          removeGuestFromEvent(user.key(), eventID);
         });
-      }).then(function() {
-        myEventsReference.child(eventID).remove();
-        eventReference.child(eventID).remove();
+      });
+
+      // Next, remove the data about the event
+      // Takes care of event_data
+      eventReference.child(eventID).remove();
+
+      // Last, remove all pictures associated with the event
+      // Takes care of user_images, image_data, image_likes, event_images, user_comments, and image_comments
+      eventImagesReference.child(eventID).once("value", function(images) {
+        images.forEach(function(image) {
+          removeImageFromEvent(image.key(), eventID);
+        });
       });
     }
+  }
+
+  // Removes all traces of the image from user_images, image_data, image_likes, event_images, user_comments, and image_comments
+  function removeImageFromEvent(imageID, eventID) {
+    return $q(function(resolve, reject) {
+      imageDataReference.child(imageID).once("value", function(data) {
+        userImagesReference.child(data.val()['user'] + "/" + imageID).remove(function() {
+          imageDataReference.child(imageID).remove();
+        });
+      });
+      
+      imageLikesReference.child(imageID).remove();
+      eventImagesReference.child(eventID + "/" + imageID).remove();
+
+      imageCommentsReference.child(imageID).once("value", function(comments) {
+        comments.forEach(function(comment) {
+          userCommentsReference.child(comment.val()['userId'] + "/" + comment.key()).remove(function() {
+            imageCommentsReference.child(imageID).remove();
+          });
+        });
+      });
+    });
   }
 
   function removeGuestFromEvent(userID, eventID) {
