@@ -1,0 +1,18 @@
+<ion-header-bar class="bar bar-header bar-positive">
+  <h1 class="title">Add User to Event</h1>
+  <button class="button button-clear button-primary" ng-click="goBack()">Cancel</button>
+</ion-header-bar>
+<ion-content>
+	<div class="padding-left padding-right">
+
+    <h1>Enter User's Email</h1>
+  	<label >
+    	<input ng-model="userEmail" type="email" placeholder="User's Email" />
+  	</label>
+
+    <br></br>
+  	<div class="button-bar">
+      <a class="button" ng-click="addUser(userEmail)">Add User</a>
+    </div>
+  </div>
+</ion-content>

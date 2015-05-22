@@ -148,6 +148,22 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'checklist-model'])
     }
   })
 
+  .state("inviteByEmail", {
+    url: "/inviteByEmail",
+    templateUrl: "templates/inviteByEmail.html",
+    controller: 'inviteByEmailController',
+    params: {'eventID': null},
+    cache: false,
+    resolve: {
+    // controller will not be loaded until $requireAuth resolves
+      "currentAuth": ["$firebaseAuth", function ($firebaseAuth) {
+        var ref = new Firebase('https://cs130project.firebaseio.com/');
+        var authObj = $firebaseAuth(ref);
+        return authObj.$requireAuth();
+      }]
+    }
+  })
+
   .state("viewProfile", {
     url: "/viewProfile",
     templateUrl: "templates/viewProfile.html",

@@ -58,4 +58,8 @@ angular.module('starter')
   $scope.inviteFriends = function(selected) {
     $state.go("inviteFriends", {'eventID': $scope.eventID});
   }
+
+  $scope.inviteByEmail = function(selected) {
+    $state.go("inviteByEmail", {'eventID': $scope.eventID});
+  }
 })
