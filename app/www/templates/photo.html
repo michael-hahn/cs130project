@@ -32,6 +32,33 @@
 		  				{{photo.numLikes}}
 		  			</a>
 		  	</div>
+		  	<div class="list">
+
+					<div class="item item-input-insert">
+						<label class="item-input-wrapper">
+							<input type="text" ng-model="comments" placeholder="Make A Comment" size="500">
+						</label>
+						<button class="button button-small" ng-click="addComments(photo,comments)"><!--addComments(photo, comments)-->
+							Submit
+						</button>
+					</div>
+					Show Comments: <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow">
+					<br/>
+					<div>
+						<div class="check-element animate-hide" ng-show="checked">
+							<ion-list>
+								<ion-item ng-repeat="c in comment track by $index" ng-if="c != null">
+									{{(c.info).displayName}} commented: {{c.data}}
+        						</ion-item>
+    						</ion-list>
+						</div>
+					</div>
+					<div>
+							<div class="check-element animate-hide" ng-hide="checked">
+								Check out what other people in this event have said about this photo by clicking the box above!
+							</div>
+					</div>
+        		</div>
 			</ion-slide>
 			
 		</ion-slide-box>
