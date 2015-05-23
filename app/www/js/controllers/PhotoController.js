@@ -24,6 +24,26 @@ angular.module('starter')
   if(fbAuth){
     var eventReference = firebaseObject.child("event_data/" + $stateParams.eventUID);
     var imageLikesReference = firebaseObject.child("image_likes");
+    //For comments functionality
+    var imageCommentsReference = firebaseObject.child("image_comments");
+    var userCommentsReference = firebaseObject.child("user_comments");
+    var userDataReference = firebaseObject.child("user_data");
+    
+    var comment = [];
+    $scope.comment = [];
+    imageCommentsReference.child($scope.photoContent.id).on("child_added", function(commentID) {
+    var commentData = commentID.val()["data"];
+    var c_userId = commentID.val()["userId"];
+    var u_info;
+    userDataReference.child(c_userId).on("value", function(info) {
+      u_info = info.val();
+    });
+    var userName = getNameOfUserWithID(c_userId);
+    var commentInfo = {data: commentData, name: userName, info: u_info};
+    comment.push(commentInfo);
+  });
+  $scope.comment = comment;
+  //End
 
   } else {
     $state.go("login");
@@ -93,6 +113,17 @@ angular.module('starter')
   $scope.addUser2Event = function(photoData, index) {
     $state.go('addUser', {
       'eventUID' :  $scope.eventID, });
+  }
+    //For comments functionality
+  $scope.addComments = function(im,comments) {
+    //Once "Submit" button is pushed, the comment with the userID is pushed into the "image_comments" attribute
+    var commentID = imageCommentsReference.child(im.id).push({
+      data: comments,
+      userId: fbAuth.uid
+    });
+    //We will also record which user makes what comments by saving the commentID to the userID in the "user_comments" attribute
+    userCommentsReference.child(fbAuth.uid).child(commentID.key()).set(1);
+    //End
   }
 
   $scope.viewProfile = function(user) {
