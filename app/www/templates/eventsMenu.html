@@ -1,30 +1,35 @@
-<ion-view view-title="<i class='ion-android-star balanced' style='font-size: 40px'></i>">
-  <ion-nav-bar>
+<ion-view class="backgroundGradient">
+  <ion-nav-bar class="barOrange">
+    <ion-nav-title class="vantageHeader">
+    Events
+  </ion-nav-title>
   </ion-nav-bar>
-  <div class="bar bar-subheader">
-  	<div class="button-bar">
-      <a class="button button-energized" href="#/createEvent">Create</a>
-      <a class="button button-energized" href="#/joinEvent">Join</a>
+  <div class="bar bar-subheader" style="background: none">
+    <div class="button-bar">
+      <a class="button buttonGrey vantageFontOrange" style="font-size: 1.6em" href="#/createEvent">Create Event</a>
+      <a class="button buttonGrey vantageFontOrange" style="font-size: 1.6em" href="#/joinEvent">Join Event</a>
     </div>
   </div>
 
-  <ion-content class="has-subheader has-tabs" padding="true">
+  <ion-content class="has-subheader" padding="true">
 
     <div class="list">
 
-      <a class="button button-bar item-stable" ng-click="toggleGroup(hostedEvents)" ng-class="{active: isGroupShown(hostedEvents)}">
+      <a class="button button-bar item-stable vantageBody" ng-click="toggleGroup(hostedEvents)" ng-class="{active: isGroupShown(hostedEvents)}">
         <i class="icon" ng-class="isGroupShown(hostedEvents) ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         Hosted Events
         &nbsp;
-        <span class="badge badge-positive">
-          {{hostedEvents.eventIDs.length}}</span>
+        <div>
+          <span class="badge orangeBadge">
+            {{hostedEvents.eventIDs.length}}</span>
+        </div>
       </a>
-      <div class="item-accordion" ng-repeat="eventID in hostedEvents.eventIDs" ng-show="isGroupShown(hostedEvents)" ng-if="eventData[eventID] !== undefined">
+      <div class="item-accordion vantageBody" ng-repeat="eventID in hostedEvents.eventIDs" ng-show="isGroupShown(hostedEvents)" ng-if="eventData[eventID] !== undefined">
         <ion-list can-swipe="true">
           <ion-item class="item-thumbnail-left" href="" ng-click="goToEvent(eventID)">
             <img src={{getCoverPhoto(eventData[eventID].coverPhoto)}}>
-            <h2>{{eventData[eventID].Name}}</h2>
+            <h2 >{{eventData[eventID].Name}}</h2>
             <p>Host</p>
             <p ng-if="eventData[eventID].Active === 1">Active</p>
             <ion-option-button class="button-assertive icon ion-trash-a" ng-click="removeEvent(eventID)"></ion-option-button>
@@ -34,13 +39,15 @@
 
       <br />
       
-      <a class="button button-bar item-stable" ng-click="toggleGroup(joinedEvents)" ng-class="{active: isGroupShown(joinedEvents)}">
+      <a class="button button-bar item-stable vantageBody" ng-click="toggleGroup(joinedEvents)" ng-class="{active: isGroupShown(joinedEvents)}">
         <i class="icon" ng-class="isGroupShown(joinedEvents) ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         Joined Events
         &nbsp;
-        <span class="badge badge-positive">
-          {{joinedEvents.eventIDs.length}}</span>
+        <div>
+          <span class="badge orangeBadge">
+            {{joinedEvents.eventIDs.length}}</span>
+        </div>
       </a>
       <div class="item-accordion" ng-repeat="eventID in joinedEvents.eventIDs" ng-show="isGroupShown(joinedEvents)" ng-if="eventData[eventID] !== undefined">
         <ion-list can-swipe="true">
@@ -56,13 +63,15 @@
       
       <br />
 
-      <a class="button button-bar item-stable" ng-click="toggleGroup(pendingEvents)" ng-class="{active: isGroupShown(pendingEvents)}">
+      <a class="button button-bar item-stable vantageBody" ng-click="toggleGroup(pendingEvents)" ng-class="{active: isGroupShown(pendingEvents)}">
         <i class="icon" ng-class="isGroupShown(pendingEvents) ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         Pending Events
         &nbsp;
-        <span class="badge badge-positive">
-          {{pendingEvents.eventIDs.length}}</span>
+        <div>
+          <span class="badge orangeBadge">
+            {{pendingEvents.eventIDs.length}}</span>
+        </div>
       </a>
       <div class="item-accordion" ng-repeat="eventID in pendingEvents.eventIDs" ng-show="isGroupShown(pendingEvents)" ng-if="eventData[eventID] !== undefined">
         <div class="item item-thumbnail-left">
