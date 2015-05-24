@@ -1,0 +1,44 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Filter Input</h1>
+        <button class="button button-clear button-primary" ng-click="modalFilterInput.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="row">
+            <div class="col col-100">
+                <label class="item item-input">
+                <input ng-model="userEmail" type="text" placeholder="User Email" />
+                </label>
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class="col col-100">From : YYYY-MM-DD,hh:mm</div>
+        </div>
+
+        <div class="row">
+            <div class="col col-100">
+                <label class="item item-input">
+                <input ng-model="timeLower" type="text" placeholder="YYYY-MM-DD,hh:mm" />
+                </label>
+            </div>
+        </div>
+
+
+        <div class = "row">
+            <div class="col col-100">To : YYYY-MM-DD,hh:mm</div>
+        </div>
+
+        <div class="row">
+            <div class="col col-100">
+                <label class="item item-input">
+                <input ng-model="timeUpper" type="text" placeholder="YYYY-MM-DD,hh:mm" />
+                </label>
+            <div>
+        </div>
+
+        <div class="row">
+            <button class="button button-full button-positive" ng-click="filter(userEmail,timeLower, timeUpper); modalFilterInput.hide()">Filter</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

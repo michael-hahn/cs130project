@@ -8,7 +8,7 @@
 **/
 angular.module('starter')
 
-.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $firebaseObject, $cordovaCamera, $state, firebaseObject, $timeout, $q) {
+.controller('eventPageController', function( $scope, $stateParams, $ionicHistory, $firebaseArray, $firebaseObject, $cordovaCamera, $state, firebaseObject, $timeout, $q, $ionicModal) {
 
   $scope.eventID = $stateParams.eventUID;
   $scope.eventData = $stateParams.eventData;
@@ -67,6 +67,14 @@ angular.module('starter')
   else {
     $state.go("login");
   }
+
+
+  $ionicModal.fromTemplateUrl('templates/filterInput.html', {
+      scope: $scope
+  }).then(function (modal) {
+      $scope.modalFilterInput = modal;
+  });
+
 
 
   $scope.filter = function(userEmail, timeLower, timeUpper) {

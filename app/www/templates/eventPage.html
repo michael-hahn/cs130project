@@ -48,20 +48,10 @@
 			<button class="button button-clear icon ion-android-contacts" ng-click="eventUserList()"> 
 			</button>
 
-			<label class="item item-input">
-      		<input ng-model="userEmail" type="text" placeholder="User Email" />
-    	    </label>
-
-    	    <label class="item item-input">
-    		<input ng-model="timeLower" type="text" placeholder="YYYY-MM-DD,hh:mm" />
-  			</label>
-
-     	    <label class="item item-input">
-    		<input ng-model="timeUpper" type="text" placeholder="YYYY-MM-DD,hh:mm" />
-  			</label>
-
-  			<button ng-click="filter(userEmail, timeLower, timeUpper)">Filter</button>
-  			<button ng-click="unfilter()">Unfilter</button>
+<!--   			<button ng-click="filter(userEmail, timeLower, timeUpper)">Filter</button> -->
+			<button class = "button button-clear icon ion-android-radio-button-on" ng-click="modalFilterInput.show()">
+			</button>
+  			<button class = "button button-clear icon ion-android-radio-button-off" ng-click="unfilter()"></button>
     
 		</div>
 	</div>
