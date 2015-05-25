@@ -7,10 +7,10 @@
 
 	<div class="bar bar-subheader" ng-if="isHost()">
 		<div class="button-bar">
-	        <button ng-click="endEvent()" class="button button-assertive" ng-if="eventActive == 1">
+	        <button ng-click="endEvent()" class="button button-assertive" ng-if="eventData.Active == 1">
 	            End Event
 	        </button>
-	        <button ng-click="reactivateEvent()" class="button button-balanced" ng-if="eventActive == 0">
+	        <button ng-click="reactivateEvent()" class="button button-balanced" ng-if="eventData.Active == 0">
 	            Reactivate Event
 	        </button>
 	    </div>

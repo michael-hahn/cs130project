@@ -256,17 +256,17 @@ angular.module('starter')
   }
 
   $scope.isHost = function() {
-    return (fbAuth.uid == $scope.eventHost);
+    return (fbAuth.uid == $scope.eventData.Host);
   }
 
   $scope.endEvent = function() {
-    $scope.eventActive = 0;
+    $scope.eventData.Active = 0;
     eventDataReference.child("Active").set(0);
     alert("You have ended this event.");
   }
 
   $scope.reactivateEvent = function() {
-    $scope.eventActive = 1;
+    $scope.eventData.Active = 1;
     eventDataReference.child("Active").set(1);
     alert("You have reactivated this event.");
   }
