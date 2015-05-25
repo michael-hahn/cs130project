@@ -51,28 +51,13 @@ angular.module('starter')
         $scope.modalPassword = modal;
     });
 
-    //Modal for Profile Picture
-    $ionicModal.fromTemplateUrl('templates/settingsHTML/removeConfirm.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modalremoveConfirm = modal;
-    });
-
-  //Modal for Logout
-    $ionicModal.fromTemplateUrl('templates/settingsHTML/logoutConfirm.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modalLogoutConfirm = modal;
-    });
-
     $scope.logout = function() {
-      firebaseObject.unauth();
-      //$scope.userData = null;
-      $ionicHistory.clearHistory();
-      $ionicHistory.clearCache()
-      $scope.modalLogoutConfirm.hide();
-      $state.go("login");
-      //$window.location.reload();
+      if(confirm("Logout?")){
+        firebaseObject.unauth();
+        $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
+        $state.go("login");
+      }
     }
 
     $scope.changeDisplayName = function(newName) {
@@ -164,6 +149,7 @@ angular.module('starter')
     }
 
     $scope.removeProfilePicture = function() {
+      if(confirm("Remove profile picture?")){
       userReference.update({
           profilePicture : ''
         }, function(error) {
@@ -173,8 +159,8 @@ angular.module('starter')
           } else {
             alert(error);
           }
-        })
-      $scope.modalremoveConfirm.hide();
+        });
+      }
     }
 
     $scope.changePassword = function(oldPw, newPw, confirmPw) {

@@ -2,8 +2,16 @@
   <ion-nav-bar>
   </ion-nav-bar>
 
-  <ion-content class="has-header has-tabs" padding="true">
-
+  <div class="bar bar-subheader item-input-inset" style="border-style: dotted; border-width: 1px; background-color: #F8F8F8">
+      <label style="width:100%">
+        <input class="item-input-wrapper" style="width:100%" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
+      </label>
+      <button class="button button-small button-energized" ng-click="findUser(userEmail)">
+        <i class="ion-plus"></i>
+      </button>
+  </div>
+      
+  <ion-content class="has-subheader has-tabs" padding="true">
     <ion-list ng-if="pendAndWaitObjs.ids.length !== 0">
       <a class="button button-bar item-stable" ng-click="toggleGroup(pendAndWaitObjs)" ng-class="{active: isGroupShown(pendAndWaitObjs)}">
         <i class="icon" ng-class="isGroupShown(pendAndWaitObjs) ? 'ion-minus' : 'ion-plus' "></i>
@@ -17,19 +25,18 @@
       <div class="item-accordion" ng-repeat="fUID in pendAndWaitObjs.ids" ng-show="isGroupShown(pendAndWaitObjs)" ng-if="friendData[fUID] !== undefined">
         <ion-item class="item item-avatar" >
             
-            <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
+          <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
+          <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
+          
+          <p ng-click="viewProfile(friendData[fUID])">
+            <i class="icon ion-email"></i>
+            {{friendData[fUID].email}}
+          </p>
 
-            <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
-            
-            <p ng-click="viewProfile(friendData[fUID])">
-              <i class="icon ion-email"></i>
-              {{friendData[fUID].email}}
-            </p>
-
-            <p>
-              <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
-              {{friendData[fUID].status}}
-            </p>
+          <p>
+            <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
+            {{friendData[fUID].status}}
+          </p>
 
           <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept Friend Request
           </button>
@@ -55,39 +62,23 @@
         </span>
       </a>
 
-      <ion-item class="item item-avatar" style="border-style: dotted; border-width: 1px; background-color: #F8F8F8" ng-show="isGroupShown(friendsObjs)"> 
-        <img src="./img/blank-profile-question.png"/>
-        <div class="item-input-inset">
-          <label>
-            <input class="item-input-wrapper" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
-          </label>
-          <button class="button button-small button-energized" ng-click="findUser(userEmail)">
-            Go
-          </button>
-        </div>
-      </ion-item>
-
       <div class="item-accordion" ng-repeat="fUID in friendsObjs.ids" ng-show="isGroupShown(friendsObjs)" ng-if="friendData[fUID] !== undefined">
 
-
         <ion-item class="item item-avatar" >
-            
-            <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
+          
+          <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
 
-            <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
-            
-            <p ng-click="viewProfile(friendData[fUID])">
-              <i class="icon ion-email"></i>
-              {{friendData[fUID].email}}
-            </p>
+          <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
+          
+          <p ng-click="viewProfile(friendData[fUID])">
+            <i class="icon ion-email"></i>
+            {{friendData[fUID].email}}
+          </p>
 
-            <p>
-              <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
-              {{friendData[fUID].status}}
-            </p>
-
-          <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept Friend Request
-          </button>
+          <p>
+            <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
+            {{friendData[fUID].status}}
+          </p>
 
           <p class="item-icon-right">
             <i class="icon ion-chevron-right icon-accessory"></i>

@@ -1,7 +1,7 @@
 <ion-view view-title="<i class='ion-ios-contact balanced' style='font-size: 40px'></i>">
   	<ion-nav-bar>
 	  	<ion-nav-buttons side="right">
-			<button class="button button-icon icon ion-close-circled assertive" ng-click="modalLogoutConfirm.show()"></button>
+			<button class="button button-icon icon ion-close-circled assertive" ng-click="logout()"></button>
 		</ion-nav-buttons>
   	</ion-nav-bar>
   	<ion-content>
@@ -31,7 +31,7 @@
 		            </button>
 		            <button class="button button-clear icon ion-images" ng-click="changeProfilePicture(1)">     
    		            </button>
-		            <button class="button button-clear icon ion-android-remove-circle" ng-click="modalremoveConfirm.show()" ng-if="userData.profilePicture !== '' "> 
+		            <button class="button button-clear icon ion-android-remove-circle" ng-click="removeProfilePicture()" ng-if="userData.profilePicture !== '' "> 
 		            </button>
 		        </div>
 			</div>
