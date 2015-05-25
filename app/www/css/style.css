@@ -105,6 +105,10 @@
   background-image: none;
 }
 
+.tabs-orange > .tabs{
+  background-color: #f0652f !important;
+}
+
 .vantageFontOrange {
   font-family: 'SignPainter', sans-serif;
   color: #f0652f;
