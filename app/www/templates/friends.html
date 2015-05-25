@@ -54,7 +54,22 @@
           {{friendsObjs.ids.length}}
         </span>
       </a>
+
+      <ion-item class="item item-avatar" style="border-style: dotted; border-width: 1px; background-color: #F8F8F8" ng-show="isGroupShown(friendsObjs)"> 
+        <img src="./img/blank-profile-question.png"/>
+        <div class="item-input-inset">
+          <label>
+            <input class="item-input-wrapper" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
+          </label>
+          <button class="button button-small button-energized" ng-click="findUser(userEmail)">
+            Go
+          </button>
+        </div>
+      </ion-item>
+
       <div class="item-accordion" ng-repeat="fUID in friendsObjs.ids" ng-show="isGroupShown(friendsObjs)" ng-if="friendData[fUID] !== undefined">
+
+
         <ion-item class="item item-avatar" >
             
             <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>

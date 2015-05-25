@@ -11,7 +11,7 @@ angular.module('starter')
 
 .controller('FriendsController', function($scope, $stateParams, $firebaseArray, $state, firebaseObject, $timeout, $ionicHistory, Scopes) {
   $scope.friendData = {};
-  $scope.friendsObjs = {ids: [], show: false};
+  $scope.friendsObjs = {ids: [], show: true};
   $scope.pendAndWaitObjs = {ids: [], show: false};
   $timeout(function(){},0);
   
@@ -145,5 +145,48 @@ angular.module('starter')
 
   $scope.isGroupShown = function(group) {
     return group.show;
+  }
+
+  $scope.findUser = function(userEmail) {
+    if(userEmail) {
+      userDataReference.orderByChild("email").equalTo(userEmail).once("value", function(val) {
+        if(val.val() !== null) {
+          var userID = Object.keys(val.val())[0];
+          if (userID !== fbAuth.uid) { //not logged in user
+            if ($scope.friendData[userID] === undefined) {
+              sendRequest(userID);
+              alert("Request sent.");
+            } else {
+              alert("User already added.");
+            }
+          } else {
+            alert("You cannot add yourself.");
+          }
+        } else {
+          $timeout(function(){
+            alert("Email is invalid.");
+          },0);
+        }
+      });
+    } else {
+      $timeout(function(){
+        alert("Must input an email");
+      },0);
+    }
+  }
+
+  function sendRequest(userID) {
+    userFriendsReference.child(userID).child(fbAuth.uid).transaction(function(status) {
+      if(status === null) {
+        return "pending";
+      }
+    });
+
+    //adds to my (logged in user's) list
+    userFriendsReference.child(fbAuth.uid).child(userID).transaction(function(status) {
+      if(status === null) {
+        return "waiting";
+      }
+    });
   }
 });

@@ -32,6 +32,10 @@
             <h2 >{{eventData[eventID].Name}}</h2>
             <p>Host</p>
             <p ng-if="eventData[eventID].Active === 1">Active</p>
+            
+            <p class="item-icon-right">
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </p>
             <ion-option-button class="button-assertive icon ion-trash-a" ng-click="removeEvent(eventID)"></ion-option-button>
           </ion-item>
         </ion-list>
@@ -56,6 +60,10 @@
             <h2>{{eventData[eventID].Name}}</h2>
             <p>Host:{{eventData[eventID].HostEmail}}</p>
             <p ng-if="eventData[eventID].Active === 1">Active</p>
+            
+            <p class="item-icon-right">
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </p>
             <ion-option-button class="button-assertive icon ion-trash-a" ng-click="leaveEvent(eventID)"></ion-option-button>
           </ion-item>
         </ion-list>
