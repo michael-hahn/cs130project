@@ -1,32 +1,36 @@
-<ion-view view-title="Login" np-app="starter">
-    <ion-header-bar class="bar bar-header bar-positive">
-    <h1 class="title">Vantage</h1>
-    </ion-header-bar>
+<ion-view class="backgroundGradient" view-title="Login" np-app="starter">
     <ion-content class="padding">
-        <div class="list">
+        <!-- <div class="list"> -->
             <!-- Logo here -->
-        </div>
-        <div class="list card padding">
-            <label class="item item-input">
-                <input type="email" ng-model="username" placeholder="Email">
-            </label>
-            <label class="item item-input">
-                <input type="password" ng-model="password" placeholder="Password">
-            </label>
-            <button ng-click="login(username, password)" class="button button-block button-positive activated">
-                Log In
-            </button>
-        </div>
+        <!-- </div> -->
 
-        <div class="list" style="text-align:center">
-            <button ng-click="modalRegister.show()" class="button button-small button-outline icon-left ion-person-add button-positive">
-                Create New Account
-            </button>
-            <button ng-click="modalRecoverPassword.show()" class="button button-small button-outline icon-left ion-android-sync button-royal">
-                Forgot Password?
-            </button>
+        <div class="fullView verticalCenter">
+            <h1 class="vantageFontOrange" style="font-size:5em">Vantage</h1>
+
+            <div style="margin-left:10%; margin-right:10%">
+                <div class="list card padding">
+                    <label class="item item-input">
+                        <input class="vantageBody" type="email" ng-model="username" placeholder="Email" style="text-align:center; font-style:italic;">
+                    </label>
+                    <label class="item item-input">
+                        <input class="vantageBody" type="password" ng-model="password" placeholder="Password" style="text-align:center; font-style:italic;">
+                    </label>
+                </div>
+
+                <button ng-click="login(username, password)" class="button button-block buttonOrange vantageHeader">
+                    Log In
+                </button>
+
+                <div class="list" style="text-align:center">
+                    <button ng-click="modalRegister.show()" class="button button-small button-outline icon-left ion-person-add buttonGrey">
+                        Create New Account
+                    </button>
+                    <button ng-click="modalRecoverPassword.show()" class="button button-small button-outline icon-left ion-android-sync buttonGrey">
+                        Forgot Password?
+                    </button>
+                </div>
+            </div>
         </div>
-        
     </ion-content>
 </ion-view>
 

@@ -44,6 +44,18 @@
   background-color: #D8D8D8;
 }
 
+/* CSS for login.html */
+.fullView {
+  width: 100vw;
+  height: 100vh;
+}
+
+.verticalCenter {
+  text-align: center;
+  display: table-cell;
+  vertical-align:middle;
+}
+
 /* CSS for EventsMenu.html */
 .list .item.item-accordion {
   padding-top: 0;
@@ -101,9 +113,12 @@
 .buttonGrey {
   background-color: #c0c0c0;
 }
+.buttonOrange {
+  background-color: #f0652f;
+}
 
 .backgroundGradient {
-  background: radial-gradient(white,black);
+  background: radial-gradient(white,black 75%);
 }
 
 .vantageBody {
