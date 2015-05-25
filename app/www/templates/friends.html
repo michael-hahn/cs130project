@@ -1,26 +1,31 @@
-<ion-view view-title="<i class='ion-ios-people balanced' style='font-size: 40px'></i>">
-  <ion-nav-bar>
+<ion-view class="backgroundGradient">
+  <ion-nav-bar class="barOrange">
+    <ion-nav-title class="vantageHeader">
+      Friends
+    </ion-nav-title>
   </ion-nav-bar>
 
-  <div class="bar bar-subheader item-input-inset" style="border-style: dotted; border-width: 1px; background-color: #F8F8F8">
+  <div class="bar bar-subheader item-input-inset" style="background: none">
       <label style="width:100%">
-        <input class="item-input-wrapper" style="width:100%" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
+        <input class="item-input-wrapper vantageFontOrange" style="width:100%; font-size: 1.6em; text-align:center" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
       </label>
-      <button class="button button-small button-energized" ng-click="findUser(userEmail)">
+      <button class="button button-small buttonGrey vantageFontOrange" ng-click="findUser(userEmail)">
         <i class="ion-plus"></i>
       </button>
   </div>
       
   <ion-content class="has-subheader has-tabs" padding="true">
     <ion-list ng-if="pendAndWaitObjs.ids.length !== 0">
-      <a class="button button-bar item-stable" ng-click="toggleGroup(pendAndWaitObjs)" ng-class="{active: isGroupShown(pendAndWaitObjs)}">
+      <a class="button button-bar item-stable vantageBody" ng-click="toggleGroup(pendAndWaitObjs)" ng-class="{active: isGroupShown(pendAndWaitObjs)}">
         <i class="icon" ng-class="isGroupShown(pendAndWaitObjs) ? 'ion-minus' : 'ion-plus' "></i>
         &nbsp;
         Pending List
         &nbsp;
-        <span class="badge badge-positive">
+        <div>
+          <span class="badge orangeBadge">
           {{pendAndWaitObjs.ids.length}}
-        </span>
+          </span>
+        </div>
       </a>
       <div class="item-accordion" ng-repeat="fUID in pendAndWaitObjs.ids" ng-show="isGroupShown(pendAndWaitObjs)" ng-if="friendData[fUID] !== undefined">
         <ion-item class="item item-avatar" >
@@ -50,16 +55,19 @@
 
         </ion-item>
       </div>
+      <br/>
     </ion-list>
     <ion-list>
-      <a class="button button-bar item-stable" ng-click="toggleGroup(friendsObjs)" ng-class="{active: isGroupShown(friendsObjs)}">
+      <a class="button button-bar item-stable vantageBody" ng-click="toggleGroup(friendsObjs)" ng-class="{active: isGroupShown(friendsObjs)}">
         <i class="icon" ng-class="isGroupShown(friendsObjs) ? 'ion-minus' : 'ion-plus' "></i>
         &nbsp;
         Friends
         &nbsp;
-        <span class="badge badge-positive">
+        <div>
+          <span class="badge orangeBadge">
           {{friendsObjs.ids.length}}
-        </span>
+          </span>
+        </div>
       </a>
 
       <div class="item-accordion" ng-repeat="fUID in friendsObjs.ids" ng-show="isGroupShown(friendsObjs)" ng-if="friendData[fUID] !== undefined">

@@ -1,26 +1,33 @@
-<ion-view view-title="<i class='ion-ios-contact balanced' style='font-size: 40px'></i>">
-  	<ion-nav-bar>
+<ion-view class="backgroundGradient">
+  	<ion-nav-bar class="barOrange">
 	  	<ion-nav-buttons side="right">
-			<button class="button button-icon icon ion-close-circled assertive" ng-click="logout()"></button>
+			<button class="button button-icon icon ion-close-circled" ng-click="logout()"></button>
 		</ion-nav-buttons>
+		<ion-nav-title class="vantageHeader">
+			My Settings
+		</ion-nav-title>
   	</ion-nav-bar>
-  	<ion-content>
+  	<ion-content class="has-header">
     	<div class="list card">
 
-		  	<a class="item item-icon-left energized" ng-click="modalDisplayName.show()" style="text-align:center">
+		  	<a class="item item-icon-left vantageBody" ng-click="modalDisplayName.show()" style="text-align:center">
 			  	<i class="icon ion-ios-person"></i>	
 			  	{{userData.displayName}} (Edit)
 			  </a>
 
-		  	<a class="item item-icon-left energized" ng-click="modalEmail.show()" style="text-align:center">
+		  	<a class="item item-icon-left vantageBody" ng-click="modalEmail.show()" style="text-align:center">
 			  	<i class="icon ion-ios-email"></i>
 			    {{userData.email}} (Edit)
 			  </a>
 
+  		  	<a class="item item-icon-left vantageBody" ng-click="modalPassword.show()" style="text-align:center">
+  		  		<i class="icon ion-locked"></i>
+			    Change Password
+		  	</a>
 
 			<div class="item item-image">
 			  	<br/>
-					<!-- Displays Profile Pic if not null --> 
+				<!-- Displays Profile Pic if not null --> 
 	    		<img style="width:250px; height:300px" ng-src="{{userData.profilePicture}}" ng-if="userData.profilePicture !== '' " />
 
 	    		<!-- Else display blank profile pic -->
@@ -35,13 +42,6 @@
 		            </button>
 		        </div>
 			</div>
-
-		  	<br />
-
-  		  	<a class="item item-icon-left energized" ng-click="modalPassword.show()">
-  		  		<i class="icon ion-locked"></i>
-			    Change Password
-		  	</a>
 		</div>
 
   	</ion-content>
