@@ -29,7 +29,7 @@ angular.module('starter')
 
     userFriendsReference.child(fbAuth.uid).on("child_added", function(friend) {
       var id = friend.key();
-  
+      console.log("child_added: " + id);
       userDataReference.child(id).on("value", function(info) {
         var f = info.val();
         f.status = friend.val();
@@ -51,7 +51,7 @@ angular.module('starter')
 
     //only changes from "pending" to "friend"
     userFriendsReference.child(fbAuth.uid).on("child_changed", function(friend) {
-      console.log("changed");
+      console.log("changed: " + friend.key());
       var status = friend.val();
 
       //remove id from pendingIDs and put in friendsID
@@ -59,35 +59,33 @@ angular.module('starter')
       if (i > -1) {
         $scope.pendAndWaitObjs.ids.splice(i,1);
         $scope.friendsObjs.ids.push(friend.key());
+        $scope.friendData[friend.key()].status = status;
         $timeout(function() {}, 0);
       }
-
-      $scope.friendData[friend.key()].status = status;
-
       $timeout(function() {}, 0);
     }, function(error) {
       console.log(error);
     });
 
     userFriendsReference.child(fbAuth.uid).on("child_removed", function(friend) {
+      console.log("removed: " + friend.key());
       var id = friend.key();
-      delete $scope.friendData[id]; //object now undefined
       var i = $scope.pendAndWaitObjs.ids.indexOf(id);
       var j = $scope.friendsObjs.ids.indexOf(id);
       
       if (i > -1) {
         $scope.pendAndWaitObjs.ids.splice(i,1);
+        delete $scope.friendData[id]; //object now undefined
+      }else if (j > -1) {
+        console.log("j = " + j);
+        $scope.friendsObjs.ids.splice(j,1);
+        delete $scope.friendData[id]; //object now undefined
       }
-
-      if (j > -1) {
-        $scope.friendsObjs.ids.splice(i,1);
-      }
-
       $timeout(function() {}, 0);
+
     }, function(error) {
       console.log(error);
     });
-
     $scope.friendsObjs.ids = friendsIDArr;
     $scope.pendAndWaitObjs.ids = pendingAndWaitingIDArr;
     $scope.friendData = friendData;
@@ -111,16 +109,18 @@ angular.module('starter')
 
   $scope.delete = function(friend) {
     //log msg when delete finished sync
-    var onDelete = function(error) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Friend deleted");
+    if(confirm("Remove friend?")) {
+      var onDelete = function(error) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Friend deleted");
+        }
       }
-    }
 
-    userFriendsReference.child(fbAuth.uid).child(friend.uid).remove(onDelete);
-    userFriendsReference.child(friend.uid).child(fbAuth.uid).remove(onDelete);
+      userFriendsReference.child(fbAuth.uid).child(friend.uid).remove(onDelete);
+      userFriendsReference.child(friend.uid).child(fbAuth.uid).remove(onDelete);
+    }
   }
 
   $scope.getFriendProfilePicture = function(profilePic) {
