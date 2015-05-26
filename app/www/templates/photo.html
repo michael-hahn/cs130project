@@ -1,68 +1,70 @@
-<ion-header-bar>
-	<h1 class="title">{{currIndex + 1}} / {{photosArr.length}}</h1>
+<ion-view class="backgroundGradient">
+	<ion-header-bar class="bar bar-header barOrange">
+		<h1 class="title vantageHeader" style="font-size: 2em">{{currIndex + 1}} / {{photosArr.length}}</h1>
 
-	<div class="buttons">
-		<button class="button button-assertive" ng-click="close()">Close</button>
-	</div>
-</ion-header-bar>
+		<div class="buttons">
+			<button class="button button-assertive" ng-click="close()">Close</button>
+		</div>
+	</ion-header-bar>
 
-<ion-content class="has-header">
-	<div class="padding">
+	<ion-content class="has-header">
+		<div class="padding">
 
-		<ion-slide-box ng-if="photosArr" on-slide-changed="photoChanged($index)" active-slide="activePhoto" show-pager="false">
+			<ion-slide-box ng-if="photosArr" on-slide-changed="photoChanged($index)" active-slide="activePhoto" show-pager="false">
 
-			<ion-slide ng-repeat="photo in photosArr">
-				<a href="" ng-click="viewProfile(photo.userInfo)">
-					<div class="item item-avatar">
-		    			<img src="{{photo.userInfo.profilePicture}}" ng-if="photo.userInfo.profilePicture !== '' ">
-				    	<img src="./img/blank-profile.png" ng-if="photo.userInfo.profilePicture === '' "/>
-				    	
-				    	<h2>{{photo.userInfo.displayName}}</h2>
-				    	<p>{{photo.time}}</p>
+				<ion-slide ng-repeat="photo in photosArr">
+					<a href="" ng-click="viewProfile(photo.userInfo)">
+						<div class="item item-avatar" style="background: none;">
+			    			<img src="{{photo.userInfo.profilePicture}}" ng-if="photo.userInfo.profilePicture !== '' ">
+					    	<img src="./img/blank-profile.png" ng-if="photo.userInfo.profilePicture === '' "/>
+					    	
+					    	<h2 style="font-family: 'CenturyGothic', sans-serif; color: white">{{photo.userInfo.displayName}}</h2>
+					    	<p style="font-family: 'CenturyGothic', sans-serif; color: white">{{photo.time}}</p>
+					  	</div>
+				  	</a>
+
+				 	<div class="item item-image" style="border: none; background: none; background-image: none">
+			    		<img ng-src="{{photo.image}}" style="width:350px;height:400px" />
 				  	</div>
-			  	</a>
 
-			 	<div class="item item-image" >
-		    		<img ng-src="{{photo.image}}" style="width:350px;height:400px" />
+				  	<div class="item tabs tabs-secondary tabs-icon-left" style="border: none; background: none; background-image: none">
+			  			<a class="tab-item" href="" ng-click="like(photo)" style="font-family: 'CenturyGothic', sans-serif; color: white">
+			  				<i class="{{getLikeIcon(photo)}}"></i>
+			  				{{photo.numLikes}}
+			  			</a>
 			  	</div>
+			  	<div class="list" style="font-family: 'CenturyGothic', sans-serif; color: white; border: none; background: none; background-image: none">
 
-			  	<div class="item tabs tabs-secondary tabs-icon-left">
-		  			<a class="tab-item" href="" ng-click="like(photo)">
-		  				<i class="{{getLikeIcon(photo)}}"></i>
-		  				{{photo.numLikes}}
-		  			</a>
-		  	</div>
-		  	<div class="list">
-
-					<div class="item item-input-insert">
-						<label class="item-input-wrapper">
-							<input type="text" ng-model="comments" placeholder="Make A Comment" size="500">
-						</label>
-						<button class="button button-small" ng-click="addComments(photo,comments)"><!--addComments(photo, comments)-->
-							Submit
-						</button>
-					</div>
-					Show Comments: <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow">
-					<br/>
-					<div>
-						<div class="check-element animate-hide" ng-show="checked">
-							<ion-list>
-								<ion-item ng-repeat="c in comment track by $index" ng-if="c != null">
-									{{(c.info).displayName}} commented: {{c.data}}
-        						</ion-item>
-    						</ion-list>
+						<div class="item item-input-insert" style="border: none; background: none; background-image: none">
+							<label class="item-input-wrapper">
+								<input type="text" ng-model="comments" placeholder="Make A Comment" size="500">
+							</label>
+							<button class="button button-small" ng-click="addComments(photo,comments)"><!--addComments(photo, comments)-->
+								Submit
+							</button>
 						</div>
-					</div>
-					<div>
-							<div class="check-element animate-hide" ng-hide="checked">
-								Check out what other people in this event have said about this photo by clicking the box above!
+						Show Comments: <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow">
+						<br/>
+						<div>
+							<div class="check-element animate-hide" ng-show="checked">
+								<ion-list>
+									<ion-item ng-repeat="c in comment track by $index" ng-if="c != null">
+										{{(c.info).displayName}} commented: {{c.data}}
+	        						</ion-item>
+	    						</ion-list>
 							</div>
-					</div>
-        		</div>
-			</ion-slide>
-			
-		</ion-slide-box>
+						</div>
+						<div>
+								<div class="check-element animate-hide" ng-hide="checked">
+									Check out what other people in this event have said about this photo by clicking the box above!
+								</div>
+						</div>
+	        		</div>
+				</ion-slide>
+				
+			</ion-slide-box>
 
-	</div>
+		</div>
 
-</ion-content>
+	</ion-content>
+</ion-view>
