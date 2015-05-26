@@ -1,16 +1,19 @@
-<ion-view view-title="{{eventData.Name}} ({{images.length}} Pictures)" init="">
-	<ion-nav-bar>
+<ion-view init="" class="backgroundGradient">
+	<ion-nav-bar class="barOrange">
 		<ion-nav-buttons side="left">
-			<button class="button button-large button-icon icon ion-arrow-left-a" ng-click="goBack()"></button>
+			<button class="button button-large button-icon icon ion-arrow-left-a" style="color: white" ng-click="goBack()"></button>
 		</ion-nav-buttons>
+		<ion-nav-title class="vantageHeader">
+		    {{eventData.Name}} ({{images.length}} Pictures)
+		</ion-nav-title>
 	</ion-nav-bar>
 
-	<div class="bar bar-subheader" ng-if="isHost()">
+	<div class="bar bar-subheader" ng-if="isHost()" style="background: none">
 		<div class="button-bar">
-	        <button ng-click="endEvent()" class="button button-assertive" ng-if="eventData.Active == 1">
+	        <button ng-click="endEvent()" class="button button-assertive" style="font-family: 'CenturyGothic', sans-serif;" ng-if="eventData.Active == 1">
 	            End Event
 	        </button>
-	        <button ng-click="reactivateEvent()" class="button button-balanced" ng-if="eventData.Active == 0">
+	        <button ng-click="reactivateEvent()" class="button button-balanced" style="font-family: 'CenturyGothic', sans-serif;" ng-if="eventData.Active == 0">
 	            Reactivate Event
 	        </button>
 	    </div>
@@ -43,15 +46,13 @@
 
 	<div class="bar bar-footer has-tabs">
 		<div class="button-bar">
-			<button class="button button-clear icon ion-information-circled" ng-click="eventInfo()">
-			</button> 
-			<button class="button button-clear icon ion-android-contacts" ng-click="eventUserList()"> 
-			</button>
+			<button class="button button-clear icon ion-android-contacts" style="font-family: 'CenturyGothic', sans-serif;" ng-click="eventUserList()"> 
+			 Guests</button>
 
 <!--   			<button ng-click="filter(userEmail, timeLower, timeUpper)">Filter</button> -->
-			<button class = "button button-clear icon ion-android-radio-button-on" ng-click="modalFilterInput.show()">
+			<button class = "button button-clear icon ion-android-radio-button-on" style="font-family: 'CenturyGothic', sans-serif;" ng-click="modalFilterInput.show()"> Filter
 			</button>
-  			<button class = "button button-clear icon ion-android-radio-button-off" ng-click="unfilter()"></button>
+  			<button class = "button button-clear icon ion-android-radio-button-off" style="font-family: 'CenturyGothic', sans-serif;" ng-click="unfilter()"> Unfilter</button>
     
 		</div>
 	</div>

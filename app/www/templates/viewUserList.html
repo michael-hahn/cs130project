@@ -1,45 +1,47 @@
-<ion-header-bar>
-  <h1 class="title">Attendees</h1>
+<ion-view class="backgroundGradient">
+  <ion-nav-bar class="barOrange">
+    <ion-nav-buttons side="left">
+      <button class="button button-large button-icon icon ion-arrow-left-a" style="color: white" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-nav-title class="vantageHeader">
+        Attendees
+    </ion-nav-title>
+  </ion-nav-bar>
 
-  <div class="buttons">
-    <button class="button button-assertive" ng-click="goBack()">Back</button>
+   <div class="bar bar-subheader" ng-if="isHost()" style="background: none">
+    <div class="button-bar">
+      <a class="button button-positive icon ion-android-person-add" href="" ng-click="inviteFriends()">
+        Invite Friends
+      </a>
+      <a class="button button-calm icon ion-android-mail" href="" ng-click="inviteByEmail()">
+        Invite By User Email
+      </a>
+    </div>
   </div>
-</ion-header-bar>
 
- <div class="bar bar-subheader" ng-if="isHost()">
-  <div class="button-bar">
-    <a class="button button-positive icon ion-android-person-add" href="" ng-click="inviteFriends()">
-      Invite Friends
-    </a>
-    <a class="button button-calm icon ion-android-mail" href="" ng-click="inviteByEmail()">
-      Invite By User Email
-    </a>
-  </div>
-</div>
-
-<ion-content ng-class="{'has-subheader': isHost(), 'has-header': isHost() === false}">
-  
-  <div class="list">
+  <ion-content ng-class="{'has-subheader': isHost(), 'has-header': isHost() === false}">
     
-    <a class="item item-thumbnail-left" href="" ng-click="viewProfile(host)">
-      <img src={{getProfilePicture(host.profilePicture)}} >      
-      <h2> 
-        <i class="icon ion-ios-star positive"></i>
-        {{host.displayName}}
-      </h2>
-      <p>
-        <i class="icon ion-email"></i>
-        {{host.email}}
-      </p>
-    </a>
-    
-    <a class="item item-thumbnail-left" href="" ng-click="viewProfile(user)" ng-repeat="user in usersData">
-      <img src={{getProfilePicture(user.profilePicture)}} >
-      <h2>{{user.displayName}}</h2>
-      <p>
-        <i class="icon ion-email"></i>
-        {{user.email}}
-      </p>
-    </a>
-</ion-content>
-
+    <div class="list">
+      
+      <a class="item item-thumbnail-left" href="" ng-click="viewProfile(host)" style="background: none; border: none">
+        <img src={{getProfilePicture(host.profilePicture)}} >      
+        <h2 style="font-family: 'CenturyGothic', sans-serif; color: white"> 
+          <i class="icon ion-ios-star positive"></i>
+          {{host.displayName}}
+        </h2>
+        <p style="font-family: 'CenturyGothic', sans-serif; color: white">
+          <i class="icon ion-email"></i>
+          {{host.email}}
+        </p>
+      </a>
+      
+      <a class="item item-thumbnail-left" href="" ng-click="viewProfile(user)" ng-repeat="user in usersData">
+        <img src={{getProfilePicture(user.profilePicture)}} >
+        <h2>{{user.displayName}}</h2>
+        <p>
+          <i class="icon ion-email"></i>
+          {{user.email}}
+        </p>
+      </a>
+  </ion-content>
+</ion-view>

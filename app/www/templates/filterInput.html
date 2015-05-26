@@ -1,44 +1,45 @@
-<ion-modal-view>
-    <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">Filter Input</h1>
-        <button class="button button-clear button-primary" ng-click="modalFilterInput.hide()">Cancel</button>
+<ion-modal-view class="backgroundGradient">
+    <ion-header-bar class="bar bar-header barOrange">
+        <h1 class="title vantageHeader" style="font-size: 2em">Filter Images</h1>
+        <button class="button button-clear button-primary" style="font-family: 'CenturyGothic', sans-serif;" ng-click="modalFilterInput.hide()">Cancel</button>
     </ion-header-bar>
+
     <ion-content class="padding">
         <div class="row">
             <div class="col col-100">
                 <label class="item item-input">
-                <input ng-model="userEmail" type="text" placeholder="User Email" />
+                <input ng-model="userEmail" type="text" style="font-family: 'CenturyGothic', sans-serif;" placeholder="User Email" />
                 </label>
             </div>
         </div>
 
         <div class = "row">
-            <div class="col col-100">From : YYYY-MM-DD,hh:mm</div>
+            <div class="col col-100" style="color: white; font-family: 'CenturyGothic', sans-serif;">From : YYYY-MM-DD,hh:mm</div>
         </div>
 
         <div class="row">
             <div class="col col-100">
                 <label class="item item-input">
-                <input ng-model="timeLower" type="text" placeholder="YYYY-MM-DD,hh:mm" />
+                <input ng-model="timeLower" type="text" style="font-family: 'CenturyGothic', sans-serif;" placeholder="YYYY-MM-DD,hh:mm" />
                 </label>
             </div>
         </div>
 
 
         <div class = "row">
-            <div class="col col-100">To : YYYY-MM-DD,hh:mm</div>
+            <div class="col col-100" style="color: white; font-family: 'CenturyGothic', sans-serif;">To : YYYY-MM-DD,hh:mm</div>
         </div>
 
         <div class="row">
             <div class="col col-100">
                 <label class="item item-input">
-                <input ng-model="timeUpper" type="text" placeholder="YYYY-MM-DD,hh:mm" />
+                <input ng-model="timeUpper" type="text" style="font-family: 'CenturyGothic', sans-serif;" placeholder="YYYY-MM-DD,hh:mm" />
                 </label>
             <div>
         </div>
 
         <div class="row">
-            <button class="button button-full button-positive" ng-click="filter(userEmail,timeLower, timeUpper); modalFilterInput.hide()">Filter</button>
+            <button class="button button-full buttonOrange vantageHeader" style="border: none;" ng-click="filter(userEmail,timeLower, timeUpper); modalFilterInput.hide()">Filter</button>
         </div>
     </ion-content>
 </ion-modal-view>
