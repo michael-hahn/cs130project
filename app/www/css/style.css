@@ -143,3 +143,10 @@ a:visited {
   color: white;
 }
 
+textarea#styled {
+  width: 1100px;
+  height: 50px;
+  border: 3px solid #f0652f;
+  padding: 5px;
+  font-family: Tahoma, sans-serif;
+}
