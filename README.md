@@ -1,4 +1,4 @@
-# cs130project
+# Vantage
 
 
 # Testing App
