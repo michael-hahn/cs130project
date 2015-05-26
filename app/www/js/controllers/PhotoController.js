@@ -8,7 +8,7 @@
 **/
 angular.module('starter')
 
-.controller('PhotoController', function($scope, $stateParams, $state, $firebaseObject, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal, $ionicHistory) {
+.controller('PhotoController', function($scope, $stateParams, $state, $firebaseObject, $ionicSlideBoxDelegate, $timeout, firebaseObject, $ionicModal, $ionicHistory, $q) {
   
   $scope.currIndex = $stateParams.imageIndex;
   $scope.photoContent = $stateParams.imageData;
