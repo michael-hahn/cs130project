@@ -7,7 +7,7 @@
 
   <div class="bar bar-subheader item-input-inset" style="background: none">
       <label style="width:100%">
-        <input class="item-input-wrapper vantageFontOrange" style="width:100%; font-size: 1.6em; text-align:center" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
+        <input class="item-input-wrapper vantageBody" style="font-style:italic; text-align:center; width:100%" type="email" placeholder=" Add User via Email" ng-model="userEmail"/>
       </label>
       <button class="button button-small buttonGrey vantageFontOrange" ng-click="findUser(userEmail)">
         <i class="ion-plus"></i>
@@ -31,26 +31,24 @@
         <ion-item class="item item-avatar" >
             
           <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
-          <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
+          <h2 class="vantageBody" style="font-style:italic;" ng-click="viewProfile(friendData[fUID])">
+            <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
+            {{friendData[fUID].displayName}} ({{friendData[fUID].status}})</h2>
           
-          <p ng-click="viewProfile(friendData[fUID])">
+          <p class="vantageBody" style="font-style:italic;" ng-click="viewProfile(friendData[fUID])">
             <i class="icon ion-email"></i>
             {{friendData[fUID].email}}
           </p>
 
-          <p>
-            <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
-            {{friendData[fUID].status}}
-          </p>
-
-          <button ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept Friend Request
+          <button class="button button-small buttonOrange vantageBody" style="font-style:italic" ng-if="friendData[fUID].status === 'pending' " ng-click="add(friendData[fUID])">  Accept
           </button>
 
           <p class="item-icon-right">
             <i class="icon ion-chevron-right icon-accessory"></i>
           </p>
           
-          <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">Delete
+          <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">
+            <i class="icon ion-sad-outline"></i>
           </ion-option-button>
 
         </ion-item>
@@ -76,23 +74,21 @@
           
           <img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} ng-click="viewProfile(friendData[fUID])"/>
 
-          <h2 ng-click="viewProfile(friendData[fUID])">{{friendData[fUID].displayName}}</h2>
+          <h2 class="vantageBody" style="font-style:italic;" ng-click="viewProfile(friendData[fUID])">
+            <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
+            {{friendData[fUID].displayName}}</h2>
           
-          <p ng-click="viewProfile(friendData[fUID])">
+          <p class="vantageBody" style="font-style:italic;" ng-click="viewProfile(friendData[fUID])">
             <i class="icon ion-email"></i>
             {{friendData[fUID].email}}
-          </p>
-
-          <p>
-            <i class="{{getStatusIcon(friendData[fUID].status)}}"></i>
-            {{friendData[fUID].status}}
           </p>
 
           <p class="item-icon-right">
             <i class="icon ion-chevron-right icon-accessory"></i>
           </p>
           
-          <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">Delete
+          <ion-option-button class="button-assertive" ng-click="delete(friendData[fUID])">
+            <i class="icon ion-sad-outline"></i>
           </ion-option-button>
 
         </ion-item>

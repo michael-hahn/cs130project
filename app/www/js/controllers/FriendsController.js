@@ -134,7 +134,7 @@ angular.module('starter')
   $scope.getStatusIcon = function(status) {
     if (status === "friend") {
       return "icon ion-android-happy";
-    } else if (status === "pending") {
+    } else if (status === "pending" || status === "waiting") {
       return "icon ion-load-a";
     }
   }
