@@ -1,20 +1,20 @@
-<ion-modal-view>
-    <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">Register New Account</h1>
-        <button class="button button-clear button-primary" ng-click="modalRegister.hide()">Cancel</button>
+<ion-modal-view class="backgroundGradient">
+    <ion-header-bar class="bar bar-header barOrange">
+        <h1 class="title vantageHeader" style="font-size:1.6em">Register New Account</h1>
+        <button class="button button-clear button-dark" ng-click="modalRegister.hide()">Cancel</button>
     </ion-header-bar>
-    <ion-content class="padding">
+    <ion-content class="padding" scroll="false">
         <div class="list">
             <label class="item item-input">
-                <input ng-model="email" type="email" placeholder="Email">
+                <input class="vantageBody" style="font-style:italic; text-align:center" ng-model="email" type="email" placeholder="Email">
             </label>
             <label class="item item-input">
-                <input ng-model="password" type="password" placeholder="Password">
+                <input class="vantageBody" style="font-style:italic; text-align:center" ng-model="password" type="password" placeholder="Password">
             </label>
             <label class="item item-input">
-                <input ng-model="confirmPassword" type="password" placeholder="Confirm Password">
+                <input class="vantageBody" style="font-style:italic; text-align:center" ng-model="confirmPassword" type="password" placeholder="Confirm Password">
             </label>
-            <button class="button button-full button-positive" ng-click="register(email, password, confirmPassword)">Next</button>
+            <button class="button button-block buttonOrange vantageHeader" ng-click="register(email, password, confirmPassword)">Next</button>
         </div>
     </ion-content>
 </ion-modal-view>

@@ -1,20 +1,18 @@
-<ion-view view-title="Photo Content">
-  <ion-content>
-
+<ion-view class="backgroundGradient">
+  
+  <ion-content padding="true">
 	<div class="list card">
 
-		  <div class="item item-avatar">
-		    <input ng-model="displayName" type="text" placeholder="Display Name">
-		  </div>
+		  	<label class="item item-input">
+		    	<input class="vantageBody" style="font-style:italic; font-size:1.6em; text-align:center;" ng-model="displayName" type="text" placeholder="Display Name">
+			</label>
 
 		  <div class="item item-image">
 		  	<br/>
-		    <div class="item energized">
-		    	Choose Profile Picture (Optional)
-		    	<br />
-		    	<img style="width:250px; height:300px" ng-src="./././img/blank-profile.png" ng-if="profilePic === '' ">
-		    	<img style="width:250px; height:300px" ng-src="{{profilePic}}" ng-if="profilePic !== '' ">
-		    </div>
+		    <h2 class="vantageBody" style="font-style:italic; text-align:center"> Choose Profile Picture (Optional) </h2>
+	    	<br />
+	    	<img style="width:250px; height:300px" ng-src="./././img/blank-profile.png" ng-if="profilePic === '' ">
+	    	<img style="width:250px; height:300px" ng-src="{{profilePic}}" ng-if="profilePic !== '' ">
 		    <div class="button-bar">
 	            <button class="button button-clear icon ion-camera" ng-click="chooseProfilePicture(0)">
 	            </button>
@@ -24,7 +22,7 @@
 		  </div>
 	</div>
 
-    <button class="button button-full button-positive" ng-click="submit(displayName)">Done!</button>
+    <button class="button button-block buttonOrange vantageHeader" ng-click="submit(displayName)">Done!</button>
 
   </ion-content>
 </ion-view>
