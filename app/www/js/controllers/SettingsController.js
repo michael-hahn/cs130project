@@ -50,13 +50,7 @@ angular.module('starter')
     }).then(function (modal) {
         $scope.modalPassword = modal;
     });
-	//Modal for PhotoZoom
-	$ionicModal.fromTemplateUrl('templates/settingsHTML/PhotoZoom.html', {
-		scope: $scope
-	}).then(function (modal) {
-		$scope.modalPhotoZoom = modal;
-	});
-	
+
     $scope.logout = function() {
       if(confirm("Logout?")){
         firebaseObject.unauth();

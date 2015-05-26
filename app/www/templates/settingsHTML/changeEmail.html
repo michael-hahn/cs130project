@@ -1,17 +1,17 @@
-<ion-modal-view>
-    <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">Change Email</h1>
-        <button class="button button-clear button-primary" ng-click="modalEmail.hide()">Cancel</button>
+<ion-modal-view class="backgroundGradient">
+    <ion-header-bar class="bar bar-header barOrange">
+        <h1 class="title vantageHeader" style="font-size:1.6em">Change Email</h1>
+        <button class="button button-clear button-dark" ng-click="modalEmail.hide()">Cancel</button>
     </ion-header-bar>
-    <ion-content class="padding">
+    <ion-content class="padding" scroll="false">
         <div class="list">
             <label class="item item-input">
-                <input ng-model="newEmail" type="email" placeholder="New Email">
+                <input class="vantageBody" style="font-style:italic; text-align:center" ng-model="newEmail" type="email" placeholder="New Email">
             </label>
             <label class="item item-input">
-                <input ng-model="password" type="password" placeholder="Password">
+                <input class="vantageBody" style="font-style:italic; text-align:center" ng-model="password" type="password" placeholder="Password">
             </label>
-            <button class="button button-full button-positive" ng-click="changeEmail(newEmail, password)">Change!</button>
+            <button class="button button-block buttonOrange vantageHeader" ng-click="changeEmail(newEmail, password)">Change!</button>
         </div>
     </ion-content>
 </ion-modal-view>
