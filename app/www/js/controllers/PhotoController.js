@@ -110,6 +110,14 @@ angular.module('starter')
     return false;
   }
 
+  function getNameOfUserWithID(userID) {
+    return $q(function(resolve, reject) {
+      firebaseObject.child("user_data/" + userID).once("value", function(userData) {
+        resolve( userData.val()["displayName"] );
+      });
+    });
+  }
+  
   $scope.addUser2Event = function(photoData, index) {
     $state.go('addUser', {
       'eventUID' :  $scope.eventID, });
