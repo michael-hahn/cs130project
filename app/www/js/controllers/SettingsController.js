@@ -15,13 +15,12 @@ angular.module('starter')
     $scope.userData = null;
 
     if(fbAuth) {
-      console.log("id = " + fbAuth.uid);
       $scope.uid = fbAuth.uid;
       var userReference = firebaseObject.child("user_data/" + fbAuth.uid);
       userReference.on("value", function(snapshot) {
-          //using timeout to schedule the changes to the scope in a future call stack. timeout period of 0ms makes it occur as soon as possible and $timeout will ensure code be called in single $apply block
-          $scope.userData = snapshot.val();
-          $timeout(function() {}, 0);
+        //using timeout to schedule the changes to the scope in a future call stack. timeout period of 0ms makes it occur as soon as possible and $timeout will ensure code be called in single $apply block
+        $scope.userData = snapshot.val();
+        $timeout(function() {}, 0);
       }, function(error) {
           console.log("Read failed: " + error);
       });
@@ -159,7 +158,6 @@ angular.module('starter')
           profilePicture : ''
         }, function(error) {
           if ( error === null ) {
-            $scope.modalProfilePicture.hide();
             alert("Profile picture changed!");
           } else {
             alert(error);
