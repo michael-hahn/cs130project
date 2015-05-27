@@ -119,6 +119,7 @@ angular.module('starter')
   //joined by checking whether the user gives correct password. If the event can be joined, alert the user and 
   //direct the user to the event image page. Otehrwise alert the user and let him try again
   $scope.joinEvent = function(eventName, userEmail, password) {
+    if (eventName && userEmail && password){
       eventExist(eventName).then(function() {
             getEventPassword(eventName, userEmail).then(function(eventPassword) {
                 eventNotJoined(targetEventID).then(function(){
@@ -138,6 +139,11 @@ angular.module('starter')
             });
           }); 
       });
+    } else {
+      $timeout(function() {
+        alert("Fill out all details.");
+      },0);
+    }
   }
 
   $scope.goBack = function() {

@@ -1,32 +1,34 @@
-<ion-header-bar class="bar bar-header bar-positive">
-    <h1 class="title">Invite Friends</h1>
-    <button class="button button-clear button-primary" ng-click="goBack()">Cancel</button>
-</ion-header-bar>
+<ion-view class="backgroundGradient">
+	<ion-header-bar class="bar bar-header barOrange">
+	    <h1 class="title vantageHeader" style="font-size:2em;">Invite Friends</h1>
+	    <button class="button button-clear button-dark" style="font-family: 'CenturyGothic', sans-serif;"ng-click="goBack()">Cancel</button>
+	</ion-header-bar>
 
-<div class="bar bar-subheader">
-	<div class='button-bar'>
-		<button class="button" ng-click="checkAll()">Check All</button>
-		<button class="button button-balanced" ng-click="inviteFriends(invitedIDs.ids)" ng-if="invitedIDs.ids.length !== 0">Invite Friends</button>
-		<button class="button" ng-click="uncheckAll()">Uncheck All</button>
+	<div class="bar bar-subheader" style="background-color:transparent">
+		<div class='button-bar'>
+			<button class="button buttonOrange vantageHeader" style="font-size:1.6em" ng-click="checkAll()">Check All</button>
+			<button class="button button-energized vantageHeader" style="font-size:1.6em" ng-click="inviteFriends(invitedIDs.ids)" ng-if="invitedIDs.ids.length !== 0">INVITE!</button>
+			<button class="button buttonOrange vantageHeader" style="font-size:1.6em" ng-click="uncheckAll()">Uncheck All</button>
+		</div>
 	</div>
-</div>
 
-<ion-content ng-class="{'has-subheader':true, 'has-footer': invitedIds.ids.length !== 0}">
-	<h3 ng-if="myFriendIDs.length === 0">No Friends to Invite</h3>
-	<ul class="list" ng-if="myFriendIDs.length !== 0">
-		<li class="item item-avatar-right item-checkbox" ng-repeat="fUID in myFriendIDs" ng-if="friendData[fUID] !== undefined">
-			<img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} />
-		    
-		    <label class="checkbox">
-		    	<input type="checkbox" checklist-model="invitedIDs.ids" checklist-value="fUID">
-	    	</label>
-	    	
-			<h2>{{friendData[fUID].displayName}}</h2>
+	<ion-content ng-class="{'has-subheader':true, 'has-footer': invitedIds.ids.length !== 0}">
+		<h1 class="title vantageHeader" style="font-size:2em;text-align:center" ng-if="myFriendIDs.length === 0">No Friends to Invite</h1>
+		<ul class="list" ng-if="myFriendIDs.length !== 0">
+			<li class="item item-avatar-right item-checkbox" ng-repeat="fUID in myFriendIDs" ng-if="friendData[fUID] !== undefined" style="background:none">
+				<img src={{getFriendProfilePicture(friendData[fUID].profilePicture)}} />
+			    
+			    <label class="checkbox">
+			    	<input type="checkbox" checklist-model="invitedIDs.ids" checklist-value="fUID">
+		    	</label>
+		    	
+				<h2 style="font-family: 'CenturyGothic', sans-serif; color: white">{{friendData[fUID].displayName}}</h2>
 
-			<p>
-			  <i class="icon ion-email"></i>
-			  {{friendData[fUID].email}}
-			</p>
-		</li>
-	</ul>
-</ion-content>
+				<p style="font-family: 'CenturyGothic', sans-serif; color: white">
+				  <i class="icon ion-email"></i>
+				  {{friendData[fUID].email}}
+				</p>
+			</li>
+		</ul>
+	</ion-content>
+</ion-view>

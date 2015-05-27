@@ -1,31 +1,31 @@
-<ion-header-bar>
-  <h1 class="title">Join Event</h1>
+<ion-view class="backgroundGradient">
+  <ion-header-bar class="bar bar-header barOrange">
+    <h1 class="title vantageHeader" style="font-size:2em;">Join Event</h1>
 
-  <div class="buttons">
-    <button class="button button-assertive" ng-click="goBack()">Back</button>
-  </div>
-</ion-header-bar>
-<ion-content>
-	<div class="padding-left padding-right">
-
-  	<label class="item item-input">
-      <input ng-model="eventName" type="text" placeholder="Event Name" />
-    </label>
-
-  	<label class="item item-input">
-    	<input ng-model="creatorName" type="email" placeholder="Host's Email" />
-  	</label>
-
-  	<label class="item item-input">
-    	<input ng-model="password" type="password" placeholder="Password" />
-  	</label>
-
-    <br></br>
-
-  	<div class="button-bar">
-      <a class="button" ng-click="joinEvent(eventName, creatorName, password)">Join Event</a>
+    <div class="buttons">
+      <button class="button button-clear button-dark" style="font-family: 'CenturyGothic', sans-serif;"ng-click="goBack()">Back</button>
     </div>
-  </div>
-</ion-content>
+  </ion-header-bar>
+  <ion-content class="padding">
+  	<div class="padding-left padding-right">
 
+      <label class="item item-input" style="background-color:transparent;">
+      <input ng-model="creatorName" class="vantageBody" style="font-style:italic; text-align:center; color:white" type="email" placeholder="Host's Email" />
+      </label>
+
+      <label class="item item-input" style="background-color:transparent;">
+        <input ng-model="eventName" class="vantageBody" style="font-style:italic; text-align:center; color:white" type="text" placeholder="Event Name" />
+      </label>
+
+    	<label class="item item-input" style="background-color:transparent;">
+      	<input ng-model="password" class="vantageBody" style="font-style:italic; text-align:center; color:white" type="password" placeholder="Password" />
+    	</label>
+
+      <br></br>
+
+      <button class="button button-block buttonOrange vantageHeader" style="font-size:1.6em" ng-click="joinEvent(eventName, creatorName, password)">Join Event</button>
+
+    </div>
+  </ion-content>
+</ion-view>
  
