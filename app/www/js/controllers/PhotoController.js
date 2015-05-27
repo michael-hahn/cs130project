@@ -128,6 +128,8 @@ angular.module('starter')
     var commentID = imageCommentsReference.child(im.id).push({
       data: comments,
       userId: fbAuth.uid
+    }, function() {
+      alert("Comment has been posted!");
     });
     //We will also record which user makes what comments by saving the commentID to the userID in the "user_comments" attribute
     userCommentsReference.child(fbAuth.uid).child(commentID.key()).set(1);

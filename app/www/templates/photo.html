@@ -14,7 +14,7 @@
 
 				<ion-slide ng-repeat="photo in photosArr">
 					<a href="" ng-click="viewProfile(photo.userInfo)">
-						<div class="item item-avatar" style="background: none;">
+						<div class="item item-avatar" style="border: none; background: none; background-image: none">
 			    			<img src="{{photo.userInfo.profilePicture}}" ng-if="photo.userInfo.profilePicture !== '' ">
 					    	<img src="./img/blank-profile.png" ng-if="photo.userInfo.profilePicture === '' "/>
 					    	
@@ -35,11 +35,11 @@
 			  				{{photo.numLikes}}
 			  			</a>
 			  	</div>
-			  	<div class="list" style="font-family: 'CenturyGothic', sans-serif; color: white; border: none; background: none; background-image: none">
+			  	<div class="list padding" style="font-family: 'CenturyGothic', sans-serif; color: white; border: none; background: none; background-image: none">
 
 						<div class="item item-input-insert" style="border: none; background: none; background-image: none">
 							<label class="item-input-wrapper">
-								<textarea name="styled-textarea" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')" ng-model="comments" placeholder="Make a comment"></textarea>
+								<textarea name="styled-textarea" id="styled" style="resize: none" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')" ng-model="comments" placeholder="Make a comment"></textarea>
 							</label>
 							<button class="button button-small" ng-click="addComments(photo,comments)"><!--addComments(photo, comments)-->
 								Submit
@@ -50,9 +50,11 @@
 						<div>
 							<div class="check-element animate-hide" ng-show="checked">
 								<ion-list>
-									<ion-item ng-repeat="c in comment track by $index" ng-if="c != null">
+									<ion-item class="item-text-wrap" ng-repeat="c in comment track by $index" ng-if="c != null">
 										{{(c.info).displayName}} commented: 
-											<textarea id="sttled" style="width:1100px; word-wrap:breakword;">{{c.data}}</textarea>
+										<p>
+											{{c.data}}
+										</p>
 	        						</ion-item>
 	    						</ion-list>
 							</div>
