@@ -9,4 +9,41 @@
 <h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">ImagesController();</pre>
 </div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_endevent">endEvent()</h3>
+<div class="endevent"><div class="endevent-page"><p>Ends the event so that it still exists, but no user can add pictures to it</p>
+</div></div>
+</li>
+<li><h3 id="methods_eventuserlist">eventUserList()</h3>
+<div class="eventuserlist"><div class="eventuserlist-page"><p>Brings up a list of all users associated with the event</p>
+</div></div>
+</li>
+<li><h3 id="methods_filter">filter(userEmail, timeLower, timeUpper)</h3>
+<div class="filter"><div class="filter-page"><p>Filters the photos in the event based on the user and/or a date range</p>
+</div><h5 id="methods_filter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userEmail</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="filter-page"><p>The email of the user to filter photos by</p>
+</div></td></tr><tr><td>timeLower</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="filter-page"><p>The lower bound of the time to filter by</p>
+</div></td></tr><tr><td>timeUpper</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="filter-page"><p>The upper bound of the time to filter by</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_reactivateevent">reactivateEvent()</h3>
+<div class="reactivateevent"><div class="reactivateevent-page"><p>Reactivates the event so that users can add pictures to it again</p>
+</div></div>
+</li>
+<li><h3 id="methods_unfilter">unfilter()</h3>
+<div class="unfilter"><div class="unfilter-page"><p>Removes the filter on photos (displaying them all)</p>
+</div></div>
+</li>
+<li><h3 id="methods_upload">upload(type)</h3>
+<div class="upload"><div class="upload-page"><p>Uploads a photo to the current event (either a new photo or an existing one from the user&#39;s photo gallery)</p>
+</div><h5 id="methods_upload_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>type</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="upload-page"><p>The user&#39;s selection of how to upload a picture (either taking a new one or selecting one from their photo gallery)</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_viewphoto">viewPhoto(photoData, index)</h3>
+<div class="viewphoto"><div class="viewphoto-page"><p>Brings up a page to view the selected photo</p>
+</div><h5 id="methods_viewphoto_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>photoData</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="viewphoto-page"><p>The data of the photo that the user selected</p>
+</div></td></tr><tr><td>index</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="viewphoto-page"><p>The index of the photo the user selected</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
 </div>

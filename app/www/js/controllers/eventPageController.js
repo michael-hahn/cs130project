@@ -76,7 +76,17 @@ angular.module('starter')
   });
 
 
-
+  /**
+   * @ngdoc function
+   * @name filter
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Filters the photos in the event based on the user and/or a date range
+   *
+   * @param {string} userEmail The email of the user to filter photos by
+   * @param {string} timeLower The lower bound of the time to filter by
+   * @param {string} timeUpper The upper bound of the time to filter by
+   */
   $scope.filter = function(userEmail, timeLower, timeUpper) {
     var UserEmail = null;
     var users = $scope.allUsersData;
@@ -147,6 +157,13 @@ angular.module('starter')
 
   }
 
+  /**
+   * @ngdoc function
+   * @name unfilter
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Removes the filter on photos (displaying them all)
+   */
   $scope.unfilter = function () {
     $scope.images = AllImages;
   }
@@ -156,7 +173,15 @@ angular.module('starter')
 
 
 
-
+  /**
+   * @ngdoc function
+   * @name upload
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Uploads a photo to the current event (either a new photo or an existing one from the user's photo gallery)
+   *
+   * @param {int} type The user's selection of how to upload a picture (either taking a new one or selecting one from their photo gallery)
+   */
   $scope.upload = function(type) {
     // We have to actually go check the value of Active in Firebase because it could have changed since the time they entered
     /*$q(function(resolve, reject) {
@@ -241,6 +266,16 @@ angular.module('starter')
       });
   }
 
+  /**
+   * @ngdoc function
+   * @name viewPhoto
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Brings up a page to view the selected photo
+   *
+   * @param {Object} photoData The data of the photo that the user selected
+   * @param {int} index The index of the photo the user selected
+   */  
   $scope.viewPhoto = function(photoData, index) {
     photoData.userInfo = $scope.allUsersData[photoData.user];
     $state.go('viewPhoto', {
@@ -259,12 +294,26 @@ angular.module('starter')
     return (fbAuth.uid == $scope.eventData.Host);
   }
 
+  /**
+   * @ngdoc function
+   * @name endEvent
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Ends the event so that it still exists, but no user can add pictures to it
+   */  
   $scope.endEvent = function() {
     $scope.eventData.Active = 0;
     eventDataReference.child("Active").set(0);
     alert("You have ended this event.");
   }
 
+  /**
+   * @ngdoc function
+   * @name reactivateEvent
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Reactivates the event so that users can add pictures to it again
+   */  
   $scope.reactivateEvent = function() {
     $scope.eventData.Active = 1;
     eventDataReference.child("Active").set(1);
@@ -276,6 +325,13 @@ angular.module('starter')
     alert("event info");
   }
 
+  /**
+   * @ngdoc function
+   * @name eventUserList
+   * @methodOf starter.controller:ImagesController
+   * @description
+   * Brings up a list of all users associated with the event
+   */  
   $scope.eventUserList = function() {
     $state.go('viewUserList', { 'allUsersData': $scope.allUsersData, 'eventID' : $scope.eventID })
   }

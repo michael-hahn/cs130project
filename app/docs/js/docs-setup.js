@@ -14,12 +14,21 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "starter.controller:AddUserController",
+      "shortName": "AddUserController",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "Add user to event controller of the app.",
+      "keywords": "add api app controller event function starter user"
+    },
+    {
+      "section": "api",
       "id": "starter.controller:createEventController",
       "shortName": "createEventController",
       "type": "function",
       "moduleName": "starter",
       "shortDescription": "Create event controller of the app.",
-      "keywords": "api app controller create event function starter"
+      "keywords": "allows api app confirm confirmpassword controller cover create createevent creates details event eventname function gallery opt password photo picture repeated select selecting selection starter supplied takecoverphoto upload user"
     },
     {
       "section": "api",
@@ -32,12 +41,30 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "starter.controller:FriendsPageController",
+      "shortName": "FriendsPageController",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "Friends page controller of the app.",
+      "keywords": "api app controller friends function starter"
+    },
+    {
+      "section": "api",
       "id": "starter.controller:ImagesController",
       "shortName": "ImagesController",
       "type": "function",
       "moduleName": "starter",
       "shortDescription": "Images controller of the app.",
-      "keywords": "api app controller function images starter"
+      "keywords": "add api app associated based bound brings controller current data email endevent ends event eventuserlist existing exists filter filters function gallery images list lower photo photodata photos picture pictures range reactivateevent reactivates removes selected selecting selection starter time timelower timeupper type unfilter upload uploads upper user useremail users view viewphoto"
+    },
+    {
+      "section": "api",
+      "id": "starter.controller:inviteFriendsController",
+      "shortName": "inviteFriendsController",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "Invite friends controller of the app.",
+      "keywords": "api app controller friends function invite starter"
     },
     {
       "section": "api",
@@ -83,6 +110,33 @@ NG_DOCS={
       "moduleName": "starter",
       "shortDescription": "Register controller of the app.",
       "keywords": "api app controller function register starter"
+    },
+    {
+      "section": "api",
+      "id": "starter.controller:viewProfileController",
+      "shortName": "viewProfileController",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "View profile controller of the app.",
+      "keywords": "api app controller function profile starter view"
+    },
+    {
+      "section": "api",
+      "id": "starter.controller:viewUserListController",
+      "shortName": "viewUserListController",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "viewUserList controller of the app.",
+      "keywords": "api app controller function starter viewuserlist"
+    },
+    {
+      "section": "api",
+      "id": "starter.factory",
+      "shortName": "starter.factory",
+      "type": "function",
+      "moduleName": "starter",
+      "shortDescription": "Service to hold controller&#39;s $scope and share data between scopes",
+      "keywords": "$scope api controller data factory function hold scopes service share starter"
     }
   ],
   "apis": {

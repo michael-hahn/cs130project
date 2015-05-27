@@ -84,6 +84,18 @@ angular.module('starter')
     });
   }
 
+
+  /**
+   * @ngdoc function
+   * @name createEvent
+   * @methodOf starter.controller:createEventController
+   * @description
+   * Creates the event with the details supplied by the user
+   *
+   * @param {string} eventName The name of the event to create
+   * @param {string} password The password for the new event
+   * @param {string} confirmPassword The repeated password to confirm the password
+   */
   $scope.createEvent = function(eventName, password, confirmPassword) {
     $ionicLoading.show({
       template: 'Creating event...'
@@ -143,6 +155,15 @@ angular.module('starter')
     $ionicHistory.goBack();
   }
 
+  /**
+   * @ngdoc function
+   * @name takeCoverPhoto
+   * @methodOf starter.controller:createEventController
+   * @description
+   * Allows the user to either select a photo from their photo gallery or take a new photo to use as the cover photo for their event
+   *
+   * @param {int} opt The user's selection of how to upload a picture (either taking a new one or selecting one from their photo gallery)
+   */
   $scope.takeCoverPhoto = function(opt) {
     //from camera
       var options1 = {
