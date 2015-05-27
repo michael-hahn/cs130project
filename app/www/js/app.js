@@ -214,7 +214,7 @@ angular.module('starter', ['firebase', 'ngCordova', 'ionic', 'checklist-model'])
         controller: 'SettingsController'
       }
     },
-    cache: false
+    cache: true
   })
 
   .state("app.eventsMenu", {
