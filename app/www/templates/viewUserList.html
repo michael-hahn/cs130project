@@ -14,7 +14,7 @@
         Invite Friends
       </a>
       <a class="button button-calm icon ion-android-mail" href="" ng-click="inviteByEmail()">
-        Invite By User Email
+        Invite By Email
       </a>
     </div>
   </div>
@@ -35,10 +35,10 @@
         </p>
       </a>
       
-      <a class="item item-thumbnail-left" href="" ng-click="viewProfile(user)" ng-repeat="user in usersData">
+      <a class="item item-thumbnail-left" href="" ng-click="viewProfile(user)" ng-repeat="user in usersData" style="background: none; border: none">
         <img src={{getProfilePicture(user.profilePicture)}} >
-        <h2>{{user.displayName}}</h2>
-        <p>
+        <h2 style="font-family: 'CenturyGothic', sans-serif; color: white">{{user.displayName}}</h2>
+        <p style="font-family: 'CenturyGothic', sans-serif; color: white">
           <i class="icon ion-email"></i>
           {{user.email}}
         </p>

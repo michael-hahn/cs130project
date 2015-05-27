@@ -85,58 +85,64 @@ angular.module('starter')
   }
 
   $scope.createEvent = function(eventName, password, confirmPassword) {
-    $ionicLoading.show({
-      template: 'Creating event...'
-    });
-
-    // First, refresh the list of events this user is hosting
-    refreshMyEvents().then(function() {
-      // Then, check if the event name is available
-      eventNameIsAvailable(eventName).then(function() {
-        // We're not hosting an event by that name yet, so we can add it
-        var coverPhoto;
-        if($scope.eventCoverPhoto === '') {
-          coverPhoto = $scope.userProfilePic;
-        } else {
-          coverPhoto = $scope.eventCoverPhoto;
-        }
-
-        if( password == confirmPassword ) {
-          getEmailOfUserWithID(fbAuth.uid).then(function(email) {
-            var eventID = eventsReference.push({Host: fbAuth.uid, 
-              HostEmail: email, 
-              Name: eventName, 
-              Password: password, 
-              Timestamp: Firebase.ServerValue.TIMESTAMP, 
-              Active: 1, 
-              coverPhoto: coverPhoto 
-            }).key();
-            
-            myEventsReference.child(eventID).set("host");
-
-            firebaseObject.child("event_attendees").child(eventID).child(fbAuth.uid).set("host");
-
-            $ionicLoading.hide();
-            
-            $timeout(function(){
-              alert("Event Created!");
-            }, 0);
-
-            $state.go("app.eventsPage", { 'eventUID' : eventID});
-          });
-          
-        }
-        else {
-          $ionicLoading.hide();
-          alert("The passwords do not match");
-        }
-      },
-      function() {
-        // We're already hosting an event by that name, so we can't add it.
-        $ionicLoading.hide();
-        alert("You are already hosting an event by this name");
+    if (eventName && password && confirmPassword){
+      $ionicLoading.show({
+        template: 'Creating event...'
       });
-    });
+
+      // First, refresh the list of events this user is hosting
+      refreshMyEvents().then(function() {
+        // Then, check if the event name is available
+        eventNameIsAvailable(eventName).then(function() {
+          // We're not hosting an event by that name yet, so we can add it
+          var coverPhoto;
+          if($scope.eventCoverPhoto === '') {
+            coverPhoto = $scope.userProfilePic;
+          } else {
+            coverPhoto = $scope.eventCoverPhoto;
+          }
+
+          if( password == confirmPassword ) {
+            getEmailOfUserWithID(fbAuth.uid).then(function(email) {
+              var eventID = eventsReference.push({Host: fbAuth.uid, 
+                HostEmail: email, 
+                Name: eventName, 
+                Password: password, 
+                Timestamp: Firebase.ServerValue.TIMESTAMP, 
+                Active: 1, 
+                coverPhoto: coverPhoto 
+              }).key();
+              
+              myEventsReference.child(eventID).set("host");
+
+              firebaseObject.child("event_attendees").child(eventID).child(fbAuth.uid).set("host");
+
+              $ionicLoading.hide();
+              
+              $timeout(function(){
+                alert("Event Created!");
+              }, 0);
+
+              $state.go("app.eventsPage", { 'eventUID' : eventID});
+            });
+            
+          }
+          else {
+            $ionicLoading.hide();
+            alert("The passwords do not match");
+          }
+        },
+        function() {
+          // We're already hosting an event by that name, so we can't add it.
+          $ionicLoading.hide();
+          alert("You are already hosting an event by this name");
+        });
+      });
+    } else {
+      $timeout(function(){  
+        alert("Fill out all fields.");
+      },0);
+    } 
   }
 
   $scope.goBack = function() {
