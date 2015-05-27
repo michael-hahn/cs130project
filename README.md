@@ -30,7 +30,7 @@ OR (Preferred)
 ## Dependencies
   1. install [node](http://nodejs.org)
   2. install [grunt-cli](https://github.com/gruntjs/grunt-cli) `npm install -g grunt-cli`
-  3. install dependencies with `npm install`
+  3. install dependencies (grunt-ngdocs, grunt-contrib-connect, and grunt-contrib-clean) with `npm install`
 
 ## Build and run
   Run `grunt` and open http://localhost:8000/docs in browser
