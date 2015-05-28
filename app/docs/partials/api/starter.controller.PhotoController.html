@@ -9,4 +9,37 @@
 <h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">PhotoController();</pre>
 </div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_addcomments">addComments(im, comment)</h3>
+<div class="addcomments"><div class="addcomments-page"><p>Add a comment to the image.</p>
+</div><h5 id="methods_addcomments_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>im</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="addcomments-page"><p>Firebase object representing the image</p>
+</div></td></tr><tr><td>comment</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="addcomments-page"><p>comment to add to image</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_close">close()</h3>
+<div class=""><div class="close-page"><p>close photo viewing session. </p>
+</div></div>
+</li>
+<li><h3 id="methods_isliked">isLiked(im)</h3>
+<div class="isliked"><div class="isliked-page"><p>Check if the curent user already liked the photo</p>
+</div><h5 id="methods_isliked_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>im</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="isliked-page"><p>Firebase object representing the image</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_like">like(im)</h3>
+<div class="like"><div class="like-page"><p>Like the photo. Increment the number of likes by one.</p>
+</div><h5 id="methods_like_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>im</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="like-page"><p>Firebase object representing the image</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_photochanged">photoChanged(index)</h3>
+<div class="photochanged"><div class="photochanged-page"><p>The active photo has changed. </p>
+</div><h5 id="methods_photochanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>index</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="photochanged-page"><p>index of new active photo</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_viewprofile">viewProfile(user)</h3>
+<div class="viewprofile"><div class="viewprofile-page"><p>View profile of selected user.</p>
+</div><h5 id="methods_viewprofile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>user</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="viewprofile-page"><p>ID of user</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
 </div>

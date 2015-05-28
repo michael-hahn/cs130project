@@ -207,6 +207,5 @@ angular.module('starter')
       });
 
       $timeout(function() {}, 0);
-      //$scope.$apply();//updates the view
   }
 })

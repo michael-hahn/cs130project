@@ -64,10 +64,26 @@ angular.module('starter')
     $scope.friendData = friendData;
   }
 
+  /**
+   * @ngdoc function
+   * @name goBack
+   * @methodOf starter.controller:inviteFriendsController
+   * @description
+   * Returns to the eventMenu Page
+   */
   $scope.goBack = function() {
     $ionicHistory.goBack();
   }
 
+  /**
+   * @ngdoc function
+   * @name inviteFriends
+   * @methodOf starter.controller:inviteFriendsController
+   * @description
+   * Send friend request to user
+   *
+   * @param {string[]} selected array of user IDs to be added as friends
+   */ 
   $scope.inviteFriends = function(selected) {
     for (var i = 0; i < selected.length; i++) {
       userEventReference.child(selected[i]).child($scope.eventID).transaction(function(role) {
@@ -82,6 +98,15 @@ angular.module('starter')
     $ionicHistory.goBack();
   }
 
+  /**
+   * @ngdoc function
+   * @name getFriendProfilePicture
+   * @methodOf starter.controller:inviteFriendsController
+   * @description
+   * Get the profile picture of a friend. Return a generic profile picture if the friend does not have one.
+   *
+   * @param {string} profilePic profile picture of friend
+   */ 
   $scope.getFriendProfilePicture = function(profilePic) {
     if (profilePic === "") {
       return "./img/blank-profile.png";
@@ -90,11 +115,24 @@ angular.module('starter')
     }
   }
 
-  //check list helpers
+  /**
+   * @ngdoc function
+   * @name checkAll
+   * @methodOf starter.controller:inviteFriendsController
+   * @description
+   * Select all friends of the user.
+   */ 
   $scope.checkAll = function() {
     $scope.invitedIDs.ids = angular.copy($scope.myFriendIDs);
   }
 
+  /**
+   * @ngdoc function
+   * @name checkAll
+   * @methodOf starter.controller:inviteFriendsController
+   * @description
+   * Deselect all friends of the user.
+   */ 
   $scope.uncheckAll = function() {
     $scope.invitedIDs.ids = [];
   }

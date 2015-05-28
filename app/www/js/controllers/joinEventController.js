@@ -115,10 +115,22 @@ angular.module('starter')
     });
   }
 
+
+  /**
+   * @ngdoc function
+   * @name joinEvent
+   * @methodOf starter.controller:joinEventController
+   * @description
+   * Join an event
+   *
+   * @param {string} eventName name of the event
+   * @param {string} userEmail email address of user
+   * @param {string} password password of the event
+   */  
+  $scope.joinEvent = function(eventName, userEmail, password) {
   //called when join event button is pushed. To test whether the event given event name and host email address can be
   //joined by checking whether the user gives correct password. If the event can be joined, alert the user and 
   //direct the user to the event image page. Otehrwise alert the user and let him try again
-  $scope.joinEvent = function(eventName, userEmail, password) {
     if (eventName && userEmail && password){
       eventExist(eventName).then(function() {
             getEventPassword(eventName, userEmail).then(function(eventPassword) {
@@ -146,6 +158,13 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name goBack
+   * @methodOf starter.controller:joinEventController
+   * @description
+   * Returns to the event menu Page
+   */
   $scope.goBack = function() {
     $ionicHistory.goBack();
   }

@@ -32,6 +32,13 @@ angular.module('starter')
 	$state.go("login");
 	}
   
+  	/**
+   * @ngdoc function
+   * @name addUser
+   * @methodOf starter.controller:viewProfileController
+   * @description
+   * Request user as a friend.
+   */
 	$scope.addUser = function() {
     	if ($scope.person.uid !== fbAuth.uid) {
     	//adds to their list
@@ -50,11 +57,18 @@ angular.module('starter')
 			}
 		});
 		
-    } else {
-      alert("You can't add yourself...");
-    }
-  }
+    	} else {
+      		alert("You can't add yourself...");
+    	}
+  	}
 
+  	/**
+   * @ngdoc function
+   * @name getAddIcon
+   * @methodOf starter.controller:viewProfileController
+   * @description
+   * Get an icon denoting whether or not the user has been requested as a friend already.
+   */
 	$scope.getAddIcon = function() {
 		if ($scope.status === 1) { //already added
 	        return "button button-clear button-icon icon ion-person-add";
@@ -63,6 +77,13 @@ angular.module('starter')
 		}
 	}
 
+	 /**
+   * @ngdoc function
+   * @name goBack
+   * @methodOf starter.controller:viewProfileController
+   * @description
+   * Returns to the eventMenu Page
+   */
 	$scope.goBack = function() {
 		$ionicHistory.goBack();
 	}

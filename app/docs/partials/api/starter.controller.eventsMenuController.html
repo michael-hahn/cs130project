@@ -1,0 +1,67 @@
+<h1><code ng:non-bindable="">eventsMenuController</code>
+<div><span class="hint">function in module <code ng:non-bindable="">starter</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="starter-controller-page starter-controller-eventsmenucontroller-page"><p>events page controller of the app.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">eventsMenuController();</pre>
+</div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_getcoverphoto">getCoverPhoto(photo)</h3>
+<div class="getcoverphoto"><div class="getcoverphoto-page"><p>Checks if there is a valid photo. Returns a generic photo if there is not any.</p>
+</div><h5 id="methods_getcoverphoto_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>photo</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="getcoverphoto-page"><p>photo of user</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_gotoevent">goToEvent(eventID)</h3>
+<div class="gotoevent"><div class="gotoevent-page"><p>Brings up the selected event page</p>
+</div><h5 id="methods_gotoevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="gotoevent-page"><p>the event ID</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_isgroupshown">isGroupShown(group)</h3>
+<div class="isgroupshown"><div class="isgroupshown-page"><p>Check if the panel is shown</p>
+</div><h5 id="methods_isgroupshown_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>group</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="isgroupshown-page"><p>group ID of panel</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_joinevent">joinEvent(eventID)</h3>
+<div class="joinevent"><div class="joinevent-page"><p>Current user joins an event he or she was invited to.</p>
+</div><h5 id="methods_joinevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="joinevent-page"><p>ID of event the user was invited to.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_leaveevent">leaveEvent(eventID)</h3>
+<div class="leaveevent"><div class="leaveevent-page"><p>Remove the current user from the event.</p>
+</div><h5 id="methods_leaveevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="leaveevent-page"><p>ID of event</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_rejectevent">rejectEvent(eventID)</h3>
+<div class="rejectevent"><div class="rejectevent-page"><p>Current user rejects an event he or she was invited to.</p>
+</div><h5 id="methods_rejectevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="rejectevent-page"><p>ID of event the user was invited to.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_removeevent">removeEvent(eventID)</h3>
+<div class="removeevent"><div class="removeevent-page"><p>Delete an event</p>
+</div><h5 id="methods_removeevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="removeevent-page"><p>ID of event the user wants to delete</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_removeguestfromevent">removeGuestFromEvent(userID, eventID)</h3>
+<div class="removeguestfromevent"><div class="removeguestfromevent-page"><p>Remove a guest from the event</p>
+</div><h5 id="methods_removeguestfromevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="removeguestfromevent-page"><p>ID of user to be removed</p>
+</div></td></tr><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="removeguestfromevent-page"><p>ID of event</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_removeimagefromevent">removeImageFromEvent(imageID, eventID)</h3>
+<div class="removeimagefromevent"><div class="removeimagefromevent-page"><p>Delete an image</p>
+</div><h5 id="methods_removeimagefromevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>imageID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="removeimagefromevent-page"><p>ID of event</p>
+</div></td></tr><tr><td>eventID</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="removeimagefromevent-page"><p>ID of image that the user wants to delete</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_togglegroup">toggleGroup(group)</h3>
+<div class="togglegroup"><div class="togglegroup-page"><p>Display/collapse content panels (accordian)</p>
+</div><h5 id="methods_togglegroup_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>group</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="togglegroup-page"><p>panel to display/collapse</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

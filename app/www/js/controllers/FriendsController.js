@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc function
- * @name starter.controller:FriendsPageController
+ * @name starter.controller:FriendsController
  * @description
  * Friends page controller of the app.
  *
@@ -94,10 +94,28 @@ angular.module('starter')
     $state.go("login");
   }
 
+  /**
+   * @ngdoc function
+   * @name viewProfile
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * View the profile of a friend
+   *
+   * @param {int} friend ID of friend
+   */  
   $scope.viewProfile = function(friend) {
     $state.go("viewProfile", {'user' : friend});
   }
 
+  /**
+   * @ngdoc function
+   * @name add
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Add a user as a friend 
+   *
+   * @param {int} friend ID of friend
+   */ 
   $scope.add = function(friend) { 
     userFriendsReference.child(fbAuth.uid).child(friend.uid).transaction(function(status) {
       return "friend";
@@ -107,6 +125,15 @@ angular.module('starter')
     });
   }
 
+  /**
+   * @ngdoc function
+   * @name delete
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Delete user as a friend
+   *
+   * @param {int} friend ID of friend
+   */ 
   $scope.delete = function(friend) {
     //log msg when delete finished sync
     if(confirm("Remove friend?")) {
@@ -123,6 +150,15 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name getFriendProfilePicture
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Get the profile picture of a friend. Return a generic profile picture if the friend does not have one.
+   *
+   * @param {string} profilePic profile picture of friend
+   */ 
   $scope.getFriendProfilePicture = function(profilePic) {
     if (profilePic === "") {
       return "./img/blank-profile.png";
@@ -131,6 +167,15 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name getStatusIcon
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Get status icon
+   *
+   * @param {string} status status of a potential friend
+   */ 
   $scope.getStatusIcon = function(status) {
     if (status === "friend") {
       return "icon ion-android-happy";
@@ -139,14 +184,41 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name toggleGroup
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Display/collapse content panels (accordian)
+   *
+   * @param {int} group panel to display/collapse
+   */  
   $scope.toggleGroup = function(group) {
     group.show = !group.show;
   }
 
+  /**
+   * @ngdoc function
+   * @name isGroupShown
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Check if the panel is shown
+   *
+   * @param {int} group group ID of panel 
+   */ 
   $scope.isGroupShown = function(group) {
     return group.show;
   }
 
+  /**
+   * @ngdoc function
+   * @name findUser
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Find user using email address
+   *
+   * @param {string} userEmail email address of user 
+   */ 
   $scope.findUser = function(userEmail) {
     if(userEmail) {
       userDataReference.orderByChild("email").equalTo(userEmail).once("value", function(val) {
@@ -175,6 +247,15 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name sendRequest
+   * @methodOf starter.controller:FriendsController
+   * @description
+   * Send friend request to user
+   *
+   * @param {int} userID ID of the user
+   */ 
   function sendRequest(userID) {
     userFriendsReference.child(userID).child(fbAuth.uid).transaction(function(status) {
       if(status === null) {

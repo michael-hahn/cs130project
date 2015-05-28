@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc function
- * @name starter.controller:ProfileController
+ * @name starter.controller:SettingsController
  * @description
  * Profile controller of the app.
  *
@@ -49,139 +49,194 @@ angular.module('starter')
     }).then(function (modal) {
         $scope.modalPassword = modal;
     });
-//Modal for PhotoZoom
-	$ionicModal.fromTemplateUrl('templates/settingsHTML/PhotoZoom.html', {
+    //Modal for PhotoZoom
+	 $ionicModal.fromTemplateUrl('templates/settingsHTML/PhotoZoom.html', {
 		scope: $scope
-	}).then(function (modal) {
+	 }).then(function (modal) {
 		$scope.modalPhotoZoom = modal;
 	});
-    $scope.logout = function() {
-      if(confirm("Logout?")){
-        firebaseObject.unauth();
-        $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
-        $state.go("login");
-      }
+
+
+   /**
+   * @ngdoc function
+   * @name logout
+   * @methodOf starter.controller:SettingsController
+   * @description
+   * Logout from current account.
+   */
+  $scope.logout = function() {
+    if(confirm("Logout?")){
+      firebaseObject.unauth();
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+      $state.go("login");
     }
+  }
 
-    $scope.changeDisplayName = function(newName) {
-      if (newName) {
-        userReference.update({
-          displayName: newName
-        }, function(error) {
-          if (error) {
-            alert("Error: " + error);
-          } else {
-            $scope.modalDisplayName.hide();
-            alert("Changed display name to " + newName);
-          }
-        });
-      } else {
-        alert("Please choose new Display Name.");
-      }
-      
-    }
-
-    $scope.changeEmail = function(newEm, pw) {
-      if (newEm && pw) {
-        userReference.changeEmail({
-          oldEmail : $scope.userData.email,
-          newEmail : newEm,
-          password : pw
-        }, function(error) {
-          if (error === null) {
-            $scope.modalEmail.hide();
-            userReference.update({
-              email : newEm
-            });
-            alert("Email changed to " + newEm);
-          } else {
-            alert(error);
-          }
-        })
-      } else {
-        alert("Please fill out all details.");
-      }
-    }
-
-    $scope.changeProfilePicture = function(opt) {
-      //from camera
-      var options1 = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
-        encodingTpe: Camera.EncodingType.JPEG,
-        popoverOptions: CameraPopoverOptions,
-        targetWidth: 500,
-        targetHeight: 500,
-        saveToPhotoAlbum: false
-      };
-      //from photo library
-      var options2 = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-        allowEdit: true,
-        encodingTpe: Camera.EncodingType.JPEG,
-        popoverOptions: CameraPopoverOptions,
-        targetWidth: 500,
-        targetHeight: 500,
-        saveToPhotoAlbum: false
-      };
-
-      if (opt === 0) {
-        var options = options1;
-      } else{
-        var options = options2;
-      } 
-
-      $cordovaCamera.getPicture(options).then(function(imageData) {
-        userReference.update({
-          profilePicture : "data:image/jpeg;base64," +imageData
-        }, function(error) {
-          if ( error === null ) {
-            $scope.modalProfilePicture.hide();
-            alert("Profile picture changed!");
-          } else {
-            alert(error);
-          }
-        });
-      });
-
-      $scope.$apply();//updates the view
-    }
-
-    $scope.removeProfilePicture = function() {
-      if(confirm("Remove profile picture?")){
+  /**
+   * @ngdoc function
+   * @name changeDisplayName
+   * @methodOf starter.controller:SettingsController
+   * @description
+   * Change the user's display name
+   *
+   * @param {string} newName new display name
+   */
+  $scope.changeDisplayName = function(newName) {
+    if (newName) {
       userReference.update({
-          profilePicture : ''
-        }, function(error) {
-          if ( error === null ) {
-            alert("Profile picture changed!");
-          } else {
-            alert(error);
-          }
-        });
-      }
+        displayName: newName
+      }, function(error) {
+        if (error) {
+          alert("Error: " + error);
+        } else {
+          $scope.modalDisplayName.hide();
+          alert("Changed display name to " + newName);
+        }
+      });
+    } else {
+      alert("Please choose new Display Name.");
     }
+      
+  }
 
-    $scope.changePassword = function(oldPw, newPw, confirmPw) {
-      if ( oldPw && newPw && confirmPw ) {
-        userReference.changePassword({
-          email : $scope.userData.email,
-          oldPassword : oldPw,
-          newPassword : newPw
-        }, function(error) {
-          if (error === null){
-            $scope.modalPassword.hide();
-            alert("Password successfully changed!");
-          } else {
-            alert(error);
-          }
-        });
-      } else {
-        alert("Please fill in all details.");
-      }
+  /**
+   * @ngdoc function
+   * @name changeEmail
+   * @methodOf starter.controller:SettingsController
+   * @description
+   * Change the user's email address
+   *
+   * @param {string} newEm new email address
+   * @param {string} pw password of the user
+   */
+  $scope.changeEmail = function(newEm, pw) {
+    if (newEm && pw) {
+      userReference.changeEmail({
+        oldEmail : $scope.userData.email,
+        newEmail : newEm,
+        password : pw
+      }, function(error) {
+        if (error === null) {
+          $scope.modalEmail.hide();
+          userReference.update({
+            email : newEm
+          });
+          alert("Email changed to " + newEm);
+        } else {
+          alert(error);
+        }
+      })
+    } else {
+      alert("Please fill out all details.");
     }
+  }
+
+  /**
+   * @ngdoc function
+   * @name changeProfilePicture
+   * @methodOf starter.controller:SettingsController
+   * @description
+   * Change profile picture of the user
+   *
+   * @param {int} opt take a new picture (0) or choose a picture from the photo library (1) 
+   */
+  $scope.changeProfilePicture = function(opt) {
+    //from camera
+    var options1 = {
+      quality: 75,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingTpe: Camera.EncodingType.JPEG,
+      popoverOptions: CameraPopoverOptions,
+      targetWidth: 500,
+      targetHeight: 500,
+      saveToPhotoAlbum: false
+    };
+    //from photo library
+    var options2 = {
+      quality: 75,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingTpe: Camera.EncodingType.JPEG,
+      popoverOptions: CameraPopoverOptions,
+      targetWidth: 500,
+      targetHeight: 500,
+      saveToPhotoAlbum: false
+    };
+
+    if (opt === 0) {
+      var options = options1;
+    } else{
+      var options = options2;
+    } 
+
+    $cordovaCamera.getPicture(options).then(function(imageData) {
+      userReference.update({
+       profilePicture : "data:image/jpeg;base64," +imageData
+      }, function(error) {
+        if ( error === null ) {
+          $scope.modalProfilePicture.hide();
+          alert("Profile picture changed!");
+        } else {
+          alert(error);
+        }
+      });
+    });
+
+    $scope.$apply();//updates the view
+  }
+
+  /**
+   * @ngdoc function
+   * @name removeProfilePicture
+   * @methodOf starter.controller:SettingsController
+   * @description
+   * Remove profile picture
+   */
+  $scope.removeProfilePicture = function() {
+    if(confirm("Remove profile picture?")){
+    userReference.update({
+        profilePicture : ''
+      }, function(error) {
+        if ( error === null ) {
+          alert("Profile picture changed!");
+        } else {
+          alert(error);
+        }
+      });
+    }
+  }
+
+  /**
+   * @ngdoc function
+   * @name changePassword
+   * @methodOf starter.controller:SettingsController
+   * @description
+   * Change the user's password.
+   *
+   * @param {string} oldPw old password
+   * @param {string} newPw new password
+   * @param {string} confirmPw confirm new password
+   */
+  $scope.changePassword = function(oldPw, newPw, confirmPw) {
+    if ( oldPw && newPw && confirmPw ) {
+      userReference.changePassword({
+        email : $scope.userData.email,
+        oldPassword : oldPw,
+        newPassword : newPw
+      }, function(error) {
+        if (error === null){
+          $scope.modalPassword.hide();
+          alert("Password successfully changed!");
+        } else {
+          alert(error);
+        }
+      });
+    } else {
+      alert("Please fill in all details.");
+    }
+  }
 }])

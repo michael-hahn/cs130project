@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc function
- * @name starter.controller:eventsPageController
+ * @name starter.controller:eventsMenuController
  * @description
  * events page controller of the app.
  *
@@ -108,23 +108,56 @@ angular.module('starter')
       $state.go("login");
   }
 
+  /**
+   * @ngdoc function
+   * @name goToEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Brings up the selected event page
+   *
+   * @param {int} eventID the event ID
+   */  
   $scope.goToEvent = function(eventID) {
     $state.go("app.eventsPage", { 
       'eventUID' : eventID, 
       'eventData' : $scope.eventData[eventID] });
   }
 
- /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
+  /**
+   * @ngdoc function
+   * @name toggleGroup
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Display/collapse content panels (accordian)
+   *
+   * @param {int} group panel to display/collapse
+   */  
   $scope.toggleGroup = function(group) {
     group.show = !group.show;
   };
+
+  /**
+   * @ngdoc function
+   * @name isGroupShown
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Check if the panel is shown
+   *
+   * @param {int} group group ID of panel 
+   */ 
   $scope.isGroupShown = function(group) {
     return group.show;
   };
 
+  /**
+   * @ngdoc function
+   * @name getCoverPhoto
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Checks if there is a valid photo. Returns a generic photo if there is not any.
+   *
+   * @param {int} photo photo of user
+   */ 
   $scope.getCoverPhoto = function(photo) {
     if (photo === "") {
       return "./././img/blank-coverphoto.png";
@@ -133,6 +166,15 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name joinEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Current user joins an event he or she was invited to.
+   *
+   * @param {int} eventID ID of event the user was invited to.
+   */ 
   $scope.joinEvent = function(eventID) {
     myEventsReference.child(eventID).transaction(function(role) {
       return "guest";
@@ -140,6 +182,15 @@ angular.module('starter')
     eventAttendeesReference.child(eventID).child(fbAuth.uid).set("guest");
   }
 
+  /**
+   * @ngdoc function
+   * @name rejectEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Current user rejects an event he or she was invited to.
+   *
+   * @param {int} eventID ID of event the user was invited to.
+   */ 
   $scope.rejectEvent = function(eventID) {
     var onDelete = function(error) {
       if (error) {
@@ -152,7 +203,15 @@ angular.module('starter')
     myEventsReference.child(eventID).remove(onDelete);
   }
 
-
+  /**
+   * @ngdoc function
+   * @name removeEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Delete an event
+   *
+   * @param {int} eventID ID of event the user wants to delete
+   */ 
   $scope.removeEvent = function(eventID) {
     if(confirm("Are you sure you want to delete this event? All associated photos will be lost.")) {
       // First, remove all associations of people with the event
@@ -177,8 +236,18 @@ angular.module('starter')
     }
   }
 
-  // Removes all traces of the image from user_images, image_data, image_likes, event_images, user_comments, and image_comments
+  /**
+   * @ngdoc function
+   * @name removeImageFromEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Delete an image
+   *
+   * @param {int} imageID ID of event 
+   * @param {int} eventID ID of image that the user wants to delete
+   */ 
   function removeImageFromEvent(imageID, eventID) {
+    // Removes all traces of the image from user_images, image_data, image_likes, event_images, user_comments, and image_comments
     return $q(function(resolve, reject) {
       imageDataReference.child(imageID).once("value", function(data) {
         userImagesReference.child(data.val()['user'] + "/" + imageID).remove(function() {
@@ -199,6 +268,16 @@ angular.module('starter')
     });
   }
 
+  /**
+   * @ngdoc function
+   * @name removeGuestFromEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Remove a guest from the event
+   *
+   * @param {int} userID ID of user to be removed 
+   * @param {int} eventID ID of event
+   */ 
   function removeGuestFromEvent(userID, eventID) {
     return $q(function(resolve, reject) {
       firebaseObject.child("user_events/" + userID + "/" + eventID).remove();
@@ -207,6 +286,15 @@ angular.module('starter')
     });
   }
 
+  /**
+   * @ngdoc function
+   * @name leaveEvent
+   * @methodOf starter.controller:eventsMenuController
+   * @description
+   * Remove the current user from the event.
+   *
+   * @param {int} eventID ID of event
+   */ 
   $scope.leaveEvent = function(eventID) {
     if(confirm("Are you sure you want to leave this event?")) {
       // Then leave the event in database

@@ -24,6 +24,15 @@ angular.module('starter')
       $state.go("login");
     }
 
+    /**
+   * @ngdoc function
+   * @name chooseProfilePicture
+   * @methodOf starter.controller:RegisterUserDetailsController
+   * @description
+   * Choose a profile picture for user.
+   *
+   * @param {int} type take a new picture (0) or choose a picture from the photo library (1) 
+   */
     $scope.chooseProfilePicture = function(type) {
       //from camera
       var options1 = {
@@ -62,6 +71,15 @@ angular.module('starter')
       $timeout(function() {},0);
     }
 
+    /**
+   * @ngdoc function
+   * @name submit
+   * @methodOf starter.controller:RegisterUserDetailsController
+   * @description
+   * finish registering the new user
+   *
+   * @param {string} name display name for user
+   */
     $scope.submit = function(name) {
       if (name) {
         userReference.update({

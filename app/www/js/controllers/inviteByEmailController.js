@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc function
- * @name starter.controller:AddUserController
+ * @name starter.controller:inviteByEmailController
  * @description
  * Add user to event controller of the app.
  *
@@ -23,6 +23,15 @@ angular.module('starter')
     $state.go("login");
   }
 
+  /**
+   * @ngdoc function
+   * @name sendRequest
+   * @methodOf starter.controller:inviteByEmailController
+   * @description
+   * Send friend request to user
+   *
+   * @param {string} userEmail email address of user
+   */ 
   $scope.addUser = function(userEmail) {
 
     if (userEmail===undefined) {
@@ -61,7 +70,13 @@ angular.module('starter')
   })
 }
 
-
+  /**
+   * @ngdoc function
+   * @name goBack
+   * @methodOf starter.controller:inviteByEmailController
+   * @description
+   * Returns to the eventMenu Page
+   */
   $scope.goBack = function() {
     $ionicHistory.goBack();
   }

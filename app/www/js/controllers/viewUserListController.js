@@ -35,18 +35,50 @@ angular.module('starter')
       $state.go("login");
   }
 
+  /**
+   * @ngdoc function
+   * @name isHost
+   * @methodOf starter.controller:viewUserListController
+   * @description
+   * Check if the current user is the host.
+   */
   $scope.isHost = function() {
     return (fbAuth.uid === $scope.host.uid);
   }
 
+  /**
+   * @ngdoc function
+   * @name viewProfile
+   * @methodOf starter.controller:viewUserListController
+   * @description
+   * View the profile of a user.
+   *
+   * @param {string} user ID of user 
+   */
   $scope.viewProfile = function(user) {
     $state.go("viewProfile", {'user' : user});
   }
 
+  /**
+   * @ngdoc function
+   * @name goBack
+   * @methodOf starter.controller:viewUserListController
+   * @description
+   * Returns to the eventMenu Page.
+   */
   $scope.goBack = function() {
     $ionicHistory.goBack();
   }
 
+  /**
+   * @ngdoc function
+   * @name getFriendProfilePicture
+   * @methodOf starter.controller:viewUserListController
+   * @description
+   * Get the profile picture of a friend. Return a generic profile picture if the friend does not have one.
+   *
+   * @param {string} profilePic profile picture of friend.
+   */ 
   $scope.getProfilePicture = function(profilePic) {
     if (profilePic === "") {
       return "./img/blank-profile.png";
@@ -55,10 +87,24 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name inviteFriends
+   * @methodOf starter.controller:viewUserListController
+   * @description
+   * Go to the invite friends page.
+   */ 
   $scope.inviteFriends = function(selected) {
     $state.go("inviteFriends", {'eventID': $scope.eventID});
   }
 
+  /**
+   * @ngdoc function
+   * @name inviteByEmail
+   * @methodOf starter.controller:viewUserListController
+   * @description
+   * Go to the invite user by email page.
+   */ 
   $scope.inviteByEmail = function(selected) {
     $state.go("inviteByEmail", {'eventID': $scope.eventID});
   }

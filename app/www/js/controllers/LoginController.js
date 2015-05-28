@@ -25,6 +25,17 @@ angular.module('starter')
       $scope.modalRecoverPassword = modal;
   });
 
+  /**
+   * @ngdoc function
+   * @name register
+   * @methodOf starter.controller:LoginController
+   * @description
+   * Register a new user.
+   *
+   * @param {string} em email address of new user
+   * @param {string} pw password for new user
+   * @param {string} confirmPw confirm password
+   */  
   $scope.register = function(em, pw, confirmPw) {
     console.log("Create User Function called");
     if (em && pw && confirmPw) {
@@ -65,6 +76,16 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name login
+   * @methodOf starter.controller:LoginController
+   * @description
+   * Login to a registered account.
+   *
+   * @param {string} username email address of the user
+   * @param {string} password password for the user
+   */  
   $scope.login = function(username, password) {
     if (username && password) {
 
@@ -88,6 +109,15 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name recoverPassword
+   * @methodOf starter.controller:LoginController
+   * @description
+   * Recover password for a registered account. Send email to the user's email address.
+   *
+   * @param {string} userEmail user email address
+   */  
   $scope.recoverPassword = function(userEmail) {
     if (userEmail) {
 

@@ -64,6 +64,15 @@ angular.module('starter')
     $state.go("login");
   }
 
+  /**
+   * @ngdoc function
+   * @name photoChanged
+   * @methodOf starter.controller:PhotoController
+   * @description
+   * The active photo has changed. 
+   *
+   * @param {int} index index of new active photo
+   */ 
   $scope.photoChanged = function(index) {
     $scope.currIndex = index;
     $scope.photoContent = $scope.photosArr[$scope.currIndex];
@@ -81,10 +90,26 @@ angular.module('starter')
     }   
   }
 
+  /**
+   * @ngdoc function
+   * @name close
+   * @methodOf starter.controller:PhotoController
+   * @description
+   * close photo viewing session. 
+   */ 
   $scope.close = function() {
     $ionicHistory.goBack();
   }
 
+  /**
+   * @ngdoc function
+   * @name like
+   * @methodOf starter.controller:PhotoController
+   * @description
+   * Like the photo. Increment the number of likes by one.
+   *
+   * @param {Object} im Firebase object representing the image
+   */ 
   $scope.like = function(im) {
 
     if (im.likedBy !== undefined) {
@@ -113,6 +138,15 @@ angular.module('starter')
     }
   }
 
+  /**
+   * @ngdoc function
+   * @name isLiked
+   * @methodOf starter.controller:PhotoController
+   * @description
+   * Check if the curent user already liked the photo
+   *
+   * @param {Object} im Firebase object representing the image
+   */ 
   $scope.isLiked = function(im) {
     if (im.likedBy !== undefined) {
 
@@ -147,7 +181,18 @@ angular.module('starter')
     $state.go('addUser', {
       'eventUID' :  $scope.eventID, });
   }
-    //For comments functionality
+
+
+   /**
+   * @ngdoc function
+   * @name addComments
+   * @methodOf starter.controller:PhotoController
+   * @description
+   * Add a comment to the image.
+   *
+   * @param {Object} im Firebase object representing the image
+   * @param {string} comment comment to add to image
+   */ 
   $scope.addComments = function(im,comments) {
     //Once "Submit" button is pushed, the comment with the userID is pushed into the "image_comments" attribute
     var commentID = imageCommentsReference.child(im.id).push({
@@ -159,6 +204,15 @@ angular.module('starter')
     //End
   }
 
+   /**
+   * @ngdoc function
+   * @name viewProfile
+   * @methodOf starter.controller:PhotoController
+   * @description
+   * View profile of selected user.
+   *
+   * @param {string} user ID of user
+   */ 
   $scope.viewProfile = function(user) {
     $state.go("viewProfile", {'user' : user});
   }
