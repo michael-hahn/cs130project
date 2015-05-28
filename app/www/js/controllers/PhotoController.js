@@ -21,7 +21,7 @@ angular.module('starter')
     $ionicSlideBoxDelegate.update();
   }, 0);
 
-
+  $scope.commentArr = [];
   $scope.formComments = function() {
     var comment = [];
     $scope.comment = [];
@@ -37,7 +37,10 @@ angular.module('starter')
     comment.push(commentInfo);
     });
     $scope.comment = comment;
+    var commentObj = {id: $scope.photoContent.id, comment: $scope.comment};
+    $scope.commentArr.push(commentObj);
   }
+
 
   if(fbAuth){
     var eventReference = firebaseObject.child("event_data/" + $stateParams.eventUID);
@@ -47,7 +50,16 @@ angular.module('starter')
     var userCommentsReference = firebaseObject.child("user_comments");
     var userDataReference = firebaseObject.child("user_data");
 
-    $scope.formComments();    
+    var addCommentObj = true;
+    for (var i = 0; i < $scope.commentArr.length; i++) {
+      if ($scope.commentArr[i].id === $scope.photoContent.id) {
+        $scope.comment = $scope.commentArr[i].comment;
+        addCommentObj = false;
+      }
+    }
+    if (addCommentObj === true) {
+      $scope.formComments(); 
+    }   
   } else {
     $state.go("login");
   }
@@ -57,7 +69,16 @@ angular.module('starter')
     $scope.photoContent = $scope.photosArr[$scope.currIndex];
     $scope.photoContent.userInfo = $scope.allUsersData[$scope.photoContent.user];
     $ionicSlideBoxDelegate.update();
-    $scope.formComments();
+    var addCommentObj = true;
+    for (var i = 0; i < $scope.commentArr.length; i++) {
+      if ($scope.commentArr[i].id === $scope.photoContent.id) {
+        $scope.comment = $scope.commentArr[i].comment;
+        addCommentObj = false;
+      }
+    }
+    if (addCommentObj === true) {
+      $scope.formComments(); 
+    }   
   }
 
   $scope.close = function() {
