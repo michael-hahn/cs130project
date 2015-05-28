@@ -21,14 +21,8 @@ angular.module('starter')
     $ionicSlideBoxDelegate.update();
   }, 0);
 
-  if(fbAuth){
-    var eventReference = firebaseObject.child("event_data/" + $stateParams.eventUID);
-    var imageLikesReference = firebaseObject.child("image_likes");
-    //For comments functionality
-    var imageCommentsReference = firebaseObject.child("image_comments");
-    var userCommentsReference = firebaseObject.child("user_comments");
-    var userDataReference = firebaseObject.child("user_data");
-    
+
+  $scope.formComments = function() {
     var comment = [];
     $scope.comment = [];
     imageCommentsReference.child($scope.photoContent.id).on("child_added", function(commentID) {
@@ -41,10 +35,19 @@ angular.module('starter')
     var userName = getNameOfUserWithID(c_userId);
     var commentInfo = {data: commentData, name: userName, info: u_info};
     comment.push(commentInfo);
-  });
-  $scope.comment = comment;
-  //End
+    });
+    $scope.comment = comment;
+  }
 
+  if(fbAuth){
+    var eventReference = firebaseObject.child("event_data/" + $stateParams.eventUID);
+    var imageLikesReference = firebaseObject.child("image_likes");
+    //For comments functionality
+    var imageCommentsReference = firebaseObject.child("image_comments");
+    var userCommentsReference = firebaseObject.child("user_comments");
+    var userDataReference = firebaseObject.child("user_data");
+
+    $scope.formComments();    
   } else {
     $state.go("login");
   }
@@ -54,6 +57,7 @@ angular.module('starter')
     $scope.photoContent = $scope.photosArr[$scope.currIndex];
     $scope.photoContent.userInfo = $scope.allUsersData[$scope.photoContent.user];
     $ionicSlideBoxDelegate.update();
+    $scope.formComments();
   }
 
   $scope.close = function() {
@@ -128,8 +132,6 @@ angular.module('starter')
     var commentID = imageCommentsReference.child(im.id).push({
       data: comments,
       userId: fbAuth.uid
-    }, function() {
-      alert("Comment has been posted!");
     });
     //We will also record which user makes what comments by saving the commentID to the userID in the "user_comments" attribute
     userCommentsReference.child(fbAuth.uid).child(commentID.key()).set(1);
