@@ -15,8 +15,7 @@
 				<ion-slide ng-repeat="photo in photosArr">
 					<a href="" ng-click="viewProfile(photo.userInfo)">
 						<div class="item item-avatar" style="border: none; background: none; background-image: none">
-			    			<img src="{{photo.userInfo.profilePicture}}" ng-if="photo.userInfo.profilePicture !== '' ">
-					    	<img src="./img/blank-profile.png" ng-if="photo.userInfo.profilePicture === '' "/>
+			    			<img src={{getProfilePicture(photo.userInfo.profilePicture)}}>
 					    	
 					    	<h2 style="font-family: 'CenturyGothic', sans-serif; color: white">{{photo.userInfo.displayName}}</h2>
 					    	<p style="font-family: 'CenturyGothic', sans-serif; color: white">{{photo.time}}</p>
@@ -41,7 +40,7 @@
 							<label class="item-input-wrapper">
 								<textarea name="styled-textarea" id="styled" style="resize: none" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')" ng-model="comments" placeholder="Make a comment"></textarea>
 							</label>
-							<button class="button button-small" ng-click="addComments(photo,comments)"><!--addComments(photo, comments)-->
+							<button class="button button-small buttonOrange" ng-click="addComments(photo,comments)">
 								Submit
 							</button>
 						</div>
@@ -50,9 +49,11 @@
 						<div>
 							<div class="check-element animate-hide" ng-show="checked">
 								<ion-list>
-									<ion-item class="item-text-wrap" ng-repeat="c in comment track by $index" ng-if="c != null">
-										{{(c.info).displayName}} commented: 
-										<p>
+									<ion-item class="item item-avatar item-text-wrap" ng-repeat="c in comment track by $index" ng-if="c != null" style="background: none; background-image: none">
+										
+										<img src={{getProfilePicture((c.info).profilePicture)}} ng-click="viewProfile(c.info)">
+										<h2 style="font-family: 'CenturyGothic', sans-serif; color: white"><u>{{(c.info).displayName}}</u><h2>  
+										<p style="font-family: 'CenturyGothic', sans-serif; color: white">
 											{{c.data}}
 										</p>
 	        						</ion-item>

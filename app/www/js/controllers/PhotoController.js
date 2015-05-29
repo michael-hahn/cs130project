@@ -31,6 +31,7 @@ angular.module('starter')
     var u_info;
     userDataReference.child(c_userId).on("value", function(info) {
       u_info = info.val();
+      u_info.uid = c_userId;
     });
     var userName = getNameOfUserWithID(c_userId);
     var commentInfo = {data: commentData, name: userName, info: u_info};
@@ -217,4 +218,11 @@ angular.module('starter')
     $state.go("viewProfile", {'user' : user});
   }
 
+  $scope.getProfilePicture = function(profilePic) {
+    if (profilePic === "") {
+      return "./img/blank-profile.png";
+    } else {
+      return profilePic;
+    }
+  }
 })
